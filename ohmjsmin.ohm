@@ -1,6 +1,6 @@
 ohmjsmin {
   Main = id "{" Rules "}"
-  Rules = (SyntacticRule | LexicalRule | SyntacticExtension | LexicalExtension)+
+  Rules = (SyntacticExtension | LexicalExtension | SyntacticRule | LexicalRule)+
   SyntacticRule = uppercaseid "=" RuleBody
   LexicalRule = lowercaseid "=" RuleBody
   SyntacticExtension = uppercaseid "+=" RuleBody

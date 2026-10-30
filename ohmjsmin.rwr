@@ -1,20 +1,37 @@
+%parameter skip
 %rewrite ohmjsmin {
 
 Main [ id _1 Rules _2] = ‛«id» «_1»«Rules»\n«_2»’
 Rules [ _3+] = ‛«_3»’
-SyntacticRule [ uppercaseid _4 RuleBody] = ‛\n  «uppercaseid»«_4»«RuleBody»’
-LexicalRule [ lowercaseid _5 RuleBody] = ‛\n  «lowercaseid»«_5»«RuleBody»’
-SyntacticExtension [ uppercaseid _6 RuleBody] = ‛\n  «uppercaseid»«_6»«RuleBody»’
-LexicalExtension [ lowercaseid _7 RuleBody] = ‛\n  «lowercaseid»«_7»«RuleBody»’
-RuleBody [ MatchItem+] = ‛«MatchItem»’
-MatchItem_parenthesizedplus [ _8 MatchItem+ _9 plussuffix] =‛ «_8»«MatchItem»«_9»«plussuffix»’
-MatchItem_parenthesized [ _10 MatchItem+ _11] =‛ «_10»«MatchItem»«_11»’
-MatchItem_string [ dqstring] =‛ «dqstring»’
+SyntacticRule [ uppercaseid _4 RuleBody] = 
+⎡ skip=‛true’
+  ‛\ndef s_«uppercaseid» ():⤷\ntry:⤷«RuleBody»\naccept ("⎨genslprefix ‛«uppercaseid»’⎬")⤶\nexcept:⤷\nfail ("⎨genslprefix ‛«uppercaseid»’⎬")\nraise⤶⤶’
+⎦
+
+LexicalRule [ lowercaseid _5 RuleBody] =
+⎡ skip=‛false’
+  ‛\ndef l_«lowercaseid» ():⤷\ntry:⤷«RuleBody»\naccept ("⎨genslprefix ‛«lowercaseid»’⎬")⤶\nexcept:⤷\nfail ("⎨genslprefix ‛«lowercaseid»’⎬")\nraise⤶⤶’
+⎦
+
+SyntacticExtension [ uppercaseid _6 RuleBody] =
+⎡ skip=‛true’
+  ‛\ndef s_«uppercaseid» ():⤷\ntry:⤷«RuleBody»\naccept ("⎨genslprefix ‛«uppercaseid»’⎬")⤶\nexcept:⤷\nfail ("⎨genslprefix ‛«uppercaseid»’⎬")\nraise⤶⤶’
+⎦
+
+LexicalExtension [ lowercaseid _7 RuleBody] =
+⎡ skip=‛false’
+  ‛\ndef l_«lowercaseid» ():⤷\ntry:⤷«RuleBody»\naccept ("⎨genslprefix ‛«lowercaseid»’⎬")⤶\nexcept:⤷\nfail ("⎨genslprefix ‛«lowercaseid»’⎬")\nraise⤶⤶’
+⎦
+
+RuleBody [ MatchItem+] = ‛⎨genskip ‛⟪skip⟫’⎬«MatchItem»⎨genskip ‛⟪skip⟫’⎬’
+MatchItem_parenthesizedplus [ _8 MatchItem+ _9 plussuffix] =‛\nparse_one_or_more («MatchItem»)’
+MatchItem_parenthesized [ _10 MatchItem+ _11] =‛ D«_10»«MatchItem»«_11»’
+MatchItem_string [ dqstring] =‛\n  parse_string («dqstring»)’
 MatchItem_notprefixed [ notprefix MatchItem] =‛ «notprefix»«MatchItem»’
-MatchItem_plussuffixed [ MatchItem plussuffix] =‛ «MatchItem»«plussuffix»’
-MatchItem_alts [ MatchItem AlternateItem+] =‛ «MatchItem»«AlternateItem»’
-MatchItem_single [ id] =‛ «id»’
-AlternateItem [ _14 MatchItem] = ‛ «_14» «MatchItem»’
+MatchItem_plussuffixed [ MatchItem plussuffix] =‛\nparse_one_or_more A(⤷lambda : «MatchItem»)⤶’
+MatchItem_alts [ MatchItem AlternateItem+] =‛\nparse_either B([lambda:⤷\n«MatchItem»⤶«AlternateItem»]’
+MatchItem_single [ id] =‛\nparse (⎨genslprefix ‛«id»’⎬)’
+AlternateItem [ _14 MatchItem] = ‛ lambda:⤷\n«MatchItem»⤶’
 plussuffix [ _15] = ‛«_15»’
 notprefix [ _17] = ‛«_17»’
 dqstring [ _18 sqchar+ _19] = ‛«_18»«sqchar»«_19»’

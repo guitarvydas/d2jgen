@@ -1,0 +1,3 @@
+d2j {
+  Array = "[" (KV | Object)+ "]"
+}
