@@ -176,9 +176,10 @@ def parse_either (flist):
             print (f'  continue parse_either len=({len(flist)}) {flist}')
         f = flist [0]
         if f ():
-            break
+            parse_debug_prefix ('')
+            return True
         elif flist:
-            if len (flist) > 0:
+            if len (flist) > 1:
                 flist = flist [1:]
             else:
                 parse_debug_prefix ('')
@@ -186,8 +187,7 @@ def parse_either (flist):
         else:
             parse_debug_prefix ('')
             return False
-    parse_debug_prefix ('')
-    return True
+    raise Exception ("internal error: should not have reached this point")
 
 def parse_set_input (s):
     buffer.set_input (s)
