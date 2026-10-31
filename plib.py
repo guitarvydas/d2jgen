@@ -97,34 +97,17 @@ def parse (f):
 
 def parse_string (s):
     global buffer
-    indent.pr ()
-    indent.ind ()
-    if debugprogress ():
-        print (f'parse_string {s} in {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
-    elif debugtrace ():
-        print (f'parse_string {s}')
     i = 0
     while i < len (s):
-        if debugprogress ():
-            print (f' continue parse_string i={i} len(s)={len(s)} {s [i]} in {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
         if buffer.parse_char (s [i]):
             i += 1
             continue
         else:
-            if debugtrace ():
-                print (f' fail parse_string {s} want {s} in {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
             return False
-    if debugtrace ():
-        indent.pr ()
-        print (f' exit parse_string {s}')
     return True
     
 def parse_upto (c):
     global buffer
-    indent.pr ()
-    indent.ind ()
-    if debugtrace ():
-        print (f'parse_upto {c}')
     while True:
         if buffer.overrun ():
             return False
@@ -137,8 +120,6 @@ def parse_upto (c):
 
 def parse_range (first, last):
     global buffer
-    if debugtrace ():
-        print (f'parse_range')
     if buffer.look () >= first and buffer.look () <= last:
         buffer.accept_char ()
         return True
@@ -147,22 +128,10 @@ def parse_range (first, last):
 
 def parse_ignore ():
     global buffer
-    indent.pr ()
-    indent.ind ()
-    if debugprogress ():
-        print (f'parse_ignore {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
-    elif debugtrace ():
-        print (f'parse_ignore')
     while (buffer.is_space ()):
         buffer.accept_char ()
-    if debugprogress ():
-        print (f' exit parse_ignore {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
 
 def parse_one_or_more (f):
-    indent.pr ()
-    indent.ind ()
-    if debugtrace ():
-        print (f'parse_one_or_more {f}')
     parse_debug_prefix ('+')
     if f ():
         while True:
@@ -177,14 +146,8 @@ def parse_one_or_more (f):
         return False
     
 def parse_either (flist):
-    indent.pr ()
-    indent.ind ()
-    if debugtrace ():
-        print (f'parse_either {flist}')
     parse_debug_prefix ('|')
     while True:
-        if debugtrace ():
-            print (f'  continue parse_either len=({len(flist)}) {flist}')
         f = flist [0]
         if f ():
             parse_debug_prefix ('')
