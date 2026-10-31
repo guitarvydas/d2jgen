@@ -31,6 +31,7 @@ def s_Main ():
 
 def temp_alt ():
     return parse_either ([s_KV, s_Object])
+
 def s_Array ():
     begin ("s_Array")
     parse_ignore ()

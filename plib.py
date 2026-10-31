@@ -48,7 +48,7 @@ class Indentation ():
     def out (self):
         self.indent -= 1
     def pr (self):
-        if debugprogress ():
+        if debugprogress () or debugtrace ():
             print (" " * self.indent, end="")
             print (self.prefix, end="")
         pass
@@ -97,6 +97,8 @@ def parse (f):
 
 def parse_string (s):
     global buffer
+    indent.pr ()
+    indent.ind ()
     if debugprogress ():
         print (f'parse_string {s} in {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
     elif debugtrace ():
@@ -113,11 +115,14 @@ def parse_string (s):
                 print (f' fail parse_string {s} want {s} in {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
             return False
     if debugtrace ():
+        indent.pr ()
         print (f' exit parse_string {s}')
     return True
     
 def parse_upto (c):
     global buffer
+    indent.pr ()
+    indent.ind ()
     if debugtrace ():
         print (f'parse_upto {c}')
     while True:
@@ -142,6 +147,8 @@ def parse_range (first, last):
 
 def parse_ignore ():
     global buffer
+    indent.pr ()
+    indent.ind ()
     if debugprogress ():
         print (f'parse_ignore {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
     elif debugtrace ():
@@ -152,6 +159,8 @@ def parse_ignore ():
         print (f' exit parse_ignore {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
 
 def parse_one_or_more (f):
+    indent.pr ()
+    indent.ind ()
     if debugtrace ():
         print (f'parse_one_or_more {f}')
     parse_debug_prefix ('+')
@@ -168,6 +177,8 @@ def parse_one_or_more (f):
         return False
     
 def parse_either (flist):
+    indent.pr ()
+    indent.ind ()
     if debugtrace ():
         print (f'parse_either {flist}')
     parse_debug_prefix ('|')
