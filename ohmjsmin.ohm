@@ -5,19 +5,35 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
   SyntacticExtension = uppercaseid "+=" RuleBody
   LexicalExtension = lowercaseid "+=" RuleBody
-  RuleBody = MatchItem+
-  MatchItem =
-    | "(" MatchItem+ ")" plussuffix -- parenthesizedplus
-    | "(" MatchItem+ ")" -- parenthesized
-    | dqstring -- string
-    | notprefix MatchItem -- notprefixed
-    | MatchItem plussuffix -- plussuffixed
-    | MatchItem AlternateItem+ -- alts
-    | id ~"=" ~"+="-- single
+  RuleBody = NamedAlternates RuleBody?
+  NamedAlternates =
+    | "|"? NamedMatchSequence AltNamed+ -- namedalts
+    | UnnamedMatchSequence              -- single
+  UnnamedAlternates =
+    | "|"? UnnamedMatchSequence AltUnnamed+ -- unnamedalts
+    | UnnamedMatchSequence                  -- single
 
-  AlternateItem = "|" MatchItem
-  plussuffix = "+" ~"="
-  notprefix = "~"
+  AltNamed = "|" NamedMatchSequence
+  AltUnnamed = "|" UnnamedMatchSequence
+  NamedMatchSequence = MatchSequence "--" id
+  UnnamedMatchSequence = MatchSequence
+  MatchSequence = Iter MatchSequence?
+  Iter =
+    | Pred "*" -- zeroormore
+    | Pred "+" -- oneormore
+    | Pred "?" -- optional
+    | Pred     -- plain
+  Pred =
+    | "~" Base -- not
+    |     Base -- plain
+  Base =
+    | "(" UnnamedAlternates ")" -- parenthesized
+    | matchAtom   -- atom
+
+  matchAtom =
+    | dqstring -- string
+    | id ~(spaces ("=" | "+=")) -- single
+
   dqstring = "\"" sqchar+ "\""
   sqchar =
     | "\\" "\"" -- escdq
