@@ -14,7 +14,7 @@
 
 
 
-from plib import parse, StringBuffer, fail, accept, begin, parse_ignore, parse_string, parse_one_or_more, parse_either, parse_upto, parse_range, parse_set_input
+from plib import parse, StringBuffer, fail, accept, begin, parse_ignore, parse_string, parse_one_or_more, parse_either, parse_upto, parse_range, parse_set_input, pbuffrepr
 
 ##########
 ## Parser
@@ -120,7 +120,8 @@ with open("test.json", "r", encoding="utf-8") as f:
     if s_Array ():
         accept ("test")
         print (f'success')
-    fail ("test")
-    print (f'fail')
+    else:
+        fail ("test")
+        print (f'fail')
 
         

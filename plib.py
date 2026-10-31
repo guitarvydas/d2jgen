@@ -2,7 +2,7 @@
 def debugprogress ():
     return False
 def debugtrace ():
-    return True
+    return False
 
 class StringBuffer ():
     def __init__ (self):
@@ -24,13 +24,15 @@ class StringBuffer ():
     def is_space (self):
         if self.overrun ():
             return False
-        elif self.buff [self.bx] == " " or self.buff [self.bx] == "," or self.buff [self.bx] == "\n" :
+        elif self.buff [self.bx] == " " or self.buff [self.bx] == "," or self.buff [self.bx] == "\n" or self.buff [self.bx] == "\t" :
             return True
     def look (self):
         if self.overrun ():
             bifail (e)
         else:
             return self.buff [self.bx]
+    def buffrepr (self):
+        return f"<{self.bx}>{self.buff[self.bx:10].replace('\n', '⤶').replace(' ', '␣').replace('\t', '⇢')}"
     def parse_char (self, c):
         if self.overrun ():
             return False
@@ -60,6 +62,10 @@ indent = Indentation ()
 def parse_debug_prefix (s):
     global indent
     indent.prefix = s
+
+def pbuffrepr (s):
+    global buffer
+    print (f'{s}{buffer.buffrepr()}')
     
 def fail (s):
     global buffer
@@ -76,7 +82,7 @@ def begin (s):
     indent.pr ()
     indent.ind ()
     if debugprogress ():
-        print (f'begin {s} {buffer.buff[buffer.bx:10].replace('\n', '⤶').replace(' ', '␣')}')
+        print (f'begin {s} {buffer.buffrepr()}')
     elif debugtrace ():
         print (f'begin {s}')
     buffer.push_mark ()
@@ -135,7 +141,6 @@ def parse_one_or_more (f):
     parse_debug_prefix ('+')
     if f ():
         while True:
-            print (f'  >>loop on {f}')
             if f ():
                 continue
             else:
