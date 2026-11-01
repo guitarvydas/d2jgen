@@ -1,6 +1,6 @@
 function genskip (skip) {
     if (skip == "true") {
-	return "\nparse_ignore ()";
+	return "parse_ignore ()";
     } else {
 	return "";
     }

@@ -1,12 +1,25 @@
+%parameter skip
 %rewrite ohmjsmin {
 
 Main [ id _1 Rules _2] = ‛«id»«_1»«Rules»«_2»’
 Rules [ _3+] = ‛«_3»’
-SyntacticRule [ uppercaseid _4 RuleBody] = ‛«uppercaseid»«_4»«RuleBody»’
-LexicalRule [ lowercaseid _5 RuleBody] = ‛«lowercaseid»«_5»«RuleBody»’
-SyntacticExtension [ uppercaseid _6 RuleBody] = ‛«uppercaseid»«_6»«RuleBody»’
-LexicalExtension [ lowercaseid _7 RuleBody] = ‛«lowercaseid»«_7»«RuleBody»’
-RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»’
+SyntacticRule [ id _4 RuleBody] =
+⎡ skip=‛true’
+  ‛\ndef «id» ():⤷\nbegin («id»)\n«RuleBody»⤶’
+⎦
+LexicalRule [ id _5 RuleBody] =
+⎡ skip=‛false’
+  ‛«id» ():⤷\nbegin («id»)\n«RuleBody»⤶’
+⎦
+SyntacticExtension [ id _6 RuleBody] =
+⎡ skip=‛true’
+  ‛«id» ():⤷\nbegin («id»)\n«RuleBody»⤶’
+⎦
+LexicalExtension [ id _7 RuleBody] =
+⎡ skip=‛false’
+  ‛«id» ():⤷\nbegin («id»)\n«RuleBody»⤶’
+⎦
+RuleBody [ NamedAlternates RuleBody?] = ‛if («NamedAlternates»):⤷«RuleBody»⤶’
 NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =‛«_8»«NamedMatchSequence»«AltNamed»’
 NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] =‛«_9»«UnnamedMatchSequence»«AltUnnamed»’
@@ -23,9 +36,9 @@ Iter_plain [ Pred] =‛«Pred»’
 Pred_not [ _16 Base] =‛«_16»«Base»’
 Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ _17 UnnamedAlternates _18] =‛«_17»«UnnamedAlternates»«_18»’
-Base_atom [ matchAtom] =‛«matchAtom»’
+Base_atom [ matchAtom] =‛⎨genskip ‛⟪skip⟫’⎬\n«matchAtom»\n⎨genskip ‛⟪skip⟫’⎬’
 matchAtom_string [ dqstring] =‛«dqstring»’
-matchAtom_single [ id] =‛«id»’
+matchAtom_single [ id] =‛ «id» ()’
 dqstring [ _22 sqchar+ _23] = ‛«_22»«sqchar»«_23»’
 sqchar_escdq [ _24 _25] =‛«_24»«_25»’
 sqchar_any [ any] =‛«any»’
