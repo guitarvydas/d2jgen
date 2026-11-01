@@ -33,8 +33,8 @@ NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =‛«NamedMatchSe
 NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] =‛«UnnamedMatchSequence»«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-AltNamed [ _10 NamedMatchSequence] = ‛«_10»«NamedMatchSequence»’
-AltUnnamed [ _11 UnnamedMatchSequence] = ‛«_11»«UnnamedMatchSequence»’
+AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
+AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
 MatchSequence [ Iter MatchSequence?] = ‛«Iter»«MatchSequence»’
@@ -46,8 +46,8 @@ Pred_not [ _16 Base] =‛«_16»«Base»’
 Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ _17 UnnamedAlternates _18] =‛«_17»«UnnamedAlternates»«_18»’
 Base_atom [ matchAtom] =‛⎨genskip ‛⟪skip⟫’⎬«matchAtom»⎨genskip ‛⟪skip⟫’⎬’
-matchAtom_string [ dqstring] =‛\nr = parse_string («dqstring»)\nif not r: return fail ("⟪rulename⟫")’
-matchAtom_single [ id] =‛\nr = «id» ()\nif not r: return fail ("⟪rulename⟫")’
+matchAtom_string [ dqstring] =‛\nif not parse_string («dqstring»): return fail ("⟪rulename⟫")’
+matchAtom_single [ id] =‛\nif not «id» (): return fail ("⟪rulename⟫")’
 dqstring [ _22 sqchar+ _23] = ‛«_22»«sqchar»«_23»’
 sqchar_escdq [ _24 _25] =‛«_24»«_25»’
 sqchar_any [ any] =‛«any»’
