@@ -1,53 +1,73 @@
+%parameter retvar
+%parameter cond
 %parameter skip
 %parameter rulename
 %rewrite ohmjsmin {
 
-Main [ id _1 Rules _2] = ‛«Rules»’
+Main [ id _1 Rules _2] = 
+⎡ cond=‛⊤⊥’
+  ‛«Rules»’
+⎦
 Rules [ _3+] = ‛«_3»’
 SyntacticRule [ id _4 RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ‛\ndef «id» ():⤷\nbegin ("«id»")«RuleBody»\⤶’
+    ⎡ retvar=‛r⎨genvar⎬’
+      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+    ⎦
   ⎦
 ⎦
 LexicalRule [ id _5 RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ‛\ndef «id» ():⤷\nbegin ("«id»")«RuleBody»⤶’
+    ⎡ retvar=‛r⎨genvar⎬’
+      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+    ⎦
   ⎦
 ⎦
 SyntacticExtension [ id _6 RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ‛\ndef «id» ():⤷\nbegin ("«id»")«RuleBody»⤶’
+    ⎡ retvar=‛r⎨genvar⎬’
+      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+    ⎦
   ⎦
 ⎦
 LexicalExtension [ id _7 RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ‛\ndef «id» ():⤷\nbegin ("«id»")«RuleBody»⤶’
+    ⎡ retvar=‛r⎨genvar⎬’
+      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’ ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+    ⎦
   ⎦
 ⎦
-RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»\nreturn accept ("⟪rulename⟫")’
-NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =‛«NamedMatchSequence»«AltNamed»’
+RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»’
+NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =
+⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+  ‛⟪retvar⟫ = True\n«NamedMatchSequence»«AltNamed»)’
+⎦
 NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] =‛«UnnamedMatchSequence»«AltUnnamed»’
+UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] = ‛«UnnamedMatchSequence»«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
 AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
-MatchSequence [ Iter MatchSequence?] = ‛«Iter»«MatchSequence»’
+MatchSequence [ Iter MatchSequence?] = ‛\n«Iter»«MatchSequence»’
 Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
 Iter_oneormore [ Pred _14] =‛«Pred»«_14»’
 Iter_optional [ Pred _15] =‛«Pred»«_15»’
 Iter_plain [ Pred] =‛«Pred»’
-Pred_not [ _16 Base] =‛«_16»«Base»’
+Pred_not [ _16 Base] =
+  ‛(not «Base»)’
 Pred_plain [ Base] =‛«Base»’
-Base_parenthesized [ _17 UnnamedAlternates _18] =‛«_17»«UnnamedAlternates»«_18»’
-Base_atom [ matchAtom] =‛⎨genskip ‛⟪skip⟫’⎬«matchAtom»⎨genskip ‛⟪skip⟫’⎬’
-matchAtom_string [ dqstring] =‛\nif not parse_string («dqstring»): return fail ("⟪rulename⟫")’
-matchAtom_single [ id] =‛\nif not «id» (): return fail ("⟪rulename⟫")’
+Base_parenthesized [ _17 UnnamedAlternates _18] =
+⎡ retvar=‛r⎨genvar⎬’
+  ‛«UnnamedAlternates»’
+⎦
+Base_atom [ matchAtom] =‛«matchAtom»’
+matchAtom_string [ dqstring] =‛parse_string («dqstring»)’
+matchAtom_single [ id] =‛«id» ()’
 dqstring [ _22 sqchar+ _23] = ‛«_22»«sqchar»«_23»’
 sqchar_escdq [ _24 _25] =‛«_24»«_25»’
 sqchar_any [ any] =‛«any»’
