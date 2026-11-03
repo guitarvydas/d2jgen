@@ -18,7 +18,9 @@ ohmjsmin {
   NamedMatchSequence = MatchSequence "--" id
   UnnamedMatchSequence = MatchSequence
   MatchSequence = MatchItem MatchSequence?
-  MatchItem = Iter
+  MatchItem = 
+  | ~ "(" Iter -- nonparenthesized
+  | Iter       -- parenthesized
   Iter =
     | Pred "*" -- zeroormore
     | Pred "+" -- oneormore

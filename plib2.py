@@ -1,8 +1,6 @@
 ## builtins
-def debugprogress ():
-    return False
-def debugtrace ():
-    return False
+debugprogress = True
+debugtrace = True
 
 class StringBuffer ():
     def __init__ (self):
@@ -50,7 +48,7 @@ class Indentation ():
     def out (self):
         self.indent -= 1
     def pr (self):
-        if debugprogress () or debugtrace ():
+        if debugprogress or debugtrace:
             print (" " * self.indent, end="")
             print (self.prefix, end="")
         pass
@@ -72,7 +70,7 @@ def fail (s):
     global indent
     indent.out ()
     indent.pr ()
-    if debugtrace ():
+    if debugtrace:
         print (f'fail {s}')
     buffer.rewind ()
     return False
@@ -82,9 +80,9 @@ def begin (s):
     global indent
     indent.pr ()
     indent.ind ()
-    if debugprogress ():
+    if debugprogress:
         print (f'begin {s} {buffer.buffrepr()}')
-    elif debugtrace ():
+    elif debugtrace:
         print (f'begin {s}')
     buffer.push_mark ()
 
@@ -94,7 +92,7 @@ def accept (s):
     indent.out ()
     indent.pr ()
     prev = buffer.pop_mark ()
-    if debugprogress () or debugtrace ():
+    if debugprogress or debugtrace:
         print (f'accept {s}')
     return True
 

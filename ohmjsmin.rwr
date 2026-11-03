@@ -51,8 +51,9 @@ AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
 AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
-MatchSequence [ Iter MatchSequence?] = ‛\n«Iter»«MatchSequence»’
-MatchItem [item] = ‛if ⟪retvar⟫ : ⤷\n⟪retvar⟫ = ⟪retvar⟫ and «item»⤶’
+MatchSequence [ Iter MatchSequence?] = ‛\nif ⟪retvar⟫:⤷\n«Iter»«MatchSequence»⤶’
+MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ and «item»’
+MatchItem_parenthesized [item] = ‛«item»’
 Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
 Iter_oneormore [ Pred _14] =‛«Pred»«_14»’
 Iter_optional [ Pred _15] =‛«Pred»«_15»’
@@ -63,7 +64,7 @@ Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ _17 UnnamedAlternates _18] =
 ⎡ previousretvar=‛⟪retvar⟫’
   ⎡ retvar=‛r⎨genvar⎬’
-    ‛\n⟪retvar⟫ = True; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪retvar⟫’
+    ‛\n⟪retvar⟫ = True; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ and ⟪retvar⟫’
   ⎦
 ⎦
 
