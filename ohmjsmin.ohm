@@ -17,7 +17,8 @@ ohmjsmin {
   AltUnnamed = "|" UnnamedMatchSequence
   NamedMatchSequence = MatchSequence "--" id
   UnnamedMatchSequence = MatchSequence
-  MatchSequence = Iter MatchSequence?
+  MatchSequence = MatchItem MatchSequence?
+  MatchItem = Iter
   Iter =
     | Pred "*" -- zeroormore
     | Pred "+" -- oneormore

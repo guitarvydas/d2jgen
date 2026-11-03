@@ -1,4 +1,5 @@
 %parameter retvar
+%parameter previousretvar
 %parameter cond
 %parameter skip
 %parameter rulename
@@ -42,10 +43,7 @@ LexicalExtension [ id _7 RuleBody] =
   ⎦
 ⎦
 RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»’
-NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =
-⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-  ‛⟪retvar⟫ = True\n«NamedMatchSequence»«AltNamed»)’
-⎦
+NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] = ‛⟪retvar⟫ = True\n«NamedMatchSequence»«AltNamed»)’
 NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] = ‛«UnnamedMatchSequence»«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
@@ -54,6 +52,7 @@ AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
 MatchSequence [ Iter MatchSequence?] = ‛\n«Iter»«MatchSequence»’
+MatchItem [item] = ‛if ⟪retvar⟫ : ⤷\n⟪retvar⟫ = ⟪retvar⟫ and «item»⤶’
 Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
 Iter_oneormore [ Pred _14] =‛«Pred»«_14»’
 Iter_optional [ Pred _15] =‛«Pred»«_15»’
@@ -62,9 +61,12 @@ Pred_not [ _16 Base] =
   ‛(not «Base»)’
 Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ _17 UnnamedAlternates _18] =
-⎡ retvar=‛r⎨genvar⎬’
-  ‛«UnnamedAlternates»’
+⎡ previousretvar=‛⟪retvar⟫’
+  ⎡ retvar=‛r⎨genvar⎬’
+    ‛\n⟪retvar⟫ = True; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪retvar⟫’
+  ⎦
 ⎦
+
 Base_atom [ matchAtom] =‛«matchAtom»’
 matchAtom_string [ dqstring] =‛parse_string («dqstring»)’
 matchAtom_single [ id] =‛«id» ()’
