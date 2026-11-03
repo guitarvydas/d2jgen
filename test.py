@@ -30,11 +30,41 @@ def main ():
     else:
         return fail ("main")
 
+def altmain ():
+    begin ("altmain")
+    r1 = True
+    if r1:
+        r1 = r1 and parse_string ("x")
+        if r1:
+            r1 = r1 and (not parse_string ("y"))
+            if r1:
+                
+                r2 = True;
+                if r2:
+                    r2 = r2 and parse_string ("a")
+                    if r2:
+                        
+                        r3 = False;
+                        if not r3:
+                            r3 = r3 or parse_string ("g")
+                            if not r3:
+                                r3 = r3 or parse_string ("h")
+                                if not r3:
+                                    r3 = r3 or parse_string ("i");
+                        r2 = r2 and r3;
+                r1 = r1 and r2
+                if r1:
+                    r1 = r1 and parse_string ("z")
+    if r1:
+        return accept ("altmain")
+    else:
+        return fail ("altmain")
+
 with open("test.txt", "r", encoding="utf-8") as f:
     stest = f.read()
     parse_set_input (stest)
     begin ("test")
-    if main ():
+    if altmain ():
         accept ("test")
         print (f'success')
     else:
