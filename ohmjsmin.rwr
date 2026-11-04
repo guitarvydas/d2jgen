@@ -47,8 +47,14 @@ NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] = ‛⟪retvar⟫ 
 NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] = ‛«UnnamedMatchSequence»«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
-AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
+AltNamed [ _10 NamedMatchSequence] =
+⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+  ‛«NamedMatchSequence»’
+⎦
+AltUnnamed [ _11 UnnamedMatchSequence] =
+⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+  ‛«UnnamedMatchSequence»’
+⎦
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
 MatchSequence [ Iter MatchSequence?] = ‛\nif ⟪retvar⟫:⤷\n«Iter»«MatchSequence»⤶’
