@@ -15,14 +15,6 @@ function genslprefix (name) {
     }
 }
 	
-function condcontinue (cond, retvar) {
-    if (cond === "⊤⊥") {
-	return `${retvar}`;
-    } else {
-	return `not ${retvar}`;
-    }
-}
-
 function finalexit (cond, retvar, funcname) {
     if (cond === "⊤⊥") {
 	return `if ${retvar}: return accept ("${funcname}"); else: return fail ("${funcname}")`;
@@ -38,11 +30,14 @@ function negatecond (cond) {
 	return "⊤⊥";
     }
 }
-function sense (cond) {
+function conjoin (cond) {
+    console.error (cond);
     if (cond === "⊤⊥") {
-	return "r";
+	console.error ("and");
+	return "and";
     } else {
-	return "(not r)";
+	console.error ("or");
+	return "or";
     }
 }
     
