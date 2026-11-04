@@ -15,37 +15,10 @@ function genslprefix (name) {
     }
 }
 	
-function finalexit (cond, retvar, funcname) {
-    if (cond === "⊤⊥") {
-	return `if ${retvar}: return accept ("${funcname}"); else: return fail ("${funcname}")`;
-    } else {
-	return `if ${revar}: return fail ("${funcname}"); else: return accept ("${funcname}")`;
-    }
+function finalexit (retvar, funcname) {
+    return `if ${retvar}:⤷\nreturn accept ("${funcname}")⤶\nelse:⤷\nreturn fail ("${funcname}")⤶`
 }
 
-function negatecond (cond) {
-    if (cond === "⊤⊥") {
-	return "⊥⊤";
-    } else {
-	return "⊤⊥";
-    }
-}
-function conjoin (cond) {
-    if (cond === "⊤⊥") {
-	return "and";
-    } else {
-	return "or";
-    }
-}
-    
-function maybenot (cond, s) {
-    if (cond === "⊤⊥") {
-	return s;
-    } else {
-	return `(not ${s})`;
-    }
-}
-    
 
 let varcounter = 0;
 function genvar () {

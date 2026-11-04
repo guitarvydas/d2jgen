@@ -1,20 +1,25 @@
+%parameter more
+%parameter conjoin
+%parameter previousconjoin
 %parameter retvar
 %parameter previousretvar
-%parameter cond
 %parameter skip
 %parameter rulename
 %rewrite ohmjsmin {
 
 Main [ id _1 Rules _2] = 
-⎡ cond=‛⊤⊥’
-  ‛«Rules»’
-⎦
+  ⎡ conjoin=‛and’
+    ‛«Rules»’
+  ⎦
+
 Rules [ _3+] = ‛«_3»’
 SyntacticRule [ id _4 RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨genvar⎬’
-      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎦
     ⎦
   ⎦
 ⎦
@@ -22,7 +27,9 @@ LexicalRule [ id _5 RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨genvar⎬’
-      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎦
     ⎦
   ⎦
 ⎦
@@ -30,17 +37,19 @@ LexicalExtension [ id _7 RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨genvar⎬’
-      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’ ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+      ⎦
     ⎦
   ⎦
 ⎦
 RuleBody [ alternates RuleBody?] = ‛«alternates»«RuleBody»’
-UnnamedAlternates_unnamedalts [ AltUnnamed+] = ‛⎨maybenot ‛⟪cond⟫’ ‛True’⎬\n«AltUnnamed»’
+UnnamedAlternates_unnamedalts [ AltUnnamed+] = ‛«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
 AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
-MatchSequence [ Iter MatchSequence?] = ‛\nif ⎨maybenot ‛⟪cond⟫’ ‛⟪retvar⟫’⎬:⤷\n«Iter»«MatchSequence»⤶’
-MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ «item»’
+MatchSequence [ Iter MatchSequence?] = ‛\nif ⟪more⟫:⤷\n«Iter»«MatchSequence»⤶’
+MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «item»’
 MatchItem_parenthesized [item] = ‛«item»’
 Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
 Iter_oneormore [ Pred _14] =‛«Pred»«_14»’
@@ -50,17 +59,27 @@ Pred_not [ _16 Base] =
   ‛(not «Base»)’
 Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ lpar UnnamedAlternates rpar] =
-⎡ previousretvar=‛⟪retvar⟫’
-  ⎡ retvar=‛r⎨genvar⎬’
-    ‛\n⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
+⎡ previousconjoin=‛⟪conjoin⟫’
+  ⎡ conjoin=‛and’
+    ⎡ previousretvar=‛⟪retvar⟫’
+      ⎡ retvar=‛r⎨genvar⎬’
+        ⎡ more=‛⟪retvar⟫’
+	  ‛\n⟪retvar⟫ = True«UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⟪previousconjoin⟫ ⟪retvar⟫’
+        ⎦
+      ⎦
+    ⎦
   ⎦
 ⎦
 
 Base_alts [ lpar _bar_lookahead UnnamedAlternates rpar] =
-⎡ previousretvar=‛⟪retvar⟫’
-  ⎡ retvar=‛r⎨genvar⎬’
-    ⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-      ‛\n⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
+⎡ previousconjoin=‛⟪conjoin⟫’
+  ⎡ conjoin=‛or’
+    ⎡ previousretvar=‛⟪retvar⟫’
+      ⎡ retvar=‛r⎨genvar⎬’
+        ⎡ more=‛not ⟪retvar⟫’
+         ‛\n⟪retvar⟫ = False«UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⟪previousconjoin⟫ ⟪retvar⟫’
+        ⎦
+      ⎦
     ⎦
   ⎦
 ⎦

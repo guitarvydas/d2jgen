@@ -104,12 +104,22 @@ def parse (f):
 def parse_string (s):
     global buffer
     i = 0
+    indent.pr ()
+    indent.ind ()
+    if debugprogress:
+        print (f'parse_string {s} {buffer.buffrepr()}')
+    elif debugtrace:
+        print (f'parse_string {s}')
     while i < len (s):
         if buffer.parse_char (s [i]):
             i += 1
             continue
         else:
+            indent.pr ()
+            print (f'False')
             return False
+    indent.pr ()
+    print (f'True')
     return True
     
 def parse_upto (c):
