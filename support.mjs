@@ -31,13 +31,18 @@ function negatecond (cond) {
     }
 }
 function conjoin (cond) {
-    console.error (cond);
     if (cond === "⊤⊥") {
-	console.error ("and");
 	return "and";
     } else {
-	console.error ("or");
 	return "or";
+    }
+}
+    
+function maybenot (cond, s) {
+    if (cond === "⊤⊥") {
+	return s;
+    } else {
+	return `(not ${s})`;
     }
 }
     

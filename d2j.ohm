@@ -1,8 +1,8 @@
 d2j {
   Main = Array
-  Array = "[" (KV | Object)+ "]"
+  Array = "[" (|KV | Object)+ "]"
   Object = "{" KV+ "}"
-  KV = keystring ":" (Array | Object | string | emptyString | number)
+  KV = keystring ":" (|Array | Object | string | emptyString | number)
   string = "\"" (~"\"" any)+ "\""
   keystring = string
   emptyString = "\"" "\""

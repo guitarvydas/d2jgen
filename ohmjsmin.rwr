@@ -43,21 +43,21 @@ LexicalExtension [ id _7 RuleBody] =
   ⎦
 ⎦
 RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»’
-NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] = ‛⟪retvar⟫ = True\n«NamedMatchSequence»«AltNamed»)’
-NamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] = ‛«UnnamedMatchSequence»«AltUnnamed»’
+NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =
+⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+  ‛⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬\n«NamedMatchSequence»«AltNamed»)’
+⎦
+NamedAlternates_single [ UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
+UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] =
+⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+  ‛«UnnamedMatchSequence»«AltUnnamed»’
+⎦
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-AltNamed [ _10 NamedMatchSequence] =
-⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-  ‛«NamedMatchSequence»’
-⎦
-AltUnnamed [ _11 UnnamedMatchSequence] =
-⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-  ‛«UnnamedMatchSequence»’
-⎦
+AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
+AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
 NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
-MatchSequence [ Iter MatchSequence?] = ‛\nif ⟪retvar⟫:⤷\n«Iter»«MatchSequence»⤶’
+MatchSequence [ Iter MatchSequence?] = ‛\nif ⎨maybenot ‛⟪cond⟫’ ‛⟪retvar⟫’⎬:⤷\n«Iter»«MatchSequence»⤶’
 MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ «item»’
 MatchItem_parenthesized [item] = ‛«item»’
 Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
@@ -70,7 +70,7 @@ Pred_plain [ Base] =‛«Base»’
 Base_parenthesized [ _17 UnnamedAlternates _18] =
 ⎡ previousretvar=‛⟪retvar⟫’
   ⎡ retvar=‛r⎨genvar⎬’
-    ‛\n⟪retvar⟫ = True; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
+    ‛\n⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
   ⎦
 ⎦
 
