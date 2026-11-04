@@ -1,6 +1,6 @@
 ## builtins
-debugprogress = True
-debugtrace = True
+debugprogress = False
+debugtrace = False
 
 class StringBuffer ():
     def __init__ (self):
@@ -115,11 +115,13 @@ def parse_string (s):
             i += 1
             continue
         else:
-            indent.pr ()
-            print (f'False')
+            if debugprogress:
+                indent.pr ()
+                print (f'False')
             return False
-    indent.pr ()
-    print (f'True')
+    if debugprogress:
+        indent.pr ()
+        print (f'True')
     return True
     
 def parse_upto (c):
