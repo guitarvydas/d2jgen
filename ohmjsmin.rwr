@@ -26,14 +26,6 @@ LexicalRule [ id _5 RuleBody] =
     ⎦
   ⎦
 ⎦
-SyntacticExtension [ id _6 RuleBody] =
-⎡ skip=‛true’
-  ⎡ rulename=‛«id»’
-    ⎡ retvar=‛r⎨genvar⎬’
-      ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪cond⟫’  ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
-    ⎦
-  ⎦
-⎦
 LexicalExtension [ id _7 RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
@@ -42,20 +34,10 @@ LexicalExtension [ id _7 RuleBody] =
     ⎦
   ⎦
 ⎦
-RuleBody [ NamedAlternates RuleBody?] = ‛«NamedAlternates»«RuleBody»’
-NamedAlternates_namedalts [ _8? NamedMatchSequence AltNamed+] =
-⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-  ‛⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬\n«NamedMatchSequence»«AltNamed»)’
-⎦
-NamedAlternates_single [ UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
-UnnamedAlternates_unnamedalts [ _9? UnnamedMatchSequence AltUnnamed+] =
-⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
-  ‛«UnnamedMatchSequence»«AltUnnamed»’
-⎦
+RuleBody [ alternates RuleBody?] = ‛«alternates»«RuleBody»’
+UnnamedAlternates_unnamedalts [ AltUnnamed+] = ‛⎨maybenot ‛⟪cond⟫’ ‛True’⎬\n«AltUnnamed»’
 UnnamedAlternates_single [ UnnamedMatchSequence] =‛«UnnamedMatchSequence»’
-AltNamed [ _10 NamedMatchSequence] = ‛«NamedMatchSequence»’
 AltUnnamed [ _11 UnnamedMatchSequence] = ‛«UnnamedMatchSequence»’
-NamedMatchSequence [ MatchSequence _12 id] = ‛«MatchSequence»«_12»«id»’
 UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
 MatchSequence [ Iter MatchSequence?] = ‛\nif ⎨maybenot ‛⟪cond⟫’ ‛⟪retvar⟫’⎬:⤷\n«Iter»«MatchSequence»⤶’
 MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ «item»’
@@ -67,10 +49,19 @@ Iter_plain [ Pred] =‛«Pred»’
 Pred_not [ _16 Base] =
   ‛(not «Base»)’
 Pred_plain [ Base] =‛«Base»’
-Base_parenthesized [ _17 UnnamedAlternates _18] =
+Base_parenthesized [ lpar UnnamedAlternates rpar] =
 ⎡ previousretvar=‛⟪retvar⟫’
   ⎡ retvar=‛r⎨genvar⎬’
     ‛\n⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
+  ⎦
+⎦
+
+Base_alts [ lpar _bar_lookahead UnnamedAlternates rpar] =
+⎡ previousretvar=‛⟪retvar⟫’
+  ⎡ retvar=‛r⎨genvar⎬’
+    ⎡ cond=‛⎨negatecond ‛⟪cond⟫’⎬’
+      ‛\n⟪retvar⟫ = ⎨maybenot ‛⟪cond⟫’ ‛True’⎬; «UnnamedAlternates»; \n⟪previousretvar⟫ = ⟪previousretvar⟫ ⎨conjoin ‛⟪cond⟫’⎬ ⟪retvar⟫’
+    ⎦
   ⎦
 ⎦
 

@@ -1,21 +1,15 @@
 ohmjsmin {
   Main = id "{" Rules "}"
-  Rules = (SyntacticExtension | LexicalExtension | SyntacticRule | LexicalRule)+
+  Rules = (LexicalExtension | SyntacticRule | LexicalRule)+
   SyntacticRule = uppercaseid "=" RuleBody
   LexicalRule = lowercaseid "=" RuleBody
-  SyntacticExtension = uppercaseid "+=" RuleBody
   LexicalExtension = lowercaseid "+=" RuleBody
-  RuleBody = NamedAlternates RuleBody?
-  NamedAlternates =
-    | "|"? NamedMatchSequence AltNamed+ -- namedalts
-    | UnnamedMatchSequence              -- single
+  RuleBody = UnnamedAlternates RuleBody?
   UnnamedAlternates =
-    | "|"? UnnamedMatchSequence AltUnnamed+ -- unnamedalts
+    | AltUnnamed+ -- unnamedalts
     | UnnamedMatchSequence                  -- single
 
-  AltNamed = "|" NamedMatchSequence
   AltUnnamed = "|" UnnamedMatchSequence
-  NamedMatchSequence = MatchSequence "--" id
   UnnamedMatchSequence = MatchSequence
   MatchSequence = MatchItem MatchSequence?
   MatchItem = 
@@ -30,7 +24,8 @@ ohmjsmin {
     | "~" Base -- not
     |     Base -- plain
   Base =
-    | "(" UnnamedAlternates ")" -- parenthesized
+    | "(" ~"|" UnnamedMatchSequence ")" -- parenthesized
+    | "(" &"|" UnnamedAlternates ")" -- alts
     | matchAtom   -- atom
 
   matchAtom =
