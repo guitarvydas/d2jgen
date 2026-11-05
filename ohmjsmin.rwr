@@ -51,9 +51,11 @@ UnnamedMatchSequence [ MatchSequence] = ‛«MatchSequence»’
 MatchSequence [ Iter MatchSequence?] = ‛\nif ⟪more⟫:⤷\n«Iter»«MatchSequence»⤶’
 MatchItem_nonparenthesized [item] = ‛⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «item»’
 MatchItem_parenthesized [item] = ‛«item»’
-Iter_zeroormore [ Pred _13] =‛«Pred»«_13»’
-Iter_oneormore [ Pred _14] =‛«Pred»«_14»’
-Iter_optional [ Pred _15] =‛«Pred»«_15»’
+
+Iter_zeroormore [ Pred _13] =‛True\nwhile «Pred»:⤷\npass⤶’
+Iter_oneormore [ Pred _14] =‛«Pred»\nwhile «Pred»:⤷\npass⤶’
+Iter_optional [ Pred _15] =‛True\n«Pred»’
+
 Iter_plain [ Pred] =‛«Pred»’
 Pred_not [ _16 Base] =
   ‛(not «Base»)’

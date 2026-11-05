@@ -1,3 +1,6 @@
 d2j {
-  main = "x" ~"y" ("a" (| "g" | "h" | (|"i" | "j"))) "z"
+  number = digit+
+  teststar = digit*
+  testopt = digit?
+  digit = (| "0" | "1" )
 }
