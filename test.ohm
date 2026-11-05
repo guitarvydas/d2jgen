@@ -1,6 +1,5 @@
 d2j {
-  number = digit+
-  teststar = digit*
-  testopt = digit?
-  digit = (| "0" | "1" )
+  Array = "[" KVorObject+ "]"
+  KVorObject = (| KV | Object)
+  KVorObjectPlain = | KV | Object
 }
