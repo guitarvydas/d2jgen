@@ -48,23 +48,28 @@ def KV ():
         if r4:
             r4 = r4 and parse_ignoring (lambda : parse_string (":"))
             if r4:
-                
-                r5 = False
-                if not r5:
-                    r5 = r5 or parse_ignoring (lambda : Array ())
-                if not r5:
-                    r5 = r5 or parse_ignoring (lambda : Object ())
-                if not r5:
-                    r5 = r5 or parse_ignoring (lambda : string ())
-                if not r5:
-                    r5 = r5 or parse_ignoring (lambda : emptyString ())
-                if not r5:
-                    r5 = r5 or parse_ignoring (lambda : number ());
-                r4 = r4 and r5
+                r4 = r4 and parse_ignoring (lambda : AOsen ())
     if r4:
         return accept ("KV")
     else:
         return fail ("KV")
+def AOsen ():
+    begin ("AOsen")
+    r5 = True
+    if r5:
+        r5 = r5 and parse_ignoring (lambda : Array ())
+    if r5:
+        r5 = r5 and parse_ignoring (lambda : Object ())
+    if r5:
+        r5 = r5 and parse_ignoring (lambda : string ())
+    if r5:
+        r5 = r5 and parse_ignoring (lambda : emptyString ())
+    if r5:
+        r5 = r5 and parse_ignoring (lambda : number ())
+    if r5:
+        return accept ("AOsen")
+    else:
+        return fail ("AOsen")
 def KVorObject ():
     begin ("KVorObject")
     r6 = True
@@ -137,49 +142,41 @@ def ndigit ():
     begin ("ndigit")
     r12 = True
     if r12:
-        
-        r13 = False
-        if not r13:
-            r13 = r13 or parse_string ("0")
-        if not r13:
-            r13 = r13 or parse_string ("1")
-        if not r13:
-            r13 = r13 or parse_string ("2")
-        if not r13:
-            r13 = r13 or parse_string ("3")
-        if not r13:
-            r13 = r13 or parse_string ("4")
-        if not r13:
-            r13 = r13 or parse_string ("5")
-        if not r13:
-            r13 = r13 or parse_string ("6")
-        if not r13:
-            r13 = r13 or parse_string ("7")
-        if not r13:
-            r13 = r13 or parse_string ("8")
-        if not r13:
-            r13 = r13 or parse_string ("9");
-        r12 = r12 and r13
+        r12 = r12 and parse_string ("0")
+    if r12:
+        r12 = r12 and parse_string ("1")
+    if r12:
+        r12 = r12 and parse_string ("2")
+    if r12:
+        r12 = r12 and parse_string ("3")
+    if r12:
+        r12 = r12 and parse_string ("4")
+    if r12:
+        r12 = r12 and parse_string ("5")
+    if r12:
+        r12 = r12 and parse_string ("6")
+    if r12:
+        r12 = r12 and parse_string ("7")
+    if r12:
+        r12 = r12 and parse_string ("8")
+    if r12:
+        r12 = r12 and parse_string ("9")
     if r12:
         return accept ("ndigit")
     else:
         return fail ("ndigit")
 def ws ():
     begin ("ws")
-    r14 = True
-    if r14:
-        
-        r15 = False
-        if not r15:
-            r15 = r15 or parse_string (",")
-        if not r15:
-            r15 = r15 or parse_string (" ")
-        if not r15:
-            r15 = r15 or parse_string ("\n")
-        if not r15:
-            r15 = r15 or parse_string ("\t");
-        r14 = r14 and r15
-    if r14:
+    r13 = True
+    if r13:
+        r13 = r13 and parse_string (",")
+    if r13:
+        r13 = r13 and parse_string (" ")
+    if r13:
+        r13 = r13 and parse_string ("\n")
+    if r13:
+        r13 = r13 and parse_string ("\t")
+    if r13:
         return accept ("ws")
     else:
         return fail ("ws")

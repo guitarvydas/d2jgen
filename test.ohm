@@ -2,13 +2,14 @@ d2j {
   Main = KVorObject
   Array = "[" KVorObject+ "]"
   Object = "{" KV+ "}"
-  KV = keystring ":" (|Array | Object | string | emptyString | number)
+  KV = keystring ":" AOsen
+  AOsen = |Array | Object | string | emptyString | number
   KVorObject = | KV | Object
   string = "\"" strchar+ "\""
   strchar = ~"\"" any
   keystring = string
   emptyString = "\"" "\""
   number = ndigit+
-  ndigit = (| "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" |"8" | "9")
-  ws = (| "," | " " | "\n" | "\t")
+  ndigit = | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" |"8" | "9"
+  ws = | "," | " " | "\n" | "\t"
 }
