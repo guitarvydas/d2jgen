@@ -1,5 +1,3 @@
 d2j {
-  Array = "[" KVorObject+ "]"
-  KVorObject = (| KV | Object)
-  KVorObjectPlain = | KV | Object
+  string = "\"" (~"\"" any)+ "\""
 }

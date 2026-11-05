@@ -96,32 +96,31 @@ def accept (s):
         print (f'accept {s}')
     return True
 
-def parse (f):
-    if f ():
-        return True
-    return False
+def debug (name, s):
+    global buffer
+    indent.pr ()
+    indent.ind ()
+    if debugprogress:
+        print (f'any {s} {buffer.buffrepr()}')
+    elif debugtrace:
+        print (f'{name} {s}')
 
 def parse_string (s):
     global buffer
     i = 0
-    indent.pr ()
-    indent.ind ()
-    if debugprogress:
-        print (f'parse_string {s} {buffer.buffrepr()}')
-    elif debugtrace:
-        print (f'parse_string {s}')
+    debug ("parse_string", s)
     while i < len (s):
         if buffer.parse_char (s [i]):
             i += 1
             continue
         else:
-            if debugprogress:
-                indent.pr ()
-                print (f'False')
             return False
-    if debugprogress:
-        indent.pr ()
-        print (f'True')
+    return True
+
+def any ():
+    global buffer
+    debug ("any", "_")
+    buffer.accept_char ()
     return True
     
 def parse_upto (c):
