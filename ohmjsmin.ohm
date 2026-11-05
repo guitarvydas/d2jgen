@@ -16,10 +16,11 @@ ohmjsmin {
   | ~ "(" Iter -- nonparenthesized
   | Iter       -- parenthesized
   Iter =
-    | Pred "*" -- zeroormore
-    | Pred "+" -- oneormore
-    | Pred "?" -- optional
+    | UnparenthesizedPred "*" -- zeroormore
+    | UnparenthesizedPred "+" -- oneormore
+    | UnparenthesizedPred "?" -- optional
     | Pred     -- plain
+  UnparenthesizedPred (UnparenthesizedPredicate) = ~"(" Pred
   Pred =
     | "~" Base -- not
     |     Base -- plain

@@ -2,7 +2,6 @@ from plib2 import StringBuffer, fail, accept, begin, parse_ignore, parse_string,
 
 import generated_parser
 
-
 with open("test.txt", "r", encoding="utf-8") as f:
     stest = f.read()
     parse_set_input (stest)
