@@ -126,15 +126,15 @@ def number ():
     begin ("number")
     r11 = True
     if r11:
-        r11 = r11 and digit ()
-        while digit ():
+        r11 = r11 and ndigit ()
+        while ndigit ():
             pass
     if r11:
         return accept ("number")
     else:
         return fail ("number")
-def digit ():
-    begin ("digit")
+def ndigit ():
+    begin ("ndigit")
     r12 = True
     if r12:
         
@@ -161,11 +161,11 @@ def digit ():
             r13 = r13 or parse_string ("9");
         r12 = r12 and r13
     if r12:
-        return accept ("digit")
+        return accept ("ndigit")
     else:
-        return fail ("digit")
-def space ():
-    begin ("space")
+        return fail ("ndigit")
+def ws ():
+    begin ("ws")
     r14 = True
     if r14:
         
@@ -180,7 +180,7 @@ def space ():
             r15 = r15 or parse_string ("\t");
         r14 = r14 and r15
     if r14:
-        return accept ("space")
+        return accept ("ws")
     else:
-        return fail ("space")
+        return fail ("ws")
 

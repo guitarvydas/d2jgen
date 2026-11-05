@@ -21,11 +21,6 @@ class StringBuffer ():
         self.bx += 1
     def overrun (self):
         return self.bx >= len (self.buff)
-    def is_space (self):
-        if self.overrun ():
-            return False
-        elif self.buff [self.bx] == " " or self.buff [self.bx] == "," or self.buff [self.bx] == "\n" or self.buff [self.bx] == "\t" :
-            return True
     def look (self):
         if self.overrun ():
             bifail (e)
@@ -134,7 +129,7 @@ def parse_range (first, last):
 
 def parse_ignore ():
     global buffer
-    while (buffer.is_space ()):
+    while (ws ()):
         buffer.accept_char ()
 
 def parse_one_or_more (f):
