@@ -1,8 +1,9 @@
 d2j {
   Main = Array
-  Array = "[" (|KV | Object)+ "]"
+  Array = "[" KVorObject+ "]"
   Object = "{" KV+ "}"
   KV = keystring ":" (|Array | Object | string | emptyString | number)
+  KVorObject = KV | Object
   string = "\"" (~"\"" any)+ "\""
   keystring = string
   emptyString = "\"" "\""
