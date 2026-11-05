@@ -9,7 +9,7 @@
 
 Main [ id _1 Rules _2] = 
   ⎡ conjoin=‛and’
-    ‛«Rules»’
+    ‛from plib2 import *\n«Rules»’
   ⎦
 
 Rules [ _3+] = ‛«_3»’
@@ -87,8 +87,8 @@ Base_alts [ lpar _bar_lookahead UnnamedAlternates rpar] =
 ⎦
 
 Base_atom [ matchAtom] =‛«matchAtom»’
-matchAtom_string [ dqstring] =‛parse_string («dqstring»)’
-matchAtom_single [ id] =‛«id» ()’
+matchAtom_string [ dqstring] =‛⎨genskipmaybe ‛⟪skip⟫’ ‛parse_string («dqstring»)’⎬’
+matchAtom_single [ id] =‛⎨genskipmaybe ‛⟪skip⟫’ ‛«id» ()’⎬’
 dqstring [ _22 sqchar+ _23] = ‛«_22»«sqchar»«_23»’
 sqchar_escdq [ _24 _25] =‛«_24»«_25»’
 sqchar_any [ any] =‛«any»’

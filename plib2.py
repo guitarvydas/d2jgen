@@ -1,6 +1,6 @@
 ## builtins
-debugprogress = False
-debugtrace = False
+debugprogress = True
+debugtrace = True
 
 class StringBuffer ():
     def __init__ (self):
@@ -101,7 +101,7 @@ def debug (name, s):
     indent.pr ()
     indent.ind ()
     if debugprogress:
-        print (f'any {s} {buffer.buffrepr()}')
+        print (f'{name} {s} {buffer.buffrepr()}')
     elif debugtrace:
         print (f'{name} {s}')
 
@@ -143,10 +143,15 @@ def parse_range (first, last):
     else:
         return False
 
-def parse_ignore ():
+def parse_ignoring (f):
     global buffer
+    debug ("ignore", "")
     while (buffer.is_space ()):
         buffer.accept_char ()
+    r = f ()
+    while (buffer.is_space ()):
+        buffer.accept_char ()
+    return r
 
 def parse_one_or_more (f):
     parse_debug_prefix ('+')

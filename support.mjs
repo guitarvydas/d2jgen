@@ -1,8 +1,8 @@
-function genskip (skip) {
+function genskipmaybe (skip, item) {
     if (skip === "true") {
-	return "\nparse_ignore ()";
+	return `parse_ignoring (lambda : ${item})`;
     } else {
-	return "";
+	return item;
     }
 }
 
