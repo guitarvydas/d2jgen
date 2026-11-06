@@ -4,30 +4,32 @@ ohmjsmin {
   SyntacticRule = uppercaseid "=" RuleBody
   LexicalRule = lowercaseid "=" RuleBody
   LexicalExtension = lowercaseid "+=" RuleBody
-  RuleBody = UnnamedAlternates RuleBody?
-  UnnamedAlternates =
-    | AltUnnamed+ -- unnamedalts
-    | UnnamedMatchSequence                  -- single
 
-  AltUnnamed = "|" UnnamedMatchSequence
-  UnnamedMatchSequence = MatchSequence
-  MatchSequence = MatchItem MatchSequence?
-  MatchItem = 
-  | ~ "(" Iter -- nonparenthesized
-  | Iter       -- parenthesized
-  Iter =
-    | UnparenthesizedPred "*" -- zeroormore
-    | UnparenthesizedPred "+" -- oneormore
-    | UnparenthesizedPred "?" -- optional
-    | Pred     -- plain
-  UnparenthesizedPred (UnparenthesizedPredicate) = ~"(" Pred
+  RuleBody =
+    | Alternation -- alternates
+    | Sequence           -- sequence
+  Alternation = "|"? Sequence OrBranch+
+  OrBranch = "|" Sequence
+  Sequence = MatchItem+
+  MatchItem =
+    | ParenthesizedMatchItem -- paren
+    | Pred "+"               -- plus
+    | Pred "*"               -- star
+    | Pred "?"               -- optional
+    | Pred                   -- plain
+  ParenthesizedMatchItem =
+    | "(" Alternation ")" "+" -- orplus
+    | "(" Alternation ")" "*" -- orstar
+    | "(" Alternation ")" "?" -- oropt
+    | "(" Alternation ")"     -- or
+    | "(" Sequence  ")" "+" -- andplus
+    | "(" Sequence  ")" "*" -- andstar
+    | "(" Sequence  ")" "?" -- andopt
+    | "(" Sequence  ")"     -- and
+
   Pred =
-    | "~" Base -- not
-    |     Base -- plain
-  Base =
-    | "(" ~"|" UnnamedMatchSequence ")" -- parenthesized
-    | "(" &"|" UnnamedAlternates ")" -- alts
-    | matchAtom   -- atom
+    | "~" matchAtom -- neg
+    |     matchAtom -- plain
 
   matchAtom =
     | dqstring -- string
@@ -37,7 +39,7 @@ ohmjsmin {
   sqchar =
     | "\\" "\"" -- escdq
     | ~"\"" any -- any
-  id = uppercaseid | lowercaseid
+  id = (uppercaseid | lowercaseid)
   uppercaseid = upper alnum*
   lowercaseid = lower alnum*
 }

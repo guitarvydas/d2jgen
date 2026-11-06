@@ -13,6 +13,9 @@ convert `d2j.ohm` into Python parser
 - `plib2.py` - parser library (set `debugprogress` and `debutrace` to True to trace the parsing)
 - `kernel.drawio.json` ultimate target to parse with generated parser (not tried at this point, 2026-11-04)
 
+## Once
+- if you create a new ohmjsmin.ohm, you can generate a new ohmjsmin.rwr by `./@makerwr` - be careful, since that will wipe out any the previous version of ohmjsmin.rwr
+
 ## Concessions
 - parenthesized alternates must use (| ... | ...) syntax instead of ( ... | ... ) 
   - makes it easier to parse and to differentate parenthesized **sequences** from parenthesized **alternates**
