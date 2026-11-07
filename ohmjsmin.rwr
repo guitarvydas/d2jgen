@@ -75,10 +75,10 @@ ParenthesizedMatchItem_orstar [ lp Alternation rp _star] = ‛ «lp» «Alternat
 ParenthesizedMatchItem_oropt [ lp Alternation rp _opt] = ‛ «lp» «Alternation» «rp» «_opt»’
 ParenthesizedMatchItem_or [ lp Alternation rp] = ‛«Alternation»’
 
-ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] = ‛ «lp» «Sequence» «rp» «_plus»’
-ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛ «lp» «Sequence» «rp» «_star»’
-ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛ «lp» «Sequence» «rp» «_opt»’
-ParenthesizedMatchItem_and [ lp Sequence rp] = ‛«Sequence»’
+ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛\n«Sequence»’
+ParenthesizedMatchItem_and [ lp Sequence rp] = ‛\n«Sequence»’
 
 Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
 Pred_plain [ matchAtom] = ‛ «matchAtom»’
