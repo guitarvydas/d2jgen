@@ -1,5 +1,5 @@
 from plib2 import *
-from generated_parser import *
+from d2jgen import *
 
 with open("test.txt", "r", encoding="utf-8") as f:
     stest = f.read()
