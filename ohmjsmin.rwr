@@ -21,7 +21,7 @@ SyntacticRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
     ⎦
   ⎦
@@ -32,7 +32,7 @@ LexicalRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
     ⎦
   ⎦
@@ -44,7 +44,7 @@ LexicalExtension [ id _peq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛r⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬⤶’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
     ⎦
   ⎦
@@ -61,13 +61,13 @@ OrBranch [ _bar Sequence] = ‛«Sequence»’
 Sequence [ MatchItem+] = ‛«MatchItem»’
 
 MatchItem_paren [ ParenthesizedMatchItem] = ‛«ParenthesizedMatchItem»’
-MatchItem_plus [ Pred _plus] = ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:⤷\npass⤶’
-MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:⤷\npass⤶’
+MatchItem_plus [ Pred _plus] = ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:{\npass}’
+MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
 MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
 
 MatchItem_plain [ Pred] = ‛
-if ⟪retvar⟫:⤷
-⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «Pred»⤶’
+if ⟪retvar⟫:{
+⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «Pred»}’
 
 
 ParenthesizedMatchItem_orplus [ lp Alternation rp _plus] = ‛«Alternation»’
