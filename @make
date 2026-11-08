@@ -56,5 +56,5 @@ if [ "$level" = "top" ]; then
     ./@testc
 fi
 
-rm -f temp.*
+#rm -f temp.*
 rm -f *.drawio.json

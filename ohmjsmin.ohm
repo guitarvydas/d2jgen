@@ -4,31 +4,14 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   lowercaseid "+=" RuleBody
 
   RuleBody =
-    | Alternation -- alternates
-    | MultiItem           -- multi
-    | SingleItem -- single
-  Alternation = "|"? MultiItem OrBranch+
-  OrBranch = "|" MultiItem
+    | SingleItem  -- single
   
-  MultiItem = SingleItem SingleItem+
   SingleItem = MatchItem
   MatchItem =
-    | ParenthesizedMatchItem -- paren
-    | Pred "+"               -- plus
-    | Pred "*"               -- star
-    | Pred "?"               -- optional
+    | MatchItem "+"               -- plus
+    | MatchItem "*"               -- star
+    | MatchItem "?"               -- optional
     | Pred                   -- plain
-  ParenthesizedMatchItem =
-    | "(" MultiItem  ")" "+" -- andplus
-    | "(" MultiItem  ")" "*" -- andstar
-    | "(" MultiItem  ")" "?" -- andopt
-    | "(" SingleItem  ")"   -- andsingle
-    | "(" MultiItem  ")"     -- andseq
-    | "(" Alternation ")" "+" -- orplus
-    | "(" Alternation ")" "*" -- orstar
-    | "(" Alternation ")" "?" -- oropt
-    | "(" Alternation ")"     -- or
-
   Pred =
     | "~" matchAtom -- neg
     |     matchAtom -- plain

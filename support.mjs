@@ -30,3 +30,9 @@ function freshgenvar () {
     return genvar ();
 }
 
+
+
+function pbplog (s) {
+    console.error (s);
+}
+

@@ -56,10 +56,10 @@ t2t {
   rewriteFormatString = "‛" formatItem* "’"
   formatItem =
     | "⎨" s_ name s_ argstring* "⎬" -- supportCall
-    | "⟪" parameterRef "⟫"                         -- parameter
+    | "⦑" parameterRef "⦒"                         -- parameter
     | "«" argRef "»"                               -- arg
     | "\\" any                                     -- escapedCharacter
-    | ~"‛" ~"’" ~"⎡" ~"⎦" ~"⟪" ~"⟫" ~"«" ~"»" any  -- rawCharacter
+    | ~"‛" ~"’" ~"⎡" ~"⎦" ~"⦑" ~"⦒" ~"«" ~"»" any  -- rawCharacter
 
   parenarg = name s_
   argstring =  rewriteFormatString s_
