@@ -1,0 +1,99 @@
+%parameter more
+%parameter conjoin
+%parameter previousconjoin
+%parameter retvar
+%parameter previousretvar
+%parameter skip
+%parameter rulename
+
+%rewrite ohmjsmin {
+
+
+Main [ id _lb Rules _rb] =
+  ⎡ conjoin=‛and’
+    ‛from plib2 import *\n«Rules»’
+  ⎦
+
+Rules [ _1+] = ‛«_1»’
+
+SyntacticRule [ id _eq RuleBody] =
+⎡ skip=‛true’
+  ⎡ rulename=‛«id»’
+    ⎡ retvar=‛r⎨freshgenvar⎬’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+LexicalRule [ id _eq RuleBody] =
+⎡ skip=‛false’
+  ⎡ rulename=‛«id»’
+    ⎡ retvar=‛r⎨freshgenvar⎬’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+
+LexicalExtension [ id _peq RuleBody] =
+⎡ skip=‛false’
+  ⎡ rulename=‛«id»’
+    ⎡ retvar=‛r⎨freshgenvar⎬’
+      ⎡ more=‛⟪retvar⟫’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+
+RuleBody_alternates [ Alternation] = ‛ «Alternation»’
+RuleBody_sequence [ Sequence] = ‛«Sequence»’
+
+Alternation [ _bar? Sequence OrBranch+] = ‛«Sequence» «OrBranch»’
+
+OrBranch [ _bar Sequence] = ‛«Sequence»’
+
+Sequence [ MatchItem+] = ‛«MatchItem»’
+
+MatchItem_paren [ ParenthesizedMatchItem] = ‛«ParenthesizedMatchItem»’
+MatchItem_plus [ Pred _plus] = ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:{\npass}’
+MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
+MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
+
+MatchItem_plain [ Pred] = ‛
+if ⟪retvar⟫:{
+⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «Pred»}’
+
+
+ParenthesizedMatchItem_orplus [ lp Alternation rp _plus] = ‛«Alternation»’
+ParenthesizedMatchItem_orstar [ lp Alternation rp _star] = ‛ «lp» «Alternation» «rp» «_star»’
+ParenthesizedMatchItem_oropt [ lp Alternation rp _opt] = ‛ «lp» «Alternation» «rp» «_opt»’
+ParenthesizedMatchItem_or [ lp Alternation rp] = ‛«Alternation»’
+
+ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛\n«Sequence»’
+ParenthesizedMatchItem_and [ lp Sequence rp] = ‛\n«Sequence»’
+
+Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
+Pred_plain [ matchAtom] = ‛ «matchAtom»’
+
+matchAtom_string [ dqstring] =‛⎨genskipmaybe ‛⟪skip⟫’ ‛parse_string («dqstring»)’⎬’
+matchAtom_single [ id] =‛⎨genskipmaybe ‛⟪skip⟫’ ‛«id» ()’⎬’
+
+dqstring [ dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
+
+sqchar_escdq [ _bslash dq] = ‛«_bslash»«dq»’
+sqchar_any [any] = ‛«any»’
+
+id [ _3] = ‛ «_3»’
+
+uppercaseid [ upper alnum*] = ‛«upper»«alnum»’
+
+lowercaseid [ lower alnum*] = ‛«lower»«alnum»’
+}

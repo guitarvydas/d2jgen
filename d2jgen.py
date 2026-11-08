@@ -1,63 +1,63 @@
 
 from plib2 import *
 
-def a ():
-    begin ("a")
+def Aa ():
+    begin ("Aa")
     r1 = True
     if r1:
-        r1 = r1 and   b ()
+        r1 = r1 and  parse_ignoring (lambda :  b ())
     if r1:
-        return accept ("a")
+        return accept ("Aa")
     else:
-        return fail ("a")
-def c ():
-    begin ("c")
+        return fail ("Aa")
+def Ac ():
+    begin ("Ac")
     r1 = True
     if r1:
-        r1 = r1 and   d ()
+        r1 = r1 and  parse_ignoring (lambda :  d ())
     if r1:
-        r1 = r1 and   e ()
+        r1 = r1 and  parse_ignoring (lambda :  e ())
     if r1:
-        return accept ("c")
+        return accept ("Ac")
     else:
-        return fail ("c")
-def f ():
-    begin ("f")
+        return fail ("Ac")
+def Af ():
+    begin ("Af")
     r1 = True
     
     if r1:
-        r1 = r1 and   g ()
+        r1 = r1 and  parse_ignoring (lambda :  g ())
     if r1:
-        r1 = r1 and   h ()
+        r1 = r1 and  parse_ignoring (lambda :  h ())
     if r1:
-        return accept ("f")
+        return accept ("Af")
     else:
-        return fail ("f")
-def i ():
-    begin ("i")
+        return fail ("Af")
+def Ai ():
+    begin ("Ai")
     r1 = True
-    r1 =   j ()
-    while   j ():
+    r1 =  parse_ignoring (lambda :  j ())
+    while  parse_ignoring (lambda :  j ()):
         pass
     if r1:
-        return accept ("i")
+        return accept ("Ai")
     else:
-        return fail ("i")
-def k ():
-    begin ("k")
+        return fail ("Ai")
+def Ak ():
+    begin ("Ak")
     r1 = True
-    while   l ():
+    while  parse_ignoring (lambda :  l ()):
         pass
     if r1:
-        return accept ("k")
+        return accept ("Ak")
     else:
-        return fail ("k")
-def m ():
-    begin ("m")
+        return fail ("Ak")
+def Am ():
+    begin ("Am")
     r1 = True
-    n ()
+    parse_ignoring (lambda :  n ())
     if r1:
-        return accept ("m")
+        return accept ("Am")
     else:
-        return fail ("m")
+        return fail ("Am")
 
