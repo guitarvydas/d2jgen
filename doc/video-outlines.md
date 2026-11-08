@@ -15,3 +15,5 @@ d2j {
   m = n?
 }
 ```
+# 22
+revamp grammar to handle single item vs sequence
