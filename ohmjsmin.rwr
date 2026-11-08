@@ -61,7 +61,7 @@ OrBranch [ _bar Sequence] = ‛«Sequence»’
 Sequence [ MatchItem+] = ‛«MatchItem»’
 
 MatchItem_paren [ ParenthesizedMatchItem] = ‛«ParenthesizedMatchItem»’
-MatchItem_plus [ Pred _plus] = ‛ ⟪retvar⟫ = «Pred»\nwhile «Pred»:⤷\npass⤶’
+MatchItem_plus [ Pred _plus] = ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:⤷\npass⤶’
 MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:⤷\npass⤶’
 MatchItem_optional [ Pred _opt] = ‛ «Pred»’
 
