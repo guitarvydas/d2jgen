@@ -17,3 +17,6 @@ d2j {
 ```
 # 22
 revamp grammar to handle single item vs sequence
+
+# 23
+the parser is mis-parsing `f = (g h)+` or it's not helping me enough

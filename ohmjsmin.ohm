@@ -20,11 +20,11 @@ ohmjsmin {
     | Pred "?"               -- optional
     | Pred                   -- plain
   ParenthesizedMatchItem =
-    | "(" SingleItem  ")"   -- andsingle
-    | "(" Sequence  ")"     -- andseq
     | "(" Sequence  ")" "+" -- andplus
     | "(" Sequence  ")" "*" -- andstar
     | "(" Sequence  ")" "?" -- andopt
+    | "(" SingleItem  ")"   -- andsingle
+    | "(" Sequence  ")"     -- andseq
     | "(" Alternation ")" "+" -- orplus
     | "(" Alternation ")" "*" -- orstar
     | "(" Alternation ")" "?" -- oropt

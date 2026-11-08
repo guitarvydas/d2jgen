@@ -1,8 +1,3 @@
 d2j {
-  Aa = b
-  Ac = d e
-  Af = (g h)
-  Ai = j+
-  Ak = l*
-  Am = n?
+  f = (g h)+
 }
