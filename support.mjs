@@ -23,7 +23,7 @@ function finalexit (retvar, funcname) {
 let varcounter = 0;
 function genvar () {
     varcounter = varcounter + 1;
-    return `${varcounter}`;
+    return `v${varcounter}`;
 }
 function freshgenvar () {
     varcounter = 0

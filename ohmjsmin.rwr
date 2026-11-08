@@ -19,7 +19,7 @@ Rules [ _1+] = ‛«_1»’
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛r⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
         ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
@@ -30,7 +30,7 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛r⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
         ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
@@ -42,7 +42,7 @@ LexicalRule [ id _eq RuleBody] =
 LexicalExtension [ id _peq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛r⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⟪retvar⟫’
         ‛\ndef «id» ():{\nbegin ("«id»")\n⟪retvar⟫ = True«RuleBody»\n⎨finalexit ‛⟪retvar⟫’ ‛⟪rulename⟫’⎬}’
       ⎦
@@ -53,13 +53,16 @@ LexicalExtension [ id _peq RuleBody] =
 
 RuleBody_alternates [ Alternation] = ‛ «Alternation»’
 RuleBody_single [ single] = ‛«single»’
-RuleBody_sequence [ Sequence] = ‛«Sequence»’
+RuleBody_multi [ MultiItem] = ‛«MultiItem»’
 
-Alternation [ _bar? Sequence OrBranch+] = ‛«Sequence» «OrBranch»’
+Alternation [ _bar? MultiItem OrBranch+] = ‛«MultiItem» «OrBranch»’
 
-OrBranch [ _bar Sequence] = ‛«Sequence»’
+OrBranch [ _bar MultiItem] = ‛«MultiItem»’
 
-Sequence [ single items+] = ‛«single»«items»’
+MultiItem [ first rest+ ] =
+⎡ resultvar=‛⎨genvar⎬’
+  ‛«first»«rest»’
+⎦
 SingleItem [matchitem] = ‛«matchitem»’
 
 MatchItem_paren [ ParenthesizedMatchItem] = ‛«ParenthesizedMatchItem»’
@@ -71,9 +74,9 @@ MatchItem_plain [ Pred] = ‛
 if ⟪retvar⟫:{
 ⟪retvar⟫ = ⟪retvar⟫ ⟪conjoin⟫ «Pred»}’
 
-ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] =
- ‛\n⟪retvar⟫ = «Sequence»\nwhile «Sequence»:{\npass}’ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
-ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andplus [ lp MultiItem rp _plus] =
+ ‛\n⟪retvar⟫ = «MultiItem»\nwhile «MultiItem»:{\npass}’ParenthesizedMatchItem_andstar [ lp MultiItem rp _star] = ‛\n«MultiItem»’
+ParenthesizedMatchItem_andopt [ lp MultiItem rp _opt] = ‛\n«MultiItem»’
 ParenthesizedMatchItem_andseq [ lp seq rp ] = ‛\n«seq»’
 ParenthesizedMatchItem_andsingle [ lp single rp ] = ‛\n«single»’
 

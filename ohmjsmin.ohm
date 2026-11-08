@@ -1,17 +1,16 @@
-ohmjsmin {
-  Main = id "{" Rules "}"
-  Rules = (LexicalExtension | SyntacticRule | LexicalRule)+
-  SyntacticRule = uppercaseid "=" RuleBody
-  LexicalRule = lowercaseid "=" RuleBody
-  LexicalExtension = lowercaseid "+=" RuleBody
+ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
+  SyntacticRule | LexicalRule)+ SyntacticRule = uppercaseid "="
+  RuleBody LexicalRule = lowercaseid "=" RuleBody LexicalExtension =
+  lowercaseid "+=" RuleBody
 
   RuleBody =
     | Alternation -- alternates
-    | Sequence           -- sequence
+    | MultiItem           -- multi
     | SingleItem -- single
-  Alternation = "|"? Sequence OrBranch+
-  OrBranch = "|" Sequence
-  Sequence = SingleItem SingleItem+
+  Alternation = "|"? MultiItem OrBranch+
+  OrBranch = "|" MultiItem
+  
+  MultiItem = SingleItem SingleItem+
   SingleItem = MatchItem
   MatchItem =
     | ParenthesizedMatchItem -- paren
@@ -20,11 +19,11 @@ ohmjsmin {
     | Pred "?"               -- optional
     | Pred                   -- plain
   ParenthesizedMatchItem =
-    | "(" Sequence  ")" "+" -- andplus
-    | "(" Sequence  ")" "*" -- andstar
-    | "(" Sequence  ")" "?" -- andopt
+    | "(" MultiItem  ")" "+" -- andplus
+    | "(" MultiItem  ")" "*" -- andstar
+    | "(" MultiItem  ")" "?" -- andopt
     | "(" SingleItem  ")"   -- andsingle
-    | "(" Sequence  ")"     -- andseq
+    | "(" MultiItem  ")"     -- andseq
     | "(" Alternation ")" "+" -- orplus
     | "(" Alternation ")" "*" -- orstar
     | "(" Alternation ")" "?" -- oropt

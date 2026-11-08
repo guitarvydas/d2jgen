@@ -1,22 +1,24 @@
 
 from plib2 import *
 
-def f ():
-    begin ("f")
-    r1 = True
-    r1 =
-    if r1:
-        r1 = r1 and   g ()
-    if r1:
-        r1 = r1 and   h ()
-    while
-    if r1:
-        r1 = r1 and   g ()
-    if r1:
-        r1 = r1 and   h ():
-        pass
-    if r1:
-        return accept ("f")
+def a ():
+    begin ("a")
+    v1 = True
+    if v1:
+        v1 = v1 and   b ()
+    if v1:
+        return accept ("a")
     else:
-        return fail ("f")
+        return fail ("a")
+def c ():
+    begin ("c")
+    v1 = True
+    if v1:
+        v1 = v1 and   d ()
+    if v1:
+        v1 = v1 and   e ()
+    if v1:
+        return accept ("c")
+    else:
+        return fail ("c")
 
