@@ -8,9 +8,11 @@ ohmjsmin {
   RuleBody =
     | Alternation -- alternates
     | Sequence           -- sequence
+    | SingleItem -- single
   Alternation = "|"? Sequence OrBranch+
   OrBranch = "|" Sequence
-  Sequence = MatchItem+
+  Sequence = SingleItem SingleItem+
+  SingleItem = MatchItem
   MatchItem =
     | ParenthesizedMatchItem -- paren
     | Pred "+"               -- plus
@@ -18,14 +20,15 @@ ohmjsmin {
     | Pred "?"               -- optional
     | Pred                   -- plain
   ParenthesizedMatchItem =
+    | "(" SingleItem  ")"   -- andsingle
+    | "(" Sequence  ")"     -- andseq
+    | "(" Sequence  ")" "+" -- andplus
+    | "(" Sequence  ")" "*" -- andstar
+    | "(" Sequence  ")" "?" -- andopt
     | "(" Alternation ")" "+" -- orplus
     | "(" Alternation ")" "*" -- orstar
     | "(" Alternation ")" "?" -- oropt
     | "(" Alternation ")"     -- or
-    | "(" Sequence  ")" "+" -- andplus
-    | "(" Sequence  ")" "*" -- andstar
-    | "(" Sequence  ")" "?" -- andopt
-    | "(" Sequence  ")"     -- and
 
   Pred =
     | "~" matchAtom -- neg

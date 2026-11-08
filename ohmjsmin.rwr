@@ -52,13 +52,15 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 RuleBody_alternates [ Alternation] = ‛ «Alternation»’
+RuleBody_single [ single] = ‛«single»’
 RuleBody_sequence [ Sequence] = ‛«Sequence»’
 
 Alternation [ _bar? Sequence OrBranch+] = ‛«Sequence» «OrBranch»’
 
 OrBranch [ _bar Sequence] = ‛«Sequence»’
 
-Sequence [ MatchItem+] = ‛«MatchItem»’
+Sequence [ single items+] = ‛«single»«items»’
+SingleItem [matchitem] = ‛«matchitem»’
 
 MatchItem_paren [ ParenthesizedMatchItem] = ‛«ParenthesizedMatchItem»’
 MatchItem_plus [ Pred _plus] = ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:{\npass}’
@@ -78,7 +80,8 @@ ParenthesizedMatchItem_or [ lp Alternation rp] = ‛«Alternation»’
 ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] =
  ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:{\npass}’ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
 ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛\n«Sequence»’
-ParenthesizedMatchItem_and [ lp Sequence rp] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andseq [ lp seq rp ] = ‛\n«seq»’
+ParenthesizedMatchItem_andsingle [ lp single rp ] = ‛\n«single»’
 
 Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
 Pred_plain [ matchAtom] = ‛ «matchAtom»’
