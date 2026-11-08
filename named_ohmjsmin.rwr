@@ -1,0 +1,61 @@
+ohmjsmin {
+
+
+Main [ id _lb Rules _rb] = ‛ «id» «_lb» «Rules» «_rb»’
+
+Rules [ _1+] = ‛ «_1»’
+
+SyntacticRule [ uppercaseid _eq Rulohmjsmin {
+
+
+Main [ id _lb Rules _rb] = ‛ «id» «_lb» «Rules» «_rb»’
+
+Rules [ _1+] = ‛ «_1»’
+
+SyntacticRule [ uppercaseid _eq RuleBody] = ‛ «uppercaseid» «_eq» «RuleBody»’
+
+LexicalRule [ lowercaseid _eq RuleBody] = ‛ «lowercaseid» «_eq» «RuleBody»’
+
+LexicalExtension [ lowercaseid _peq RuleBody] = ‛ «lowercaseid» «_peq» «RuleBody»’
+|
+«RuleBody»_«alternates» [ Alternation] = ‛ «Alternation»’|
+«RuleBody»_«sequence» [ Sequence] = ‛ «Sequence»’
+
+Alternation [ _bar? Sequence OrBranch+] = ‛ «_bar» «Sequence» «OrBranch»’
+
+OrBranch [ _bar Sequence] = ‛ «_bar» «Sequence»’
+
+Sequence [ MatchItem+] = ‛ «MatchItem»’
+|
+«MatchItem»_«paren» [ ParenthesizedMatchItem] = ‛ «ParenthesizedMatchItem»’|
+«MatchItem»_«plus» [ Pred _plus] = ‛ «Pred» «_plus»’|
+«MatchItem»_«star» [ Pred _star] = ‛ «Pred» «_star»’|
+«MatchItem»_«optional» [ Pred _opt] = ‛ «Pred» «_opt»’|
+«MatchItem»_«plain» [ Pred] = ‛ «Pred»’
+|
+«ParenthesizedMatchItem»_«orplus» [ lp Alternation rp _plus] = ‛ «lp» «Alternation» «rp» «_plus»’|
+«ParenthesizedMatchItem»_«orstar» [ lp Alternation rp _star] = ‛ «lp» «Alternation» «rp» «_star»’|
+«ParenthesizedMatchItem»_«oropt» [ lp Alternation rp _opt] = ‛ «lp» «Alternation» «rp» «_opt»’|
+«ParenthesizedMatchItem»_«or» [ lp Alternation rp] = ‛ «lp» «Alternation» «rp»’|
+«ParenthesizedMatchItem»_«andplus» [ lp Sequence rp _plus] = ‛ «lp» «Sequence» «rp» «_plus»’|
+«ParenthesizedMatchItem»_«andstar» [ lp Sequence rp _star] = ‛ «lp» «Sequence» «rp» «_star»’|
+«ParenthesizedMatchItem»_«andopt» [ lp Sequence rp _opt] = ‛ «lp» «Sequence» «rp» «_opt»’|
+«ParenthesizedMatchItem»_«and» [ lp Sequence rp] = ‛ «lp» «Sequence» «rp»’
+|
+«Pred»_«neg» [ _not matchAtom] = ‛ «_not» «matchAtom»’|
+«Pred»_«plain» [ matchAtom] = ‛ «matchAtom»’
+|
+«matchAtom»_«string» [ dqstring] = ‛ «dqstring»’|
+«matchAtom»_«single» [ id~  spaces _2] = ‛ «id»~  «spaces» «_2»’
+
+dqstring [ dq sqchar+ dq] = ‛ «dq» «sqchar» «dq»’
+|
+«sqchar»_«escdq» [ _bslash dq] = ‛ «_bslash» «dq»’|
+«sqchar»_«any» [~ dq any] = ‛~ «dq» «any»’
+
+id [ _3] = ‛ «_3»’
+
+uppercaseid [ upper alnum*] = ‛ «upper» «alnum»’
+
+lowercaseid [ lower alnum*] = ‛ «lower» «alnum»’
+}

@@ -1,0 +1,45 @@
+ohmjsmin {
+  Main = id _lb Rules _rb
+  Rules = (LexicalExtension | SyntacticRule | LexicalRule)+
+  SyntacticRule = uppercaseid _eq RuleBody
+  LexicalRule = lowercaseid _eq RuleBody
+  LexicalExtension = lowercaseid _peq RuleBody
+
+  RuleBody =
+    | Alternation -- alternates
+    | Sequence           -- sequence
+  Alternation = _bar? Sequence OrBranch+
+  OrBranch = _bar Sequence
+  Sequence = MatchItem+
+  MatchItem =
+    | ParenthesizedMatchItem -- paren
+    | Pred _plus               -- plus
+    | Pred _star               -- star
+    | Pred _opt               -- optional
+    | Pred                   -- plain
+  ParenthesizedMatchItem =
+    | lp Alternation rp _plus -- orplus
+    | lp Alternation rp _star -- orstar
+    | lp Alternation rp _opt -- oropt
+    | lp Alternation rp     -- or
+    | lp Sequence  rp _plus -- andplus
+    | lp Sequence  rp _star -- andstar
+    | lp Sequence  rp _opt -- andopt
+    | lp Sequence  rp     -- and
+
+  Pred =
+    | _not matchAtom -- neg
+    |     matchAtom -- plain
+
+  matchAtom =
+    | dqstring -- string
+    | id ~(spaces (_eq | _peq)) -- single
+
+  dqstring = dq sqchar+ dq
+  sqchar =
+    | _bslash dq -- escdq
+    | ~dq any -- any
+  id = (uppercaseid | lowercaseid)
+  uppercaseid = upper alnum*
+  lowercaseid = lower alnum*
+}

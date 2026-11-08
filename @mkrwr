@@ -1,0 +1,4 @@
+#!/bin/bash
+here=$(realpath .)
+there=$(realpath ~/projects/mkrwr)
+${there}/@make ${there} ${here} named_ohmjsmin >named_ohmjsmin.rwr
