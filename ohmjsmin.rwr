@@ -75,8 +75,8 @@ ParenthesizedMatchItem_orstar [ lp Alternation rp _star] = ‛ «lp» «Alternat
 ParenthesizedMatchItem_oropt [ lp Alternation rp _opt] = ‛ «lp» «Alternation» «rp» «_opt»’
 ParenthesizedMatchItem_or [ lp Alternation rp] = ‛«Alternation»’
 
-ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] = ‛\n«Sequence»’
-ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
+ParenthesizedMatchItem_andplus [ lp Sequence rp _plus] =
+ ‛\n⟪retvar⟫ = «Pred»\nwhile «Pred»:{\npass}’ParenthesizedMatchItem_andstar [ lp Sequence rp _star] = ‛\n«Sequence»’
 ParenthesizedMatchItem_andopt [ lp Sequence rp _opt] = ‛\n«Sequence»’
 ParenthesizedMatchItem_and [ lp Sequence rp] = ‛\n«Sequence»’
 
