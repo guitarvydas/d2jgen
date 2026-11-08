@@ -1,8 +1,8 @@
 d2j {
-  a = b
-  c = d e
-  f = (g h)
-  i = j+
-  k = l*
-  m = n?
+  Aa = b
+  Ac = d e
+  Af = (g h)
+  Ai = j+
+  Ak = l*
+  Am = n?
 }
