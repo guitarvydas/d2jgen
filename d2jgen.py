@@ -12,18 +12,22 @@ def main ():
     v1 = v1 and v2
     
     v4 = True
-    v4 =   a ()
-    if v4:
-        while   a ():
-            pass
-    v1 = v1 and v4
     
     v5 = True
     
-    v6 =  parse_string ("}")
+    v6 =   a ()
     v5 = v5 and v6
     
-    v1 = v1 and v5
+    v4 = v4 and v5
+    
+    v1 = v1 and v4
+    
+    v7 = True
+    
+    v8 =  parse_string ("}")
+    v7 = v7 and v8
+    
+    v1 = v1 and v7
     
     if v1:
         return accept ("main")

@@ -16,6 +16,9 @@ Main [ id _lb Rules _rb] =
 
 Rules [ _1+] = ‛«_1»’
 
+Alternation [lp Alt+ rp] = ‛«lp»«Alt»«rp»’
+Alt [_bar seq+] = ‛«_bar»«seq»’
+
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
