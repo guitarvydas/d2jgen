@@ -26,11 +26,29 @@ def main ():
     v6 = v6 or v9
     v5 = v5 or v6
     v4 = v4 or v5
+    while v5:
+        v12 = False
+        if not v12:
+            v13 = True
+            v14 =   a ()
+            v13 = v13 and v14
+            v12 = v12 and v13
+            
+        v15 = False
+        if not v15:
+            v16 = True
+            v17 =   b ()
+            v16 = v16 and v17
+            v15 = v15 and v16
+            
+        v12 = v12 or v15
+        v5 = v5 or v12
+        
     v1 = v1 and v4
-    v12 = True
-    v13 =  parse_string ("}")
-    v12 = v12 and v13
-    v1 = v1 and v12
+    v18 = True
+    v19 =  parse_string ("}")
+    v18 = v18 and v19
+    v1 = v1 and v18
     if v1:
         return accept ("main")
     else:

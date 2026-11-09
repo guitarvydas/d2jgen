@@ -60,7 +60,37 @@ AndSequence [i+] =
   ‛«i»’
 ⎦
 
-Alternation [lp Altrec rp] =
+Alternation_plus [lp Altrec rp _plus] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+    ⦑retvar⦒ = False
+    «Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    while ⦑retvar⦒:⤷
+      «Altrec»⤶
+    ’
+  ⎦
+⎦
+Alternation_star [lp Altrec rp _star] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+    ⦑retvar⦒ = True
+    while ⦑retvar⦒:⤷
+      «Altrec»⤶
+    ’
+  ⎦
+⎦
+Alternation_opt [lp Altrec rp _opt] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+    ⦑retvar⦒=False
+    «Altrec»
+    ’
+  ⎦
+⎦
+Alternation_plain [lp Altrec rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
     ‛⦑retvar⦒ = False
