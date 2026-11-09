@@ -1,3 +1,4 @@
+
 from plib2 import *
 def main ():
     begin ("main")
@@ -31,3 +32,4 @@ def a ():
         return accept ("a")
     else:
         return fail ("a")
+
