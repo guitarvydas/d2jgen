@@ -1,7 +1,9 @@
-ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
-  SyntacticRule | LexicalRule)+ SyntacticRule = uppercaseid "="
-  RuleBody LexicalRule = lowercaseid "=" RuleBody LexicalExtension =
-  lowercaseid "+=" RuleBody
+ohmjsmin {
+  Main = id "{" Rules "}"
+  Rules = (LexicalExtension | SyntacticRule | LexicalRule)+
+  SyntacticRule = uppercaseid "=" RuleBody
+  LexicalRule = lowercaseid "=" RuleBody
+  LexicalExtension =  lowercaseid "+=" RuleBody
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -9,9 +11,11 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   // final accept/fail test at the end of the chain based on the boolean value
   // of ⦑retvar⦒
   //////////////////////////////////////////////////////////////////////////////
-  RuleBody = AndSequence
+  RuleBody =
+    | Alternation -- alt
+    | AndSequence -- anded
 
-  AndSequence = SingleItem*
+  AndSequence = SingleItem+
 
   Alternation = "(" Altrec ")"
   Altrec =
@@ -26,6 +30,7 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   SingleItem = MatchItem
 
   MatchItem =
+    | Alternation            -- alt
     | "(" MatchItem ")" "+"  -- parenplus
     | "(" MatchItem ")" "*"  -- parenstar
     | "(" MatchItem ")" "?"  -- parenopt

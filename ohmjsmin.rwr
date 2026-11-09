@@ -52,7 +52,8 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 
-RuleBody [andseq] = ‛⦑retvar⦒ = True«andseq»’
+RuleBody_alt [alts] = ‛⦑retvar⦒ = True«alts»’
+RuleBody_anded [andseq] = ‛⦑retvar⦒ = True«andseq»’
 
 AndSequence [i+] =
 ⎡conjoin=‛and’
@@ -62,14 +63,16 @@ AndSequence [i+] =
 Alternation [lp Altrec rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
-    ‛«Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒’
+    ‛⦑retvar⦒ = False
+    «Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒’
   ⎦
 ⎦
 
-Altrec_rec [_bar seq+ rec] =
+Altrec_rec [_bar seq rec] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
     ‛
+      ⦑retvar⦒ = False
       if not ⦑retvar⦒:⤷
 	«seq»⤶
       «rec»
@@ -77,10 +80,11 @@ Altrec_rec [_bar seq+ rec] =
     ’
   ⎦
 ⎦
-Altrec_last [_bar seq+] =
+Altrec_last [_bar seq] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
     ‛
+      ⦑retvar⦒ = False
       if not ⦑retvar⦒:⤷
 	«seq»⤶
       ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
@@ -98,6 +102,8 @@ SingleItem [matchitem] =
     ’
   ⎦
 ⎦
+
+MatchItem_alt [a] = ‛«a»’
 
 MatchItem_parenplus [lp i rp _op] =
 ⎡ previousretvar=‛⦑retvar⦒’
