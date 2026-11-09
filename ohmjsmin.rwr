@@ -51,14 +51,15 @@ LexicalExtension [ id _peq RuleBody] =
 ⎦
 
 
-RuleBody_single [ single] = ‛⦑retvar⦒ = «single»’
-RuleBody_multiple [first rest+] = ‛«first»«rest»’
+RuleBody [first rest*] = ‛⦑retvar⦒ = True«first»«rest»’
+First [i] =‛«i»’
+Rest [i] =‛«i»’
 
 SingleItem [matchitem] = ‛«matchitem»’
 First [i] = ‛\nif ⦑retvar⦒:{\n⦑retvar⦒ = ⦑retvar⦒ and «i»}’
 Rest [i] = ‛\nif ⦑retvar⦒:{\n⦑retvar⦒ = ⦑retvar⦒ and «i»}’
 
-MatchItem_plus [ Pred _plus] = ‛\n⦑retvar⦒ = «Pred»\nwhile «Pred»:{\npass}’
+MatchItem_plus [ Pred _plus] = ‛\n⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:{\nwhile «Pred»:{\npass}}’
 MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
 MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
 

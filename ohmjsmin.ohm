@@ -3,14 +3,10 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   RuleBody LexicalRule = lowercaseid "=" RuleBody LexicalExtension =
   lowercaseid "+=" RuleBody
 
-  RuleBody =
-    | First Rest+ -- multiple
-    | SingleItem  -- single
-  
+  RuleBody = First Rest*
   SingleItem = MatchItem
-  First = MatchItem
-  Rest = MatchItem
-
+  First = SingleItem
+  Rest = SingleItem
 
   MatchItem =
     | MatchItem "+"               -- plus

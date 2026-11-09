@@ -1,22 +1,17 @@
 
 from plib2 import *
 
-def a ():
-    begin ("a")
-    v1 =   b ()
+def main ():
+    begin ("main")
+    v1 = True
     if v1:
-        return accept ("a")
+        v1 = v1 and  parse_string ("a")
+    if v1:
+        v1 = v1 and  parse_string ("b")
+    if v1:
+        v1 = v1 and  parse_string ("c")
+    if v1:
+        return accept ("main")
     else:
-        return fail ("a")
-def c ():
-    begin ("c")
-    
-    if v1:
-        v1 = v1 and   d ()
-    if v1:
-        v1 = v1 and   e ()
-    if v1:
-        return accept ("c")
-    else:
-        return fail ("c")
+        return fail ("main")
 
