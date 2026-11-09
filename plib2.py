@@ -120,8 +120,11 @@ def parse_string (s):
 def any ():
     global buffer
     debug ("any", "_")
-    buffer.accept_char ()
-    return True
+    if buffer.overrun ():
+        return False
+    else:
+        buffer.accept_char ()
+        return True
     
 def parse_upto (c):
     global buffer
