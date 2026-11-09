@@ -17,22 +17,22 @@ class StringBuffer ():
         self.bx = self.marks.pop ()
     def accept_char (self):
         self.bx += 1
-    def overrun (self):
+    def empty (self):
         return self.bx >= len (self.buff)
     def is_space (self):
-        if self.overrun ():
+        if self.empty ():
             return False
         elif self.buff [self.bx] == " " or self.buff [self.bx] == "," or self.buff [self.bx] == "\n" or self.buff [self.bx] == "\t" :
             return True
     def look (self):
-        if self.overrun ():
+        if self.empty ():
             bifail (e)
         else:
             return self.buff [self.bx]
     def buffrepr (self):
         return f"<{self.bx}>{self.buff[self.bx:10].replace('\n', '⤶').replace(' ', '␣').replace('\t', '⇢')}"
     def parse_char (self, c):
-        if self.overrun ():
+        if self.empty ():
             return False
         if c == self.buff [self.bx]:
             self.accept_char ()
@@ -120,7 +120,7 @@ def parse_string (s):
 def any ():
     global buffer
     debug ("any", "_")
-    if buffer.overrun ():
+    if buffer.empty ():
         return False
     else:
         buffer.accept_char ()
@@ -129,7 +129,7 @@ def any ():
 def parse_upto (c):
     global buffer
     while True:
-        if buffer.overrun ():
+        if buffer.empty ():
             return False
         else:
             if c == buffer.look ():
