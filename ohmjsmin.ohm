@@ -3,14 +3,31 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   RuleBody LexicalRule = lowercaseid "=" RuleBody LexicalExtension =
   lowercaseid "+=" RuleBody
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  // RuleBody composes SingleItems into a string of branching code and adds a
+  // final accept/fail test at the end of the chain based on the boolean value
+  // of ⦑retvar⦒
+  //////////////////////////////////////////////////////////////////////////////
   RuleBody = SingleItem*
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // each SingleItem compiles into branching code based on
+  // the values of ⦑retvar⦒ and ⦑conjoin⦒
+  //////////////////////////////////////////////////////////////////////////////
   SingleItem = MatchItem
 
   MatchItem =
-    | MatchItem "+"               -- plus
-    | MatchItem "*"               -- star
-    | MatchItem "?"               -- optional
+    | Pred "+"               -- plus
+    | Pred "*"               -- star
+    | Pred "?"               -- optional
     | Pred                   -- plain
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Pred returns a function call not wrapped in branching code
+  //////////////////////////////////////////////////////////////////////////////
   Pred =
     | "~" matchAtom -- neg
     |     matchAtom -- plain

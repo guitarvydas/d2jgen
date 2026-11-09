@@ -27,6 +27,7 @@
 # if you only want to use the T2T tool, then comment out the above and use the following:
 output=/dev/stdout
 sed -E 's/,//g' <"kernel.drawio.json.txt" >"test.kernel.drawio.json.txt"
+rm -f d2jgen.py
 ./pbp/t2t "${TARGET}" <"d2jtest.ohm" |\
     python replace.py '{' '⤷' |\
     python replace.py '}' '⤶' |\

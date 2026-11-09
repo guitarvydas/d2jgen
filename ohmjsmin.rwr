@@ -53,13 +53,30 @@ LexicalExtension [ id _peq RuleBody] =
 
 RuleBody [i*] = ‛⦑retvar⦒ = True«i»’
 
-SingleItem [matchitem] = ‛\nif ⦑retvar⦒:{«matchitem»}’
+SingleItem [matchitem] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+    ⦑retvar⦒ = True
+    «matchitem»
+    ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+    ’
+  ⎦
+⎦
 
-MatchItem_plus [ Pred _plus] = ‛\n⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:{\nwhile «Pred»:{\npass}}’
+MatchItem_plus [ Pred _plus] = ‛⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:{\nwhile «Pred»:{\npass}}’
 MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
 MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
 
-MatchItem_plain [ Pred] = ‛«Pred»’
+MatchItem_plain [ Pred] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+    ⦑retvar⦒ = «Pred»
+    ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+    ’
+  ⎦
+⎦
 
 
 
