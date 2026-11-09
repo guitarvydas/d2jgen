@@ -29,7 +29,7 @@ output=/dev/stdout
 sed -E 's/,//g' <"kernel.drawio.json.txt" >"test.kernel.drawio.json.txt"
 rm -f d2jgen.py
 ./pbp/t2t "${TARGET}" <"d2jtest.ohm" |\
-    ./pbp/indent | tee d2jgen.py >$output
+    ./pbp/indent | python nonblank.py | tee d2jgen.py >$output
 
 
 ############################
