@@ -1,6 +1,3 @@
-%parameter more
-%parameter conjoin
-%parameter previousconjoin
 %parameter retvar
 %parameter previousretvar
 %parameter skip
@@ -15,9 +12,6 @@ Main [ id _lb Rules _rb] =
   ⎦
 
 Rules [ _1+] = ‛«_1»’
-
-Alternation [lp Alt+ rp] = ‛«lp»«Alt»«rp»’
-Alt [_bar seq+] = ‛«_bar»«seq»’
 
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
@@ -54,7 +48,45 @@ LexicalExtension [ id _peq RuleBody] =
 ⎦
 
 
-RuleBody [i*] = ‛⦑retvar⦒ = True«i»’
+
+
+
+
+RuleBody [andseq] = ‛⦑retvar⦒ = True«andseq»’
+
+AndSequence [i+] =
+⎡conjoin=‛and’
+  ‛«i»’
+⎦
+
+Alternation [lp Altrec rp] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛«Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒’
+  ⎦
+⎦
+
+Altrec_rec [_bar seq+ rec] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+      if not ⦑retvar⦒:⤷
+	«seq»⤶
+      «rec»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    ’
+  ⎦
+⎦
+Altrec_last [_bar seq+] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+      if not ⦑retvar⦒:⤷
+	«seq»⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    ’
+  ⎦
+⎦
 
 SingleItem [matchitem] =
 ⎡ previousretvar=‛⦑retvar⦒’
@@ -62,7 +94,7 @@ SingleItem [matchitem] =
     ‛
       ⦑retvar⦒ = True
       «matchitem»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
@@ -73,7 +105,7 @@ MatchItem_parenplus [lp i rp _op] =
     ‛
       ⦑retvar⦒ = True
       «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
       while ⦑retvar⦒:⤷
         «i»⤶    
     ’
@@ -100,7 +132,7 @@ MatchItem_paren [lp i rp] =
     ‛
       ⦑retvar⦒ = True
       «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
@@ -114,7 +146,7 @@ MatchItem_plain [ Pred] =
   ⎡ retvar=‛⎨genvar⎬’
     ‛
       ⦑retvar⦒ = «Pred»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦

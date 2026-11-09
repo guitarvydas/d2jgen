@@ -9,10 +9,14 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   // final accept/fail test at the end of the chain based on the boolean value
   // of ⦑retvar⦒
   //////////////////////////////////////////////////////////////////////////////
-  RuleBody = SingleItem*
+  RuleBody = AndSequence
 
-  Alternation = "(" Alt+ ")"
-  Alt = "|" SingleItem*
+  AndSequence = SingleItem*
+
+  Alternation = "(" Altrec ")"
+  Altrec =
+    | "|" AndSequence Altrec -- rec
+    | "|" AndSequence         -- last
 
 
   //////////////////////////////////////////////////////////////////////////////
