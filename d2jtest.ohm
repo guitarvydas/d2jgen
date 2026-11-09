@@ -1,3 +1,7 @@
 d2j {
-  main = "a"? "d"? "b"? "c"?
+  main = a? d? b? c?
+  a = "a"
+  b = "b"
+  c = "c"
+  d = "d"
 }
