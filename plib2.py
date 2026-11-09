@@ -26,7 +26,7 @@ class StringBuffer ():
             return True
     def look (self):
         if self.empty ():
-            bifail (e)
+            raise Exception ('look called on empty input buffer')
         else:
             return self.buff [self.bx]
     def buffrepr (self):

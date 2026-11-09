@@ -6,21 +6,21 @@ def main ():
     v1 = True
     v2 = True
     
-    v3 =  parse_string ("\"")
+    v3 =  parse_string ("{")
     v2 = v2 and v3
     
     v1 = v1 and v2
     
     v4 = True
-    v4 =   strchar ()
+    v4 =   a ()
     if v4:
-        while   strchar ():
+        while   a ():
             pass
     v1 = v1 and v4
     
     v5 = True
     
-    v6 =  parse_string ("\"")
+    v6 =  parse_string ("}")
     v5 = v5 and v6
     
     v1 = v1 and v5
@@ -29,25 +29,18 @@ def main ():
         return accept ("main")
     else:
         return fail ("main")
-def strchar ():
-    begin ("strchar")
+def a ():
+    begin ("a")
     v1 = True
     v2 = True
     
-    v3 =  not parse_string ("\"")
+    v3 =  parse_string ("a")
     v2 = v2 and v3
     
     v1 = v1 and v2
     
-    v4 = True
-    
-    v5 =   any ()
-    v4 = v4 and v5
-    
-    v1 = v1 and v4
-    
     if v1:
-        return accept ("strchar")
+        return accept ("a")
     else:
-        return fail ("strchar")
+        return fail ("a")
 

@@ -19,6 +19,10 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   SingleItem = MatchItem
 
   MatchItem =
+    | "(" MatchItem ")" "+"  -- parenplus
+    | "(" MatchItem ")" "*"  -- parenstar
+    | "(" MatchItem ")" "?"  -- parenopt
+    | "(" MatchItem ")"      -- paren
     | Pred "+"               -- plus
     | Pred "*"               -- star
     | Pred "?"               -- optional

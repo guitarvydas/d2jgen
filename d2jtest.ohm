@@ -1,4 +1,4 @@
 d2j {
-  main = "\"" strchar+ "\""
-  strchar = ~"\"" any
+  main = "{" a+ "}"
+  a = "a"
 }

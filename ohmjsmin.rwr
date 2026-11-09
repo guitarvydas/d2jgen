@@ -21,7 +21,7 @@ SyntacticRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
     ⎦
   ⎦
@@ -32,7 +32,7 @@ LexicalRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
     ⎦
   ⎦
@@ -44,7 +44,7 @@ LexicalExtension [ id _peq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
     ⎦
   ⎦
@@ -57,23 +57,61 @@ SingleItem [matchitem] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
     ‛
-    ⦑retvar⦒ = True
-    «matchitem»
-    ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑retvar⦒ = True
+      «matchitem»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
     ’
   ⎦
 ⎦
 
-MatchItem_plus [ Pred _plus] = ‛⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:{\nwhile «Pred»:{\npass}}’
-MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
+MatchItem_parenplus [lp i rp _op] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+      ⦑retvar⦒ = True
+      «i»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      while ⦑retvar⦒:⤷
+        «i»⤶    
+    ’
+  ⎦
+⎦
+
+MatchItem_parenstar [lp i rp _op] =
+  ⎡ retvar=‛temp’
+    ‛
+     temp = True
+      while ⦑retvar⦒:⤷
+        «i»⤶    
+    ’
+  ⎦
+
+MatchItem_parenopt [lp i rp _op] =
+    ‛
+      «i»
+    ’
+
+MatchItem_paren [lp i rp] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar⎬’
+    ‛
+      ⦑retvar⦒ = True
+      «i»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+    ’
+  ⎦
+⎦
+
+MatchItem_plus [ Pred _plus] = ‛⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:⤷\nwhile «Pred»:⤷\npass⤶⤶’
+MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:⤷\npass⤶’
 MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
 
 MatchItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar⎬’
     ‛
-    ⦑retvar⦒ = «Pred»
-    ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
+      ⦑retvar⦒ = «Pred»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ and ⦑retvar⦒
     ’
   ⎦
 ⎦
