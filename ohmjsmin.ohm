@@ -4,9 +4,14 @@ ohmjsmin { Main = id "{" Rules "}" Rules = (LexicalExtension |
   lowercaseid "+=" RuleBody
 
   RuleBody =
+    | First Rest+ -- multiple
     | SingleItem  -- single
   
   SingleItem = MatchItem
+  First = MatchItem
+  Rest = MatchItem
+
+
   MatchItem =
     | MatchItem "+"               -- plus
     | MatchItem "*"               -- star

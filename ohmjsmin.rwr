@@ -21,7 +21,7 @@ SyntacticRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n⦑retvar⦒ = True«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
       ⎦
     ⎦
   ⎦
@@ -32,7 +32,7 @@ LexicalRule [ id _eq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n⦑retvar⦒ = True«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
       ⎦
     ⎦
   ⎦
@@ -44,7 +44,7 @@ LexicalExtension [ id _peq RuleBody] =
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar⎬’
       ⎡ more=‛⦑retvar⦒’
-        ‛\ndef «id» ():{\nbegin ("«id»")\n⦑retvar⦒ = True«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
+        ‛\ndef «id» ():{\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬}’
       ⎦
     ⎦
   ⎦
@@ -52,8 +52,11 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 RuleBody_single [ single] = ‛⦑retvar⦒ = «single»’
+RuleBody_multiple [first rest+] = ‛«first»«rest»’
 
 SingleItem [matchitem] = ‛«matchitem»’
+First [i] = ‛\nif ⦑retvar⦒:{\n⦑retvar⦒ = ⦑retvar⦒ and «i»}’
+Rest [i] = ‛\nif ⦑retvar⦒:{\n⦑retvar⦒ = ⦑retvar⦒ and «i»}’
 
 MatchItem_plus [ Pred _plus] = ‛\n⦑retvar⦒ = «Pred»\nwhile «Pred»:{\npass}’
 MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:{\npass}’
