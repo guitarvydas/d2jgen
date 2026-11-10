@@ -12,14 +12,14 @@ ohmjsmin {
   // of ⦑retvar⦒
   //////////////////////////////////////////////////////////////////////////////
   RuleBody =
-    | Alternation -- alt
-    | AndSequence -- anded
+    | Alternation RuleBody? -- alt
+    | AndSequence RuleBody? -- anded
 
   AndSequence = SingleItem+
 
   Alternation =
-    | "(" AltFirst Altrec")"      -- plain
-    | "(" AltFirst Altrec ")" "+" -- plus
+    | "(" AltFirst Altrec? ")"     -- plain
+    | "(" AltFirst Altrec? ")" "+" -- plus
     | "(" Altrec ")" "*" -- star
     | "(" Altrec ")" "?" -- opt
   AltFirst = "|" AndSequence

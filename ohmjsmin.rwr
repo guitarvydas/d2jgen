@@ -16,10 +16,8 @@ Rules [ _1+] = ‛«_1»’
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛syn’⎬’
-      ⎡ more=‛⦑retvar⦒’
+    ⎡ retvar=‛⎨freshgenvar ‛topsyn’⎬’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
-      ⎦
     ⎦
   ⎦
 ⎦
@@ -27,10 +25,8 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛lex’⎬’
-      ⎡ more=‛⦑retvar⦒’
+    ⎡ retvar=‛⎨freshgenvar ‛toplex’⎬’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
-      ⎦
     ⎦
   ⎦
 ⎦
@@ -39,10 +35,8 @@ LexicalRule [ id _eq RuleBody] =
 LexicalExtension [ id _peq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛xlex’⎬’
-      ⎡ more=‛⦑retvar⦒’
+    ⎡ retvar=‛⎨freshgenvar ‛topxlex’⎬’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
-      ⎦
     ⎦
   ⎦
 ⎦
@@ -52,15 +46,15 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 
-RuleBody_alt [alts] = ‛⦑retvar⦒ = True«alts»’
-RuleBody_anded [andseq] = ‛⦑retvar⦒ = True«andseq»’
+RuleBody_alt [alt rec?] = ‛⦑retvar⦒ = True«alt»«rec»’
+RuleBody_anded [andseq rec?] = ‛⦑retvar⦒ = True«andseq»«rec»’
 
 AndSequence [i+] =
 ⎡conjoin=‛and’
   ‛«i»’
 ⎦
 
-Alternation_plus [lp first more rp _plus] =
+Alternation_plus [lp first more? rp _plus] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛altp’⎬’
     ‛
@@ -81,7 +75,7 @@ Alternation_opt [lp alt rp _opt] =
     if ⦑retvar⦒:⤷
       «alt»⤶
     ’
-Alternation_plain [lp first more rp] =
+Alternation_plain [lp first more? rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
     ‛
