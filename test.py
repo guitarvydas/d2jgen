@@ -5,7 +5,8 @@ with open("test.txt", "r", encoding="utf-8") as f:
     stest = f.read()
     parse_set_input (stest)
     begin ("test")
-    if Main ():
+    ok = main ()
+    if ok:
         accept ("test")
         print (f'success', end='')
     else:

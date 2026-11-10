@@ -21,13 +21,13 @@ function finalexit (retvar, funcname) {
 
 
 let varcounter = 0;
-function genvar () {
+function genvar (s) {
     varcounter = varcounter + 1;
-    return `v${varcounter}`;
+    return `${s}${varcounter}`;
 }
-function freshgenvar () {
+function freshgenvar (s) {
     varcounter = 0
-    return genvar ();
+    return genvar (s);
 }
 
 

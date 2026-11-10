@@ -1,0 +1,35 @@
+main = (| a b | c d)
+      ^^  ^  ^  ^  ^^
+      ||  |  |  |  ||
+      ||  |  |  |  |+-- topv and= altv
+      ||  |  |  |  +-- altv or= seqv2
+      ||  |  |  +-- seqv2
+      ||  |  +-- altv or= seqv1
+      ||  +-- seqv1
+      |+-- altv
+      +-- topv
+      
+      
+vtop = True
+vparen = False
+if not vparen:
+  vseq1 = True
+  temp = a ()
+  vseq1 = vseq1 and temp
+  if vseq1:
+    temp = b ()
+    vseq1 = vseq1 and temp
+  vparen = vparen or vseq1
+if not vparen:
+  vseq2 = True
+  temp = c ()
+  vseq2 = vseq2 and temp
+
+v5 = False
+if not v5:
+  v6 = False
+  if not v6:
+    temp = a ()
+    v6 = v6 or temp
+  if not v6:
+    temp = b ()

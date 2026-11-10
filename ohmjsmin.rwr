@@ -16,7 +16,7 @@ Rules [ _1+] = ‛«_1»’
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar ‛syn’⎬’
       ⎡ more=‛⦑retvar⦒’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
@@ -27,7 +27,7 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar ‛lex’⎬’
       ⎡ more=‛⦑retvar⦒’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
@@ -39,7 +39,7 @@ LexicalRule [ id _eq RuleBody] =
 LexicalExtension [ id _peq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar⎬’
+    ⎡ retvar=‛⎨freshgenvar ‛xlex’⎬’
       ⎡ more=‛⦑retvar⦒’
         ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
       ⎦
@@ -60,71 +60,61 @@ AndSequence [i+] =
   ‛«i»’
 ⎦
 
-Alternation_plus [lp Altrec rp _plus] =
+Alternation_plus [lp first more rp _plus] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+  ⎡ retvar=‛⎨genvar ‛altp’⎬’
     ‛
-    ⦑retvar⦒ = False
-    «Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    «first»
+    ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
     while ⦑retvar⦒:⤷
-      «Altrec»⤶
+      «more»⤶
     ’
   ⎦
 ⎦
-Alternation_star [lp Altrec rp _star] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+Alternation_star [lp alt rp _star] =
     ‛
-    ⦑retvar⦒ = True
     while ⦑retvar⦒:⤷
-      «Altrec»⤶
+      «more»⤶
     ’
-  ⎦
-⎦
-Alternation_opt [lp Altrec rp _opt] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+Alternation_opt [lp alt rp _opt] =
     ‛
-    ⦑retvar⦒=False
-    «Altrec»
+    if ⦑retvar⦒:⤷
+      «alt»⤶
     ’
-  ⎦
-⎦
-Alternation_plain [lp Altrec rp] =
+Alternation_plain [lp first more rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
-    ‛⦑retvar⦒ = False
-    «Altrec»⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+    ‛
+    «first»
+    «more»
+    ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    ’
   ⎦
 ⎦
 
-Altrec_rec [_bar seq rec] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+AltFirst [_bar seq] = 
     ‛
       ⦑retvar⦒ = False
+      if not ⦑retvar⦒:⤷
+	«seq»⤶
+    ’
+
+Altrec_rec [_bar seq rec] =
+    ‛
       if not ⦑retvar⦒:⤷
 	«seq»⤶
       «rec»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
     ’
-  ⎦
-⎦
+
 Altrec_last [_bar seq] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
     ‛
-      ⦑retvar⦒ = False
       if not ⦑retvar⦒:⤷
 	«seq»⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
     ’
-  ⎦
-⎦
 
 SingleItem [matchitem] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+  ⎡ retvar=‛⎨genvar ‛seqi’⎬’
     ‛
       ⦑retvar⦒ = True
       «matchitem»
@@ -137,7 +127,7 @@ MatchItem_alt [a] = ‛«a»’
 
 MatchItem_parenplus [lp i rp _op] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+  ⎡ retvar=‛⎨genvar ‛parenp’⎬’
     ‛
       ⦑retvar⦒ = True
       «i»
@@ -164,7 +154,7 @@ MatchItem_parenopt [lp i rp _op] =
 
 MatchItem_paren [lp i rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+  ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
       ⦑retvar⦒ = True
       «i»
@@ -179,7 +169,7 @@ MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
 
 MatchItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar⎬’
+  ⎡ retvar=‛⎨genvar ‛iplain’⎬’
     ‛
       ⦑retvar⦒ = «Pred»
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒

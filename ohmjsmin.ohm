@@ -18,13 +18,14 @@ ohmjsmin {
   AndSequence = SingleItem+
 
   Alternation =
-    | "(" Altrec ")" "+" -- plus
+    | "(" AltFirst Altrec")"      -- plain
+    | "(" AltFirst Altrec ")" "+" -- plus
     | "(" Altrec ")" "*" -- star
     | "(" Altrec ")" "?" -- opt
-    | "(" Altrec ")"     -- plain
+  AltFirst = "|" AndSequence
   Altrec =
     | "|" AndSequence Altrec -- rec
-    | "|" AndSequence         -- last
+    | "|" AndSequence        -- last
 
 
   //////////////////////////////////////////////////////////////////////////////
