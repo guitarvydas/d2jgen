@@ -7,7 +7,7 @@
 
 
 Main [ id _lb Rules _rb] =
-  ⎡ conjoin=‛and’
+  ⎡ logicalop=‛and’
     ‛from plib2 import *\n«Rules»’
   ⎦
 
@@ -49,7 +49,7 @@ LexicalExtension [ id _peq RuleBody] =
 RuleBody [x+] = ‛⦑retvar⦒ = True«x»’
 
 AndSequence [i+] =
-⎡conjoin=‛and’
+⎡logicalop=‛and’
   ‛«i»’
 ⎦
 
@@ -77,41 +77,64 @@ Alternation_opt [lp alt rp _opt] =
 Alternation_plain [lp first more? rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ‛
-    «first»
-    «more»
-    ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
-    ’
+    ⎡ logicalop=‛or’
+      ‛
+      # alt plain 1
+      «first»
+      # alt plain 2
+      «more»
+      # alt plain ending
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+      # alt plain end
+      ’
+    ⎦
   ⎦
 ⎦
 
 AltFirst [_bar seq] = 
+⎡ logicalop=‛or’
     ‛
+      # alt first 1
       ⦑retvar⦒ = False
+      # alt first 2
       if not ⦑retvar⦒:⤷
+        # alt first 3
 	«seq»⤶
+      # alt first end
     ’
+⎦
 
 Altrec_rec [_bar seq rec] =
     ‛
+      # alt rec 1
       if not ⦑retvar⦒:⤷
+        # alt rec 2
 	«seq»⤶
+      # alt rec 3
       «rec»
+      # alt rec end
     ’
 
 Altrec_last [_bar seq] =
     ‛
+      # alt last 1
       if not ⦑retvar⦒:⤷
+        # alt last 2
 	«seq»⤶
+      # alt last end
     ’
 
 SingleItem [matchitem] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛seqi’⎬’
     ‛
+      # seqi 1
       ⦑retvar⦒ = True
+      # seqi 2
       «matchitem»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
+      # seqi 3
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+      # seqi fini
     ’
   ⎦
 ⎦
@@ -124,7 +147,7 @@ MatchItem_parenplus [lp i rp _op] =
     ‛
       ⦑retvar⦒ = True
       «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
       while ⦑retvar⦒:⤷
         «i»⤶    
     ’
@@ -151,7 +174,7 @@ MatchItem_paren [lp i rp] =
     ‛
       ⦑retvar⦒ = True
       «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
@@ -165,7 +188,7 @@ MatchItem_plain [ Pred] =
   ⎡ retvar=‛⎨genvar ‛iplain’⎬’
     ‛
       ⦑retvar⦒ = «Pred»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑conjoin⦒ ⦑retvar⦒
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
