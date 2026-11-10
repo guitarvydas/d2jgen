@@ -46,8 +46,7 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 
-RuleBody_alt [alt rec?] = ‛⦑retvar⦒ = True«alt»«rec»’
-RuleBody_anded [andseq rec?] = ‛⦑retvar⦒ = True«andseq»«rec»’
+RuleBody [x+] = ‛⦑retvar⦒ = True«x»’
 
 AndSequence [i+] =
 ⎡conjoin=‛and’

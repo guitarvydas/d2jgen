@@ -11,7 +11,6 @@ def main ():
         alt2 = alt2 and seqi3
         
     toplex1 = toplex1 or alt2
-    toplex1 = True
     seqi5 = True
     iplain6 =   b ()
     seqi5 = seqi5 and iplain6

@@ -11,9 +11,7 @@ ohmjsmin {
   // final accept/fail test at the end of the chain based on the boolean value
   // of ⦑retvar⦒
   //////////////////////////////////////////////////////////////////////////////
-  RuleBody =
-    | Alternation RuleBody? -- alt
-    | AndSequence RuleBody? -- anded
+  RuleBody = (Alternation | AndSequence)+
 
   AndSequence = SingleItem+
 
