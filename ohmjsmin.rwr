@@ -34,23 +34,25 @@ LexicalRule [ id _eq RuleBody] =
 
 
 RuleBody [x+] = ‛
-def «id» ():⤷
-  begin ("«id»")
+def ⦑rulename⦒ ():⤷
+  begin ("⦑rulename⦒")
   ⦑retvar⦒ = True
   «x»
-  if ⦑retvar⦒:
-    return accept ("«id»")
-  else:
-    return fail ("«id»")
+  if ⦑retvar⦒:⤷
+    return accept ("⦑rulename⦒")⤶
+  else:⤷
+    return fail ("⦑rulename⦒")⤶
  ⤶’
 
 Sequence [i+] =
-⎡previousretvar=⦑retvar⦒
+⎡previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛seq’⎬’
     ⎡more=‛’
       ⎡logicalop=‛and’
-        ⦑retvar⦒=‛True’
-        ‛«i»’
+        ‛
+          ⦑retvar⦒=True
+          «i»
+        ’
       ⎦
     ⎦
   ⎦
@@ -62,7 +64,7 @@ Alternation_plus [lp alts+ rp _plus] =
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
-          ⦑retvar⦒=‛False’
+          ⦑retvar⦒=False
           «alts»
 	  ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
           while ⦑retvar⦒:⤷
@@ -80,7 +82,7 @@ Alternation_star [lp alts+ rp _star] =
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
-          ⦑retvar⦒=‛False’
+          ⦑retvar⦒=False
           while ⦑retvar⦒:⤷
             «alts»
 	  ⤶
@@ -96,7 +98,7 @@ Alternation_opt [lp alts+ rp _opt] =
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
-          ⦑retvar⦒=‛True’
+          ⦑retvar⦒=True
           «alts»
         ’
       ⎦
@@ -146,14 +148,14 @@ SeqItem_parenstar [lp i rp _op] =
     ‛
       while ⦑retvar⦒:⤷
         «i»⤶    
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒‛ ‛True’
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
     ’
   ⎦
 
 SeqItem_parenopt [lp i rp _op] =
     ‛
       «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒‛ ‛True’
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
     ’
 
 SeqItem_paren [lp i rp] =
@@ -184,7 +186,7 @@ SeqItem_star [ Pred _star] =
       pass
     ⤶
   ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ‛True’
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
 ’
 
 SeqItem_optional [ Pred _opt] =
@@ -192,16 +194,14 @@ SeqItem_optional [ Pred _opt] =
   if ⦑retvar⦒:⤷
     «Pred»
   ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ‛True’
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
 ’
 
 SeqItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛iplain’⎬’
     ‛
-      if ⦑retvar⦒:⤷
-        ⦑retvar⦒ = «Pred»
-      ⤶
+      ⦑retvar⦒ = «Pred»
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
