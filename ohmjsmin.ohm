@@ -17,7 +17,8 @@ ohmjsmin {
 
   AltItem = "|" Sequence
   
-  SeqItem =
+  SeqItem = MatchItem
+  MatchItem =
     | Alternation          -- alt
     | "(" SeqItem+ ")" "+" -- parenplus
     | "(" SeqItem+ ")" "*" -- parenstar

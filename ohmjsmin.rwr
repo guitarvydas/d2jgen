@@ -51,7 +51,10 @@ Sequence [i+] =
       ⎡logicalop=‛and’
         ‛
           ⦑retvar⦒=True
-          «i»
+	  if ⦑retvar⦒:⤷
+            «i»
+	  ⤶
+	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
         ’
       ⎦
     ⎦
@@ -66,7 +69,7 @@ Alternation_plus [lp alts+ rp _plus] =
         ‛
           ⦑retvar⦒=False
           «alts»
-	  ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
           while ⦑retvar⦒:⤷
             «alts»
 	  ⤶
@@ -119,17 +122,14 @@ Alternation_plain [lp alts+ rp] =
 
 AltItem [_bar seq] = ‛«seq»’
 
-SeqItem [x] =
+SeqItem [m] =
 ‛
-  if ⦑retvar⦒:⤷
-    «x»
-  ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+    «m»
 ’
 
-SeqItem_alt [a] = ‛«a»’
+MatchItem_alt [a] = ‛«a»’
 
-SeqItem_parenplus [lp i rp _op] =
+MatchItem_parenplus [lp i rp _op] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛parenp’⎬’
     ‛
@@ -144,7 +144,7 @@ SeqItem_parenplus [lp i rp _op] =
   ⎦
 ⎦
 
-SeqItem_parenstar [lp i rp _op] =
+MatchItem_parenstar [lp i rp _op] =
   ⎡ retvar=‛ignore’
     ‛
       while ⦑retvar⦒:⤷
@@ -153,13 +153,13 @@ SeqItem_parenstar [lp i rp _op] =
     ’
   ⎦
 
-SeqItem_parenopt [lp i rp _op] =
+MatchItem_parenopt [lp i rp _op] =
     ‛
       «i»
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
     ’
 
-SeqItem_paren [lp i rp] =
+MatchItem_paren [lp i rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
@@ -169,7 +169,7 @@ SeqItem_paren [lp i rp] =
   ⎦
 ⎦
 
-SeqItem_plus [ Pred _plus] =
+MatchItem_plus [ Pred _plus] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
@@ -184,7 +184,7 @@ SeqItem_plus [ Pred _plus] =
   ⎦
 ⎦
 
-SeqItem_star [ Pred _star] =
+MatchItem_star [ Pred _star] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
@@ -198,7 +198,7 @@ SeqItem_star [ Pred _star] =
   ⎦
 ⎦
 
-SeqItem_optional [ Pred _opt] =
+MatchItem_optional [ Pred _opt] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
@@ -210,11 +210,14 @@ SeqItem_optional [ Pred _opt] =
   ⎦
 ⎦
 
-SeqItem_plain [ Pred] =
+MatchItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛iplain’⎬’
     ‛
-      ⦑retvar⦒ = «Pred»
+      ⦑retvar⦒ = True
+      if  ⦑retvar⦒:⤷
+        ⦑retvar⦒ = «Pred»
+      ⤶
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
