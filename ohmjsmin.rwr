@@ -2,14 +2,12 @@
 %parameter previousretvar
 %parameter skip
 %parameter rulename
+%parameter logicalop
+%parameter more
 
 %rewrite ohmjsmin {
 
-
-Main [ id _lb Rules _rb] =
-  ⎡ logicalop=‛and’
-    ‛from plib2 import *\n«Rules»’
-  ⎦
+Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 
 Rules [ _1+] = ‛«_1»’
 
@@ -17,7 +15,7 @@ SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar ‛topsyn’⎬’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
+       ‛«RuleBody»’
     ⎦
   ⎦
 ⎦
@@ -26,17 +24,7 @@ LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
     ⎡ retvar=‛⎨freshgenvar ‛toplex’⎬’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
-    ⎦
-  ⎦
-⎦
-
-
-LexicalExtension [ id _peq RuleBody] =
-⎡ skip=‛false’
-  ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛topxlex’⎬’
-        ‛\ndef «id» ():⤷\nbegin ("«id»")\n«RuleBody»\n⎨finalexit ‛⦑retvar⦒’ ‛⦑rulename⦒’⎬⤶’
+       ‛«RuleBody»’
     ⎦
   ⎦
 ⎦
@@ -45,149 +33,175 @@ LexicalExtension [ id _peq RuleBody] =
 
 
 
+RuleBody [x+] = ‛
+def «id» ():⤷
+  begin ("«id»")
+  ⦑retvar⦒ = True
+  «x»
+  if ⦑retvar⦒:
+    return accept ("«id»")
+  else:
+    return fail ("«id»")
+ ⤶’
 
-RuleBody [x+] = ‛⦑retvar⦒ = True«x»’
-
-AndSequence [i+] =
-⎡logicalop=‛and’
-  ‛«i»’
-⎦
-
-Alternation_plus [lp first more? rp _plus] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛altp’⎬’
-    ‛
-    «first»
-    ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
-    while ⦑retvar⦒:⤷
-      «more»⤶
-    ’
+Sequence [i+] =
+⎡previousretvar=⦑retvar⦒
+  ⎡ retvar=‛⎨genvar ‛seq’⎬’
+    ⎡more=‛’
+      ⎡logicalop=‛and’
+        ⦑retvar⦒=‛True’
+        ‛«i»’
+      ⎦
+    ⎦
   ⎦
 ⎦
-Alternation_star [lp alt rp _star] =
-    ‛
-    while ⦑retvar⦒:⤷
-      «more»⤶
-    ’
-Alternation_opt [lp alt rp _opt] =
-    ‛
-    if ⦑retvar⦒:⤷
-      «alt»⤶
-    ’
-Alternation_plain [lp first more? rp] =
+
+Alternation_plus [lp alts+ rp _plus] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ logicalop=‛or’
-      ‛
-      # alt plain 1
-      «first»
-      # alt plain 2
-      «more»
-      # alt plain ending
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
-      # alt plain end
-      ’
+    ⎡ more=‛not’
+      ⎡ logicalop=‛or’
+        ‛
+          ⦑retvar⦒=‛False’
+          «alts»
+	  ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+          while ⦑retvar⦒:⤷
+            «alts»
+	  ⤶
+        ’
+      ⎦
     ⎦
   ⎦
 ⎦
 
-AltFirst [_bar seq] = 
-⎡ logicalop=‛or’
-    ‛
-      # alt first 1
-      ⦑retvar⦒ = False
-      # alt first 2
-      if not ⦑retvar⦒:⤷
-        # alt first 3
-	«seq»⤶
-      # alt first end
-    ’
-⎦
-
-Altrec_rec [_bar seq rec] =
-    ‛
-      # alt rec 1
-      if not ⦑retvar⦒:⤷
-        # alt rec 2
-	«seq»⤶
-      # alt rec 3
-      «rec»
-      # alt rec end
-    ’
-
-Altrec_last [_bar seq] =
-    ‛
-      # alt last 1
-      if not ⦑retvar⦒:⤷
-        # alt last 2
-	«seq»⤶
-      # alt last end
-    ’
-
-SingleItem [matchitem] =
+Alternation_star [lp alts+ rp _star] =
 ⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛seqi’⎬’
-    ‛
-      # seqi 1
-      ⦑retvar⦒ = True
-      # seqi 2
-      «matchitem»
-      # seqi 3
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-      # seqi fini
-    ’
+  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+    ⎡ more=‛not’
+      ⎡ logicalop=‛or’
+        ‛
+          ⦑retvar⦒=‛False’
+          while ⦑retvar⦒:⤷
+            «alts»
+	  ⤶
+        ’
+      ⎦
+    ⎦
   ⎦
 ⎦
 
-MatchItem_alt [a] = ‛«a»’
+Alternation_opt [lp alts+ rp _opt] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+    ⎡ more=‛not’
+      ⎡ logicalop=‛or’
+        ‛
+          ⦑retvar⦒=‛True’
+          «alts»
+        ’
+      ⎦
+    ⎦
+  ⎦
+⎦
 
-MatchItem_parenplus [lp i rp _op] =
+Alternation_plain [lp alts+ rp] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+    ⎡ more=‛not’
+      ⎡ logicalop=‛or’
+        ‛«alts»’
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+AltItem [_bar seq] = ‛«seq»’
+
+SeqItem [x] =
+‛
+  if ⦑retvar⦒:⤷
+    «x»
+  ⤶
+’
+
+SeqItem_alt [a] = ‛«a»’
+
+SeqItem_parenplus [lp i rp _op] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛parenp’⎬’
     ‛
-      ⦑retvar⦒ = True
       «i»
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-      while ⦑retvar⦒:⤷
-        «i»⤶    
+      if ⦑retvar⦒:⤷
+        while ⦑retvar⦒:⤷
+          «i»
+        ⤶
+      ⤶
     ’
   ⎦
 ⎦
 
-MatchItem_parenstar [lp i rp _op] =
+SeqItem_parenstar [lp i rp _op] =
   ⎡ retvar=‛temp’
     ‛
-     temp = True
       while ⦑retvar⦒:⤷
         «i»⤶    
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒‛ ‛True’
     ’
   ⎦
 
-MatchItem_parenopt [lp i rp _op] =
+SeqItem_parenopt [lp i rp _op] =
     ‛
       «i»
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒‛ ‛True’
     ’
 
-MatchItem_paren [lp i rp] =
+SeqItem_paren [lp i rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛paren’⎬’
     ‛
-      ⦑retvar⦒ = True
       «i»
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
 
-MatchItem_plus [ Pred _plus] = ‛⦑retvar⦒ = «Pred»\nif ⦑retvar⦒:⤷\nwhile «Pred»:⤷\npass⤶⤶’
-MatchItem_star [ Pred _star] = ‛ \nwhile «Pred»:⤷\npass⤶’
-MatchItem_optional [ Pred _opt] = ‛\n«Pred»’
+SeqItem_plus [ Pred _plus] =
+‛
+  ⦑retvar⦒ = «Pred»
+  if ⦑retvar⦒:⤷
+    while «Pred»:⤷
+      pass
+    ⤶
+  ⤶
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+’
 
-MatchItem_plain [ Pred] =
+SeqItem_star [ Pred _star] =
+‛
+  if ⦑retvar⦒:⤷
+    while «Pred»:⤷
+      pass
+    ⤶
+  ⤶
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ‛True’
+’
+
+SeqItem_optional [ Pred _opt] =
+‛
+  if ⦑retvar⦒:⤷
+    «Pred»
+  ⤶
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ‛True’
+’
+
+SeqItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛iplain’⎬’
     ‛
-      ⦑retvar⦒ = «Pred»
+      if ⦑retvar⦒:⤷
+        ⦑retvar⦒ = «Pred»
+      ⤶
       ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
