@@ -50,6 +50,7 @@ Sequence [i+] =
     ⎡more=‛’
       ⎡logicalop=‛and’
         ‛
+	  # Sequence
           ⦑retvar⦒=True
 	  if ⦑retvar⦒:⤷
             «i»
@@ -61,14 +62,15 @@ Sequence [i+] =
   ⎦
 ⎦
 
-Alternation_plus [lp alts+ rp _plus] =
+Alternation_plus [lp clauses+ rp _plus] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
+	  # Alt Begin +
           ⦑retvar⦒=False
-          «alts»
+          «clauses»
 	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
           while ⦑retvar⦒:⤷
             «alts»
@@ -79,15 +81,16 @@ Alternation_plus [lp alts+ rp _plus] =
   ⎦
 ⎦
 
-Alternation_star [lp alts+ rp _star] =
+Alternation_star [lp clauses+ rp _star] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
+	  # Alt Begin *
           ⦑retvar⦒=False
           while ⦑retvar⦒:⤷
-            «alts»
+            «clauses»
 	  ⤶
         ’
       ⎦
@@ -95,36 +98,55 @@ Alternation_star [lp alts+ rp _star] =
   ⎦
 ⎦
 
-Alternation_opt [lp alts+ rp _opt] =
+Alternation_opt [lp clauses+ rp _opt] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
         ‛
+	  # Alt Begin ?
           ⦑retvar⦒=True
-          «alts»
+          «clauses»
         ’
       ⎦
     ⎦
   ⎦
 ⎦
 
-Alternation_plain [lp alts+ rp] =
+Alternation_plain [lp clauses+ rp] =
 ⎡ previousretvar=‛⦑retvar⦒’
   ⎡ retvar=‛⎨genvar ‛alt’⎬’
     ⎡ more=‛not’
       ⎡ logicalop=‛or’
-        ‛«alts»’
+        ‛
+	  # Alt Begin
+	  ⦑retvar⦒ = False
+          «clauses»
+	’
       ⎦
     ⎦
   ⎦
 ⎦
 
-AltItem [_bar seq] = ‛«seq»’
-
+AltClause [_bar seq] =
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+    ‛
+      # Alt Clause
+       ⦑retvar⦒ = False
+      if not ⦑previousretvar⦒:⤷
+	«seq»
+      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+    ’
+  ⎦
+⎦
 SeqItem [m] =
 ‛
-    «m»
+    # SeqItem
+    if ⦑retvar⦒:⤷
+      «m»
+    ⤶
 ’
 
 MatchItem_alt [a] = ‛«a»’

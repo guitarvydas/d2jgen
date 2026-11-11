@@ -5,17 +5,20 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
-  RuleBody = (Alternation | Sequence)+
+  RuleBody = Sequence+
 
   Sequence = SeqItem+
 
   Alternation =
-   | "(" AltItem+ ")" "+" -- plus
-   | "(" AltItem+ ")" "*" -- star
-   | "(" AltItem+ ")" "?" -- opt
-   | "(" AltItem+ ")"     -- plain
+   // Alt Begin
+   | "(" AltClause+ ")" "+" -- plus
+   | "(" AltClause+ ")" "*" -- star
+   | "(" AltClause+ ")" "?" -- opt
+   | "(" AltClause+ ")"     -- plain
 
-  AltItem = "|" Sequence
+  AltClause =
+    // Alt Clause
+    "|" Sequence
   
   SeqItem = MatchItem
   MatchItem =
