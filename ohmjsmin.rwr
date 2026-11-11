@@ -14,7 +14,7 @@ Rules [ _1+] = ‛«_1»’
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛topsyn’⎬’
+    ⎡ retvar=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
@@ -23,7 +23,7 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨freshgenvar ‛toplex’⎬’
+    ⎡ retvar=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
@@ -124,6 +124,7 @@ SeqItem [x] =
   if ⦑retvar⦒:⤷
     «x»
   ⤶
+  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
 ’
 
 SeqItem_alt [a] = ‛«a»’

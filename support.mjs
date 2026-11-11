@@ -25,9 +25,9 @@ function genvar (s) {
     varcounter = varcounter + 1;
     return `${s}${varcounter}`;
 }
-function freshgenvar (s) {
+function resetgenvar () {
     varcounter = 0
-    return genvar (s);
+    return "";
 }
 
 
