@@ -145,7 +145,7 @@ SeqItem_parenplus [lp i rp _op] =
 ⎦
 
 SeqItem_parenstar [lp i rp _op] =
-  ⎡ retvar=‛temp’
+  ⎡ retvar=‛ignore’
     ‛
       while ⦑retvar⦒:⤷
         «i»⤶    
@@ -170,33 +170,45 @@ SeqItem_paren [lp i rp] =
 ⎦
 
 SeqItem_plus [ Pred _plus] =
-‛
-  ⦑retvar⦒ = «Pred»
-  if ⦑retvar⦒:⤷
-    while «Pred»:⤷
-      pass
-    ⤶
-  ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-’
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛paren’⎬’
+    ‛
+      ⦑retvar⦒ = «Pred»
+      if ⦑retvar⦒:⤷
+	while «Pred»:⤷
+	  pass
+	⤶
+      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+    ’
+  ⎦
+⎦
 
 SeqItem_star [ Pred _star] =
-‛
-  if ⦑retvar⦒:⤷
-    while «Pred»:⤷
-      pass
-    ⤶
-  ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-’
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛paren’⎬’
+    ‛
+      if ⦑retvar⦒:⤷
+	while «Pred»:⤷
+	  pass
+	⤶
+      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
+    ’
+  ⎦
+⎦
 
 SeqItem_optional [ Pred _opt] =
-‛
-  if ⦑retvar⦒:⤷
-    «Pred»
-  ⤶
-  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-’
+⎡ previousretvar=‛⦑retvar⦒’
+  ⎡ retvar=‛⎨genvar ‛paren’⎬’
+    ‛
+      if ⦑retvar⦒:⤷
+	«Pred»
+      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
+    ’
+  ⎦
+⎦
 
 SeqItem_plain [ Pred] =
 ⎡ previousretvar=‛⦑retvar⦒’
