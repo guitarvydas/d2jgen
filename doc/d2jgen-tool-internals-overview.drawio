@@ -854,7 +854,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="xL2s7-yqbNGW-z7V_swn" name="nov 10 conditionals 2026">
-    <mxGraphModel dx="2206" dy="1606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -970,27 +970,54 @@
     </mxGraphModel>
   </diagram>
   <diagram id="r13Nnxnf6tfdoZGA79wj" name="wrapped items">
-    <mxGraphModel dx="1106" dy="756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1564" dy="756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;" value="&lt;i&gt;Sequence branching wrappar&lt;/i&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = ...&lt;/div&gt;&lt;div&gt;retvar = seqN&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if retvar {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = prevretvar and retvar&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;verticalAlign=top;" value="&lt;i&gt;SeqBranch&lt;/i&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;prevretvar = ...&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;retvar = seqN&lt;/i&gt;&lt;/div&gt;&lt;div&gt;declare seqN = True&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if prevretvar {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = prevretvar and retvar&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="440" width="140" x="100" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;" value="&lt;i&gt;Alternate branching wrapper&lt;/i&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = ...&lt;/div&gt;&lt;div&gt;retvar = altN&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if not retvar {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;preretvar = prevretvar or retvar&lt;/div&gt;" vertex="1">
+        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;" value="&lt;i&gt;AltBranch&lt;/i&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = ...&lt;/div&gt;&lt;div&gt;&lt;i&gt;retvar = altN&lt;/i&gt;&lt;div&gt;declare altN = False&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;if not prevretvar {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;preretvar = prevretvar or retvar&lt;/div&gt;" vertex="1">
           <mxGeometry height="440" width="140" x="400" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;" value="&lt;i&gt;Pred Branching Wrapper&lt;/i&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;prevretvar = predN&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar = pred&lt;/div&gt;" vertex="1">
+        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;" value="&lt;i&gt;Branched Pred&lt;/i&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;prevretvar =&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="200" width="120" x="680" y="170" as="geometry" />
         </mxCell>
         <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="Predicate" vertex="1">
           <mxGeometry height="60" width="120" x="760" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Wrapped Item" vertex="1">
+        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Branched Item" vertex="1">
           <mxGeometry height="60" width="120" x="190" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Wrapped Item" vertex="1">
+        <mxCell id="UTcoGkKGEJ8-Wh0Eli4_-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Branched Item" vertex="1">
           <mxGeometry height="60" width="120" x="490" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-1" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="135" width="20" x="162.5" y="502.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" value="Branched Item" vertex="1">
+          <mxGeometry height="30" width="120" x="110" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-3" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="140" width="20" x="460" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" value="Branched Item" vertex="1">
+          <mxGeometry height="30" width="120" x="410" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-5" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="120" width="20" x="730" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" value="Branched Item" vertex="1">
+          <mxGeometry height="30" width="120" x="680" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=none;fillColor=none;align=left;" value="BranchedSequence = SeqBranch+" vertex="1">
+          <mxGeometry height="40" width="200" x="120" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=none;fillColor=none;align=left;" value="BranchedAlternation = AltBranch+" vertex="1">
+          <mxGeometry height="40" width="200" x="120" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="Su-IFhPcplllFw8MDSoI-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=none;fillColor=none;align=left;" value="BranchedPred = Pred" vertex="1">
+          <mxGeometry height="40" width="200" x="120" y="760" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

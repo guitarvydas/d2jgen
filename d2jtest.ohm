@@ -1,6 +1,4 @@
 d2j {
-  main = ( | a | b ) c
+  main = a
   a = "a"
-  b = "b"
-  c = "c"
 }

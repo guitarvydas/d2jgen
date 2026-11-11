@@ -33,7 +33,7 @@ LexicalRule [ id _eq RuleBody] =
 
 
 
-RuleBody [x+] = ‛
+RuleBody [x] = ‛
 def ⦑rulename⦒ ():⤷
   begin ("⦑rulename⦒")
   ⦑retvar⦒ = True
@@ -44,208 +44,49 @@ def ⦑rulename⦒ ():⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-Sequence [i+] =
-⎡previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛seq’⎬’
-    ⎡more=‛’
-      ⎡logicalop=‛and’
-        ‛
-	  # Sequence
-          ⦑retvar⦒=True
-	  if ⦑retvar⦒:⤷
-            «i»
-	  ⤶
-	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
+BranchedItem [x] = ‛«x»’
 
-Alternation_plus [lp clauses+ rp _plus] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin +
-          ⦑retvar⦒=False
-          «clauses»
-	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-          while ⦑retvar⦒:⤷
-            «alts»
-	  ⤶
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_star [lp clauses+ rp _star] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin *
-          ⦑retvar⦒=False
-          while ⦑retvar⦒:⤷
-            «clauses»
-	  ⤶
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_opt [lp clauses+ rp _opt] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin ?
-          ⦑retvar⦒=True
-          «clauses»
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_plain [lp clauses+ rp] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin
-	  ⦑retvar⦒ = False
-          «clauses»
-	’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-AltClause [_bar seq] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+BranchedSequence_parenplus [lp britem rp _plus] = ‛NIY’
+BranchedSequence_parenstar [lp britem rp _star] = ‛NIY’
+BranchedSequence_parenopt [lp britem rp _opt]   = ‛NIY’
+BranchedSequence_parenplain [lp britem rp]      = ‛NIY’
+BranchedSequence_plain [britem]                  =
+⎡ previousretvar = ‛⦑retvar⦒’
+  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
     ‛
-      # Alt Clause
-       ⦑retvar⦒ = False
+      ⦑retvar⦒ = None
+      if ⦑previousretvar⦒:⤷
+        «britem»
+      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+    ’
+  ⎦
+⎦
+
+BranchedAlternation_parenplus [lp altitem rp _plus] = ‛NIY’
+BranchedAlternation_parenstar [lp altitem rp _star] = ‛NIY’
+BranchedAlternation_parenopt [lp altitem rp _opt]   = ‛NIY’
+BranchedAlternation_parenplain [lp altitem rp]      =
+⎡ previousretvar = ‛⦑retvar⦒’
+  ⎡ retvar = ‛⎨genvar ‛alt’⎬’
+    ‛
+      ⦑retvar⦒ = None
       if not ⦑previousretvar⦒:⤷
-	«seq»
+        «altitem»
       ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-    ’
-  ⎦
-⎦
-SeqItem [m] =
-‛
-    # SeqItem
-    if ⦑retvar⦒:⤷
-      «m»
-    ⤶
-’
-
-MatchItem_alt [a] = ‛«a»’
-
-MatchItem_parenplus [lp i rp _op] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛parenp’⎬’
-    ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-      if ⦑retvar⦒:⤷
-        while ⦑retvar⦒:⤷
-          «i»
-        ⤶
-      ⤶
+      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
     ’
   ⎦
 ⎦
 
-MatchItem_parenstar [lp i rp _op] =
-  ⎡ retvar=‛ignore’
-    ‛
-      while ⦑retvar⦒:⤷
-        «i»⤶    
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-  ⎦
-
-MatchItem_parenopt [lp i rp _op] =
-    ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-
-MatchItem_paren [lp i rp] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-    ’
-  ⎦
+BranchedPred [p] =
+⎡ previousretvar = ‛⦑retvar⦒’
+  ‛
+    ⦑previousretvar⦒ = «p»
+  ’
 ⎦
 
-MatchItem_plus [ Pred _plus] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      ⦑retvar⦒ = «Pred»
-      if ⦑retvar⦒:⤷
-	while «Pred»:⤷
-	  pass
-	⤶
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-    ’
-  ⎦
-⎦
-
-MatchItem_star [ Pred _star] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      if ⦑retvar⦒:⤷
-	while «Pred»:⤷
-	  pass
-	⤶
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-  ⎦
-⎦
-
-MatchItem_optional [ Pred _opt] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      if ⦑retvar⦒:⤷
-	«Pred»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-  ⎦
-⎦
-
-MatchItem_plain [ Pred] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛iplain’⎬’
-    ‛
-      ⦑retvar⦒ = True
-      if  ⦑retvar⦒:⤷
-        ⦑retvar⦒ = «Pred»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-    ’
-  ⎦
-⎦
-
-
+AltBranchedItem [_bar item] = ‛«item»’
 
 Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
 Pred_plain [ matchAtom] = ‛ «matchAtom»’

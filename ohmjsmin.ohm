@@ -5,33 +5,23 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
-  RuleBody = Sequence+
+  RuleBody = BranchedItem
 
-  Sequence = SeqItem+
+  BranchedItem = (BranchedAlternation | BranchedSequence | BranchedPred)
+  BranchedSequence = 
+    | "(" BranchedItem ")" "+" -- parenplus
+    | "(" BranchedItem ")" "*" -- parenstar
+    | "(" BranchedItem ")" "?" -- parenopt
+    | "(" BranchedItem ")"     -- parenplain
+    | BranchedItem              -- plain
+  BranchedAlternation =
+    | "(" AltBranchedItem ")" "+" -- parenplus
+    | "(" AltBranchedItem ")" "*" -- parenstar
+    | "(" AltBranchedItem ")" "?" -- parenopt
+    | "(" AltBranchedItem ")"     -- parenplain
+  BranchedPred = Pred
 
-  Alternation =
-   // Alt Begin
-   | "(" AltClause+ ")" "+" -- plus
-   | "(" AltClause+ ")" "*" -- star
-   | "(" AltClause+ ")" "?" -- opt
-   | "(" AltClause+ ")"     -- plain
-
-  AltClause =
-    // Alt Clause
-    "|" Sequence
-  
-  SeqItem = MatchItem
-  MatchItem =
-    | Alternation          -- alt
-    | "(" SeqItem+ ")" "+" -- parenplus
-    | "(" SeqItem+ ")" "*" -- parenstar
-    | "(" SeqItem+ ")" "?" -- parenopt
-    | "(" SeqItem+ ")"     -- paren
-    | Pred "+"             -- plus
-    | Pred "*"             -- star
-    | Pred "?"             -- optional
-    | Pred                 -- plain
-
+  AltBranchedItem = "|" BranchedItem
 
   //////////////////////////////////////////////////////////////////////////////
   // Pred returns a function call not wrapped in branching code

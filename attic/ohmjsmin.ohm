@@ -1,47 +1,36 @@
 ohmjsmin {
   Main = id "{" Rules "}"
-  Rules = (LexicalExtension | SyntacticRule | LexicalRule)+
+  Rules = (SyntacticRule | LexicalRule)+
   SyntacticRule = uppercaseid "=" RuleBody
   LexicalRule = lowercaseid "=" RuleBody
-  LexicalExtension =  lowercaseid "+=" RuleBody
 
 
-  //////////////////////////////////////////////////////////////////////////////
-  // RuleBody composes SingleItems into a string of branching code and adds a
-  // final accept/fail test at the end of the chain based on the boolean value
-  // of ⦑retvar⦒
-  //////////////////////////////////////////////////////////////////////////////
-  RuleBody = (Alternation | AndSequence)+
+  RuleBody = Sequence+
 
-  AndSequence = SingleItem+
+  Sequence = SeqItem+
 
   Alternation =
-    | "(" AltFirst Altrec? ")"     -- plain
-    | "(" AltFirst Altrec? ")" "+" -- plus
-    | "(" Altrec ")" "*" -- star
-    | "(" Altrec ")" "?" -- opt
-  AltFirst = "|" AndSequence
-  Altrec =
-    | "|" AndSequence Altrec -- rec
-    | "|" AndSequence        -- last
+   // Alt Begin
+   | "(" AltClause+ ")" "+" -- plus
+   | "(" AltClause+ ")" "*" -- star
+   | "(" AltClause+ ")" "?" -- opt
+   | "(" AltClause+ ")"     -- plain
 
-
-  //////////////////////////////////////////////////////////////////////////////
-  // each SingleItem compiles into branching code based on
-  // the values of ⦑retvar⦒ and ⦑conjoin⦒
-  //////////////////////////////////////////////////////////////////////////////
-  SingleItem = MatchItem
-
+  AltClause =
+    // Alt Clause
+    "|" Sequence
+  
+  SeqItem = MatchItem
   MatchItem =
-    | Alternation            -- alt
-    | "(" MatchItem ")" "+"  -- parenplus
-    | "(" MatchItem ")" "*"  -- parenstar
-    | "(" MatchItem ")" "?"  -- parenopt
-    | "(" MatchItem ")"      -- paren
-    | Pred "+"               -- plus
-    | Pred "*"               -- star
-    | Pred "?"               -- optional
-    | Pred                   -- plain
+    | Alternation          -- alt
+    | "(" SeqItem+ ")" "+" -- parenplus
+    | "(" SeqItem+ ")" "*" -- parenstar
+    | "(" SeqItem+ ")" "?" -- parenopt
+    | "(" SeqItem+ ")"     -- paren
+    | Pred "+"             -- plus
+    | Pred "*"             -- star
+    | Pred "?"             -- optional
+    | Pred                 -- plain
 
 
   //////////////////////////////////////////////////////////////////////////////
