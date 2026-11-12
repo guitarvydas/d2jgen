@@ -48,10 +48,12 @@ try {
 	process.exit (0);
     } catch (e) {
 	//console.error (`${e}\nargv=${argv}\ngrammar=${grammarname (grammar)}\src=\n${src}`);
+	console.error(e.stack);
 	console.error (`${e}\n\ngrammar = "${grammarname (grammar)}\n"`);
 	process.exit (1);
     }
 } catch (e) {
+    console.error(e.stack);
     console.error (`${e}\n\ngrammar = "${grammarname (grammar)}"\n`);
     process.exit (1);
 }

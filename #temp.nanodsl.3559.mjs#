@@ -1,0 +1,437 @@
+'use strict'
+
+import * as ohm from 'ohm-js';
+import * as process from 'process';
+
+const verbose = !!process.env.T2TVERBOSE;
+
+function top (stack) { let v = stack.pop (); stack.push (v); return v; }
+
+function set_top (stack, v) { stack.pop (); stack.push (v); return v; }
+
+let return_value_stack = [];
+let rule_name_stack = [];
+let depth_prefix = ' ';
+
+function enter_rule (name) {
+    if (verbose) {
+	pbplog (`${depth_prefix}enter ${name}`);
+	depth_prefix += ' ';
+    }
+    return_value_stack.push ("");
+    rule_name_stack.push (name);
+}
+
+function set_return (v) {
+    set_top (return_value_stack, v);
+}
+
+function exit_rule (name) {
+    if (verbose) {
+	depth_prefix = depth_prefix.substr (1);
+	pbplog (`${depth_prefix}exit ${name}`);
+    }
+    rule_name_stack.pop ();
+    return return_value_stack.pop ()
+}
+
+const grammar = String.raw`
+ohmjsmin {
+  Main = id "{" Rules "}"
+  Rules = (SyntacticRule | LexicalRule)+
+  SyntacticRule = uppercaseid "=" RuleBody
+  LexicalRule = lowercaseid "=" RuleBody
+
+
+  RuleBody = BranchedSequence
+  BranchedSequence = SingleSeqBranchedItem+
+  BranchedItem = (SingleSeqBranchedItem | BranchedAlternation | SingleBranchedPredItem)
+
+  SingleSeqBranchedItem =
+    | "(" NoBarBranchedSequence ")" "+"  -- parenplus
+    | "(" NoBarBranchedSequence ")"      -- parenplain
+    | BranchedItem "+"                   -- plainplus
+    | BranchedItem                       -- plain
+  NoBarBranchedSequence = NoBarSingleSeqBranchedItem+
+  NoBarSingleSeqBranchedItem = ~"|" SingleSeqBranchedItem
+  BranchedAlternation =
+    | "(" SingleAltBranchedItem+ ")" "+" -- altplus
+    | "(" SingleAltBranchedItem+ ")"     -- altplain
+  SingleAltBranchedItem =
+    | "|" BranchedSequence
+  SingleBranchedPredItem = Pred
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Pred returns a function call not wrapped in branching code
+  //////////////////////////////////////////////////////////////////////////////
+  Pred =
+    | "~" matchAtom -- neg
+    |     matchAtom -- plain
+
+  matchAtom =
+    | dqstring -- string
+    | id ~(spaces ("=" | "+=")) -- single
+
+  dqstring = "\"" sqchar+ "\""
+  sqchar =
+    | "\\" "\"" -- escdq
+    | ~"\"" any -- any
+  id = (uppercaseid | lowercaseid)
+  uppercaseid = upper alnum*
+  lowercaseid = lower alnum*
+}
+`;
+
+let args = {};
+function resetArgs () {
+    args = {};
+}
+function memoArg (name, accessorString) {
+    args [name] = accessorString;
+};
+function fetchArg (name) {
+    return args [name];
+}
+
+function genskipmaybe (skip, item) {
+    if (skip === "true") {
+	return `parse_ignoring (lambda : ${item})`;
+    } else {
+	return item;
+    }
+}
+
+function genslprefix (name) {
+    let firstc = name [0];
+    if ((name[0] >= 'A' && name[0] <= 'Z') || (name[0] == '_')) {
+	return `s_${name}`;
+    } else {
+	return `l_${name}`;
+    }
+}
+	
+function finalexit (retvar, funcname) {
+    return `if ${retvar}:⤷\nreturn accept ("${funcname}")⤶\nelse:⤷\nreturn fail ("${funcname}")⤶`
+}
+
+
+let varcounter = 0;
+function genvar (s) {
+    varcounter = varcounter + 1;
+    return `${s}${varcounter}`;
+}
+function resetgenvar () {
+    varcounter = 0
+    return "";
+}
+
+
+
+function pbplog (s) {
+    console.error (s);
+}
+
+let parameters = {};
+function pushParameter (name, v) {
+    if (!parameters [name]) {
+        parameters [name] = [];
+    }
+    parameters [name].push (v);
+}
+function popParameter (name) {
+    parameters [name].pop ();
+}
+function getParameter (name) {
+    let top = parameters [name].pop ();
+    parameters [name].push (top);
+    return top;
+}
+
+parameters ["retvar"] = [];
+parameters ["previousretvar"] = [];
+parameters ["skip"] = [];
+parameters ["rulename"] = [];
+parameters ["logicalop"] = [];
+parameters ["more"] = [];
+
+let _rewrite = {
+
+Main : function (id,_lb,Rules,_rb,) {
+enter_rule ("Main");
+    set_return (`from plib2 import *\n${Rules.rwr ()}`);
+return exit_rule ("Main");
+},
+Rules : function (x,) {
+enter_rule ("Rules");
+    set_return (`${x.rwr ().join ('')}`);
+return exit_rule ("Rules");
+},
+SyntacticRule : function (id,_eq,RuleBody,) {
+enter_rule ("SyntacticRule");
+    pushParameter ("skip", `true`);
+    pushParameter ("rulename", `${id.rwr ()}`);
+    pushParameter ("retvar", `${resetgenvar ()}r`);
+    set_return (`${RuleBody.rwr ()}`);
+popParameter ("retvar");
+popParameter ("rulename");
+popParameter ("skip");
+return exit_rule ("SyntacticRule");
+},
+LexicalRule : function (id,_eq,RuleBody,) {
+enter_rule ("LexicalRule");
+    pushParameter ("skip", `false`);
+    pushParameter ("rulename", `${id.rwr ()}`);
+    pushParameter ("retvar", `${resetgenvar ()}r`);
+    set_return (`${RuleBody.rwr ()}`);
+popParameter ("retvar");
+popParameter ("rulename");
+popParameter ("skip");
+return exit_rule ("LexicalRule");
+},
+RuleBody : function (x,) {
+enter_rule ("RuleBody");
+    set_return (`
+def ${getParameter ("rulename")} ():⤷
+  begin ("${getParameter ("rulename")}")
+  ${getParameter ("retvar")} = True
+  ${x.rwr ()}
+  if ${getParameter ("retvar")}:⤷
+    return accept ("${getParameter ("rulename")}")⤶
+  else:⤷
+    return fail ("${getParameter ("rulename")}")⤶
+ ⤶`);
+return exit_rule ("RuleBody");
+},
+BranchedSequence : function (item,) {
+enter_rule ("BranchedSequence");
+    pushParameter ("logicalop", `and`);
+    pushParameter ("more", ``);
+    set_return (`${item.rwr ().join ('')}`);
+popParameter ("more");
+popParameter ("logicalop");
+return exit_rule ("BranchedSequence");
+},
+BranchedItem : function (item,) {
+enter_rule ("BranchedItem");
+    set_return (`${item.rwr ()}`);
+return exit_rule ("BranchedItem");
+},
+SingleSeqBranchedItem_parenplus : function (_lp,nbbseq,_rp,op,) {
+enter_rule ("SingleSeqBranchedItem_parenplus");
+    set_return (`${_lp.rwr ()}${nbbseq.rwr ()}${_rp.rwr ()}${op.rwr ()}`);
+return exit_rule ("SingleSeqBranchedItem_parenplus");
+},
+SingleSeqBranchedItem_parenplain : function (_lp,nbbseq,_rp,) {
+enter_rule ("SingleSeqBranchedItem_parenplain");
+    set_return (`${_lp.rwr ()}${nbbseq.rwr ()}${_rp.rwr ()}`);
+return exit_rule ("SingleSeqBranchedItem_parenplain");
+},
+SingleSeqBranchedItem_plainplus : function (bi,op,) {
+enter_rule ("SingleSeqBranchedItem_plainplus");
+    pushParameter ("prevretvar", `${getParameter ("retvar")}`);
+    pushParameter ("retvar", `${genvar (`seq`,)}`);
+    set_return (`
+      ${getParameter ("retvar")} = True
+      if ${getParameter ("more")} ${getParameter ("prevretvar")}:⤷
+        ${bi.rwr ()}
+        ${getParameter ("prevretvar")} = ${getParameter ("prevretvar")} ${getParameter ("logicalop")} ${getParameter ("retvar")} 
+        while ${getParameter ("retvar")}:⤷
+          ${bi.rwr ()}
+        ⤶
+      ⤶
+    `);
+popParameter ("retvar");
+popParameter ("prevretvar");
+return exit_rule ("SingleSeqBranchedItem_plainplus");
+},
+SingleSeqBranchedItem_plain : function (bi,) {
+enter_rule ("SingleSeqBranchedItem_plain");
+    pushParameter ("prevretvar", `${getParameter ("retvar")}`);
+    pushParameter ("retvar", `${genvar (`seq`,)}`);
+    set_return (`
+      ${getParameter ("retvar")} = True
+      if ${getParameter ("more")} ${getParameter ("prevretvar")}:⤷
+        ${bi.rwr ()}
+      ⤶
+      ${getParameter ("prevretvar")} = ${getParameter ("prevretvar")} ${getParameter ("logicalop")} ${getParameter ("retvar")} 
+    `);
+popParameter ("retvar");
+popParameter ("prevretvar");
+return exit_rule ("SingleSeqBranchedItem_plain");
+},
+NoBarBranchedSequence : function (nbssbi,) {
+enter_rule ("NoBarBranchedSequence");
+    set_return (`${nbssbi.rwr ().join ('')}`);
+return exit_rule ("NoBarBranchedSequence");
+},
+NoBarSingleSeqBranchedItem : function (i,) {
+enter_rule ("NoBarSingleSeqBranchedItem");
+    set_return (`${i.rwr ()}`);
+return exit_rule ("NoBarSingleSeqBranchedItem");
+},
+BranchedAlternation_altplus : function (_lp,i,_rp,op,) {
+enter_rule ("BranchedAlternation_altplus");
+    pushParameter ("logicalop", `and`);
+    pushParameter ("more", ``);
+    pushParameter ("prevretvar", `${getParameter ("retvar")}`);
+    pushParameter ("retvar", `${genvar (`seq`,)}`);
+    set_return (`
+	  # BA_altplus
+	  ${getParameter ("retvar")} = False
+	  ${i.rwr ().join ('')}
+	  while ${getParameter ("retvar")}:⤷
+	    ${i.rwr ().join ('')}
+	  ⤶
+	`);
+popParameter ("retvar");
+popParameter ("prevretvar");
+popParameter ("more");
+popParameter ("logicalop");
+return exit_rule ("BranchedAlternation_altplus");
+},
+BranchedAlternation_altplain : function (_lp,i,_rp,) {
+enter_rule ("BranchedAlternation_altplain");
+    pushParameter ("logicalop", `and`);
+    pushParameter ("more", ``);
+    pushParameter ("prevretvar", `${getParameter ("retvar")}`);
+    pushParameter ("retvar", `${genvar (`seq`,)}`);
+    set_return (`
+	  # BA_altplain
+	  ${getParameter ("retvar")} = False
+	  ${i.rwr ().join ('')}
+	`);
+popParameter ("retvar");
+popParameter ("prevretvar");
+popParameter ("more");
+popParameter ("logicalop");
+return exit_rule ("BranchedAlternation_altplain");
+},
+SingleAltBranchedItem : function (_bar,i,) {
+enter_rule ("SingleAltBranchedItem");
+    pushParameter ("logicalop", `or`);
+    set_return (`
+    if ${getParameter ("more")} ${getParameter ("prevretvar")}:⤷
+      ${i.rwr ()}
+      ${getParameter ("prevretvar")} = ${getParameter ("prevretvar")} ${getParameter ("logical")}  ${getParameter ("retvar")} 
+    ⤶
+  `);
+popParameter ("logicalop");
+return exit_rule ("SingleAltBranchedItem");
+},
+SingleBranchedPredItem : function (p,) {
+enter_rule ("SingleBranchedPredItem");
+    set_return (`${getParameter ("retvar")} = ${p.rwr ()}`);
+return exit_rule ("SingleBranchedPredItem");
+},
+Pred_neg : function (_not,matchAtom,) {
+enter_rule ("Pred_neg");
+    set_return (` not ${matchAtom.rwr ()}`);
+return exit_rule ("Pred_neg");
+},
+Pred_plain : function (matchAtom,) {
+enter_rule ("Pred_plain");
+    set_return (` ${matchAtom.rwr ()}`);
+return exit_rule ("Pred_plain");
+},
+matchAtom_string : function (dqstring,) {
+enter_rule ("matchAtom_string");
+    set_return (`${genskipmaybe (`${getParameter ("skip")}`,`parse_string (${dqstring.rwr ()})`,)}`);
+return exit_rule ("matchAtom_string");
+},
+matchAtom_single : function (id,) {
+enter_rule ("matchAtom_single");
+    set_return (`${genskipmaybe (`${getParameter ("skip")}`,`${id.rwr ()} ()`,)}`);
+return exit_rule ("matchAtom_single");
+},
+dqstring : function (dq,sqchar,dq2,) {
+enter_rule ("dqstring");
+    set_return (`${dq.rwr ()}${sqchar.rwr ().join ('')}${dq2.rwr ()}`);
+return exit_rule ("dqstring");
+},
+sqchar_escdq : function (_bslash,dq,) {
+enter_rule ("sqchar_escdq");
+    set_return (`${_bslash.rwr ()}${dq.rwr ()}`);
+return exit_rule ("sqchar_escdq");
+},
+sqchar_any : function (any,) {
+enter_rule ("sqchar_any");
+    set_return (`${any.rwr ()}`);
+return exit_rule ("sqchar_any");
+},
+id : function (id,) {
+enter_rule ("id");
+    set_return (` ${id.rwr ()}`);
+return exit_rule ("id");
+},
+uppercaseid : function (upper,alnum,) {
+enter_rule ("uppercaseid");
+    set_return (`${upper.rwr ()}${alnum.rwr ().join ('')}`);
+return exit_rule ("uppercaseid");
+},
+lowercaseid : function (lower,alnum,) {
+enter_rule ("lowercaseid");
+    set_return (`${lower.rwr ()}${alnum.rwr ().join ('')}`);
+return exit_rule ("lowercaseid");
+},
+_terminal: function () { return this.sourceString; },
+_iter: function (...children) { return children.map(c => c.rwr ()); }
+}
+import * as fs from 'fs';
+
+let terminated = false;
+
+function xbreak () {
+    terminated = true;
+    return '';
+}
+
+function xcontinue () {
+    terminated = false;
+    return '';
+}
+    
+function is_terminated () {
+    return terminated;
+}
+function expand (src, parser) {
+    let cst = parser.match (src);
+    if (cst.failed ()) {
+	//th  row Error (`${cst.message}\ngrammar=${grammarname (grammar)}\nsrc=\n${src}`);
+	throw Error (cst.message);
+    }
+    let sem = parser.createSemantics ();
+    sem.addOperation ('rwr', _rewrite);
+    return sem (cst).rwr ();
+}
+
+function grammarname (s) {
+    let n = s.search (/{/);
+    return s.substr (0, n).replaceAll (/\n/g,'').trim ();
+}
+
+try {
+    const argv = process.argv.slice(2);
+    let srcFilename = argv[0];
+    if ('-' == srcFilename) { srcFilename = 0 }
+    let src = fs.readFileSync(srcFilename, 'utf-8');
+    try {
+	let parser = ohm.grammar (grammar);
+	let s = src;
+	xcontinue ();
+	while (! is_terminated ()) {
+	    xbreak ();
+	    s = expand (s, parser);
+	}
+	console.log (s);
+	process.exit (0);
+    } catch (e) {
+	//console.error (`${e}\nargv=${argv}\ngrammar=${grammarname (grammar)}\src=\n${src}`);
+	console.error (`${e}\n\ngrammar = "${grammarname (grammar)}\n"`);
+	process.exit (1);
+    }
+} catch (e) {
+    console.error(e.stack);
+    //console.error (`${e}\n\ngrammar = "${grammarname (grammar)}"\n`);
+    process.exit (1);
+}
+

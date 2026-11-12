@@ -40,7 +40,13 @@ def ⦑rulename⦒ ():⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-BranchedSequence [item+] = ‛«item»’
+BranchedSequence [item+] =
+⎡ logicalop = ‛and’
+  ⎡ more = ‛’
+    ‛«item»’
+  ⎦
+⎦
+
 BranchedItem [item] = ‛«item»’
 
 SingleSeqBranchedItem_parenplus [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
@@ -51,9 +57,9 @@ SingleSeqBranchedItem_plainplus [bi op] =
   ⎡ retvar = ‛⎨genvar ‛seq’⎬’
     ‛
       ⦑retvar⦒ = True
-      if ⦑prevretvar⦒:⤷
+      if ⦑more⦒ ⦑prevretvar⦒:⤷
         «bi»
-        ⦑prevretvar⦒ = ⦑prevretvar⦒ and ⦑retvar⦒ 
+        ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒ ⦑retvar⦒ 
         while ⦑retvar⦒:⤷
           «bi»
         ⤶
@@ -67,10 +73,10 @@ SingleSeqBranchedItem_plain [bi] =
   ⎡ retvar = ‛⎨genvar ‛seq’⎬’
     ‛
       ⦑retvar⦒ = True
-      if ⦑prevretvar⦒:⤷
+      if ⦑more⦒ ⦑prevretvar⦒:⤷
         «bi»
       ⤶
-      ⦑prevretvar⦒ = ⦑prevretvar⦒ and ⦑retvar⦒ 
+      ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒ ⦑retvar⦒ 
     ’
   ⎦
 ⎦
@@ -78,10 +84,49 @@ SingleSeqBranchedItem_plain [bi] =
 NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
 NoBarSingleSeqBranchedItem [i] = ‛«i»’
 
-BranchedAlternation_altplus [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
-BranchedAlternation_altplain [_lp i+ _rp] = ‛«_lp»«i»«_rp»’
+BranchedAlternation_altplus [_lp i+ _rp op] =
+⎡ logicalop = ‛and’
+  ⎡ more = ‛’
+    ⎡ prevretvar = ‛⦑retvar⦒’
+      ⎡ retvar = ‛⎨genvar ‛seq’⎬’
+	‛
+	  # BA_altplus
+	  ⦑retvar⦒ = False
+	  «i»
+	  while ⦑retvar⦒:⤷
+	    «i»
+	  ⤶
+	’
+      ⎦
+    ⎦
+  ⎦
+⎦
 
-SingleAltBranchedItem [_bar i] = ‛«i»’
+BranchedAlternation_altplain [_lp i+ _rp] =
+⎡ logicalop = ‛and’
+  ⎡ more = ‛not’
+    ⎡ prevretvar = ‛⦑retvar⦒’
+      ⎡ retvar = ‛⎨genvar ‛seq’⎬’
+	‛
+	  # BA_altplain
+	  ⦑retvar⦒ = False
+	  «i»
+	’
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+SingleAltBranchedItem [_bar i] =
+⎡ logicalop = ‛or’
+  ‛
+    if ⦑more⦒ ⦑prevretvar⦒:⤷
+      «i»
+      ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒  ⦑retvar⦒ 
+    ⤶
+  ’
+⎦
+
 SingleBranchedPredItem [p] = ‛⦑retvar⦒ = «p»’
 
 

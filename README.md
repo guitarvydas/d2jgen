@@ -1,3 +1,5 @@
+# v6
+
 # v5
 - remove * and ? (YAGNI)
 - flesh out SingleSeqBranchedItem_plainplus
