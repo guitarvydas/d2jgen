@@ -7,79 +7,56 @@
 
 %rewrite ohmjsmin {
 
-Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
+Main [id _lb Rules _rb] = ‛«id»«_lb»«Rules»«_rb»’
 
-Rules [ _1+] = ‛«_1»’
+Rules [x+] = ‛«x»’
 
-SyntacticRule [ id _eq RuleBody] =
-⎡ skip=‛true’
-  ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
-       ‛«RuleBody»’
-    ⎦
-  ⎦
-⎦
+SyntacticRule [id _eq RuleBody] = ‛\n«id» «_eq» «RuleBody»’
 
-LexicalRule [ id _eq RuleBody] =
-⎡ skip=‛false’
-  ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
-       ‛«RuleBody»’
-    ⎦
-  ⎦
-⎦
+LexicalRule [id _eq RuleBody] = ‛\n«id» «_eq» «RuleBody»’
 
 
 
 
 
-RuleBody [x] = ‛
-def ⦑rulename⦒ ():⤷
-  begin ("⦑rulename⦒")
-  ⦑retvar⦒ = True
-  «x»
-  if ⦑retvar⦒:⤷
-    return accept ("⦑rulename⦒")⤶
-  else:⤷
-    return fail ("⦑rulename⦒")⤶
- ⤶’
+RuleBody [x] = ‛«x»’
 
 BranchedSequence [item+] = ‛«item»’
 BranchedItem [item] = ‛«item»’
 
-SingleSeqBranchedItem_parenplus [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
-SingleSeqBranchedItem_parenstar [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
-SingleSeqBranchedItem_parenopt [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
-SingleSeqBranchedItem_parenplain [lp nbbseq rp] = ‛«lp»«nbbseq»«rp»’
+SingleSeqBranchedItem_parenplus [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
+SingleSeqBranchedItem_parenstar [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
+SingleSeqBranchedItem_parenopt [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
+SingleSeqBranchedItem_parenplain [_lp nbbseq _rp] = ‛«_lp»«nbbseq»«_rp»’
 SingleSeqBranchedItem_plainplus [bi op] = ‛«bi»«op»’
 SingleSeqBranchedItem_plainstar [bi op] = ‛«bi»«op»’
 SingleSeqBranchedItem_plainopt [bi op] = ‛«bi»«op»’
-SingleSeqBranchedItem_plain [bi] = ‛«bi»«op»’
+SingleSeqBranchedItem_plain [bi] = ‛«bi»’
 
 NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
 NoBarSingleSeqBranchedItem [i] = ‛«i»’
-BranchedAlternation_altplus [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
-BranchedAlternation_altstar [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
-BranchedAlternation_altopt [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
-BranchedAlternation_altplain [lp i+ rp] = ‛«lp»«i»«rp»’
+BranchedAlternation_altplus [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
+BranchedAlternation_altstar [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
+BranchedAlternation_altopt [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
+BranchedAlternation_altplain [_lp i+ _rp] = ‛«_lp»«i»«_rp»’
 SingleAltBranchedItem [_bar i] = ‛«_bar»«i»’
 SingleBranchedPredItem [p] = ‛«p»’
 
 
-Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
-Pred_plain [ matchAtom] = ‛ «matchAtom»’
+Pred_neg [_not matchAtom] = ‛«_not»«matchAtom»’
+Pred_plain [matchAtom] = ‛«matchAtom»’
 
-matchAtom_string [ dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
-matchAtom_single [ id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
+matchAtom_string [dqstring] =‛«dqstring»’
+matchAtom_single [id] =‛«id»’
 
-dqstring [ dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
+dqstring [dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
 
-sqchar_escdq [ _bslash dq] = ‛«_bslash»«dq»’
+sqchar_escdq [_bslash dq] = ‛«_bslash»«dq»’
 sqchar_any [any] = ‛«any»’
 
-id [ _3] = ‛ «_3»’
+id [id] = ‛«id»’
 
-uppercaseid [ upper alnum*] = ‛«upper»«alnum»’
+uppercaseid [upper alnum*] = ‛«upper»«alnum»’
 
-lowercaseid [ lower alnum*] = ‛«lower»«alnum»’
+lowercaseid [lower alnum*] = ‛«lower»«alnum»’
 }
