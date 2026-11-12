@@ -13,10 +13,10 @@ ohmjsmin {
     | "(" NoBarBranchedSequence ")" "+"  -- parenplus
     | "(" NoBarBranchedSequence ")" "*"  -- parenstar
     | "(" NoBarBranchedSequence ")" "?"  -- parenopt
-    | "(" NoBarBranchedSequence ")"      -- paren
+    | "(" NoBarBranchedSequence ")"      -- parenplain
     | BranchedItem "+"                   -- plainplus
     | BranchedItem "*"                   -- plainstar
-    | BranchedItem "?"                   -- plainop
+    | BranchedItem "?"                   -- plainopt
     | BranchedItem                       -- plain
   NoBarBranchedSequence = NoBarSingleSeqBranchedItem+
   NoBarSingleSeqBranchedItem = ~"|" SingleSeqBranchedItem

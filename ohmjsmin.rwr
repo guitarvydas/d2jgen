@@ -44,54 +44,27 @@ def ⦑rulename⦒ ():⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-BranchedItem [x] = ‛«x»’
+BranchedSequence [item+] = ‛«item»’
+BranchedItem [item] = ‛«item»’
 
-BranchedSequence_parenplus [lp britem+ rp _plus] = ‛NIY’
-BranchedSequence_parenstar [lp britem+ rp _star] = ‛NIY’
-BranchedSequence_parenopt [lp britem+ rp _opt]   = ‛NIY’
-BranchedSequence_parenplain [lp britem+ rp]      = ‛NIY’
-BranchedSequence_plain [britem]                  =
-⎡ previousretvar = ‛⦑retvar⦒’
-  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
-    ‛
-      # BEGINBranched Sequence Plain
-      ⦑retvar⦒ = None
-      if ⦑previousretvar⦒:⤷
-        «britem»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
-      # END Branched Sequence Plain
-    ’
-  ⎦
-⎦
+SingleSeqBranchedItem_parenplus [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
+SingleSeqBranchedItem_parenstar [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
+SingleSeqBranchedItem_parenopt [lp nbbseq rp op] = ‛«lp»«nbbseq»«rp»«op»’
+SingleSeqBranchedItem_parenplain [lp nbbseq rp] = ‛«lp»«nbbseq»«rp»’
+SingleSeqBranchedItem_plainplus [bi op] = ‛«bi»«op»’
+SingleSeqBranchedItem_plainstar [bi op] = ‛«bi»«op»’
+SingleSeqBranchedItem_plainopt [bi op] = ‛«bi»«op»’
+SingleSeqBranchedItem_plain [bi] = ‛«bi»«op»’
 
-BranchedAlternation_parenplus [lp altitem+ rp _plus] = ‛NIY’
-BranchedAlternation_parenstar [lp altitem+ rp _star] = ‛NIY’
-BranchedAlternation_parenopt [lp altitem+ rp _opt]   = ‛NIY’
-BranchedAlternation_parenplain [lp altitem+ rp]      =
-⎡ previousretvar = ‛⦑retvar⦒’
-  ⎡ retvar = ‛⎨genvar ‛alt’⎬’
-    ‛
-      # Branched Alteration Paren Plain
-      ⦑retvar⦒ = None
-      if not ⦑previousretvar⦒:⤷
-        «altitem»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
-    ’
-  ⎦
-⎦
+NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
+NoBarSingleSeqBranchedItem [i] = ‛«i»’
+BranchedAlternation_altplus [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
+BranchedAlternation_altstar [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
+BranchedAlternation_altopt [lp i+ rp op] = ‛«lp»«i»«rp»«op»’
+BranchedAlternation_altplain [lp i+ rp] = ‛«lp»«i»«rp»’
+SingleAltBranchedItem [_bar i] = ‛«_bar»«i»’
+SingleBranchedPredItem [p] = ‛«p»’
 
-BranchedPred [p] =
-⎡ previousretvar = ‛⦑retvar⦒’
-  ‛
-    # BEGIN Branched Pred
-    ⦑previousretvar⦒ = «p»
-    # END Branched Pred
-  ’
-⎦
-
-AltBranchedItem [_bar item] = ‛«item»’
 
 Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
 Pred_plain [ matchAtom] = ‛ «matchAtom»’
