@@ -50,16 +50,33 @@ SingleSeqBranchedItem_parenplain [_lp nbbseq _rp] = ‛«_lp»«nbbseq»«_rp»�
 SingleSeqBranchedItem_plainplus [bi op] = ‛«bi»«op»’
 SingleSeqBranchedItem_plainstar [bi op] = ‛«bi»«op»’
 SingleSeqBranchedItem_plainopt [bi op] = ‛«bi»«op»’
-SingleSeqBranchedItem_plain [bi] = ‛«bi»’
+
+SingleSeqBranchedItem_plain [bi] =
+⎡ prevretvar = ‛⦑retvar⦒’
+  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
+    ‛
+      ⦑retvar⦒ = True
+      if ⦑prevretvar⦒:⤷
+      «bi»
+      ⤶
+      ⦑prevretvar⦒ = ⦑prevretvar⦒ and ⦑retvar⦒ 
+    ’
+  ⎦
+⎦
 
 NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
 NoBarSingleSeqBranchedItem [i] = ‛«i»’
+
 BranchedAlternation_altplus [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
 BranchedAlternation_altstar [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
 BranchedAlternation_altopt [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
 BranchedAlternation_altplain [_lp i+ _rp] = ‛«_lp»«i»«_rp»’
+
 SingleAltBranchedItem [_bar i] = ‛«_bar»«i»’
-SingleBranchedPredItem [p] = ‛«p»’
+SingleBranchedPredItem [p] = ‛⦑retvar⦒ = «p»’
+
+
+
 
 
 Pred_neg [_not matchAtom] = ‛ not «matchAtom»’

@@ -3,7 +3,11 @@ from plib2 import *
 def Main ():
     begin ("Main")
     r = True
-    parse_ignoring (lambda :  Array ())
+    seq1 = True
+    if r:
+        seq1 =  parse_ignoring (lambda :  Array ())
+        
+    r = r and seq1
     if r:
         return accept ("Main")
     else:
@@ -12,7 +16,33 @@ def Main ():
 def Array ():
     begin ("Array")
     r = True
-    parse_ignoring (lambda : parse_string ("["))(| parse_ignoring (lambda :  KV ())| parse_ignoring (lambda :  Object ()))+ parse_ignoring (lambda : parse_string ("]"))
+    seq1 = True
+    if r:
+        seq1 =  parse_ignoring (lambda : parse_string ("["))
+        
+    r = r and seq1
+    seq2 = True
+    if r:
+        (|
+        seq3 = True
+        if seq2:
+            seq3 =  parse_ignoring (lambda :  KV ())
+            
+        seq2 = seq2 and seq3
+        |
+        seq4 = True
+        if seq2:
+            seq4 =  parse_ignoring (lambda :  Object ())
+            
+        seq2 = seq2 and seq4
+        )+
+        
+    r = r and seq2
+    seq5 = True
+    if r:
+        seq5 =  parse_ignoring (lambda : parse_string ("]"))
+        
+    r = r and seq5
     if r:
         return accept ("Array")
     else:
@@ -21,7 +51,17 @@ def Array ():
 def Object ():
     begin ("Object")
     r = True
-    parse_ignoring (lambda : parse_string ("{")) parse_ignoring (lambda :  KV ())+ parse_ignoring (lambda : parse_string ("}"))
+    seq1 = True
+    if r:
+        seq1 =  parse_ignoring (lambda : parse_string ("{"))
+        
+    r = r and seq1
+    r =  parse_ignoring (lambda :  KV ())+
+    seq2 = True
+    if r:
+        seq2 =  parse_ignoring (lambda : parse_string ("}"))
+        
+    r = r and seq2
     if r:
         return accept ("Object")
     else:
@@ -30,7 +70,51 @@ def Object ():
 def KV ():
     begin ("KV")
     r = True
-    parse_ignoring (lambda :  keystring ()) parse_ignoring (lambda : parse_string (":"))(| parse_ignoring (lambda :  Array ())| parse_ignoring (lambda :  Object ())| parse_ignoring (lambda :  string ())| parse_ignoring (lambda :  emptyString ())| parse_ignoring (lambda :  number ()))
+    seq1 = True
+    if r:
+        seq1 =  parse_ignoring (lambda :  keystring ())
+        
+    r = r and seq1
+    seq2 = True
+    if r:
+        seq2 =  parse_ignoring (lambda : parse_string (":"))
+        
+    r = r and seq2
+    seq3 = True
+    if r:
+        (|
+        seq4 = True
+        if seq3:
+            seq4 =  parse_ignoring (lambda :  Array ())
+            
+        seq3 = seq3 and seq4
+        |
+        seq5 = True
+        if seq3:
+            seq5 =  parse_ignoring (lambda :  Object ())
+            
+        seq3 = seq3 and seq5
+        |
+        seq6 = True
+        if seq3:
+            seq6 =  parse_ignoring (lambda :  string ())
+            
+        seq3 = seq3 and seq6
+        |
+        seq7 = True
+        if seq3:
+            seq7 =  parse_ignoring (lambda :  emptyString ())
+            
+        seq3 = seq3 and seq7
+        |
+        seq8 = True
+        if seq3:
+            seq8 =  parse_ignoring (lambda :  number ())
+            
+        seq3 = seq3 and seq8
+        )
+        
+    r = r and seq3
     if r:
         return accept ("KV")
     else:
@@ -39,7 +123,17 @@ def KV ():
 def string ():
     begin ("string")
     r = True
-    parse_string ("\"")  strchar ()+ parse_string ("\"")
+    seq1 = True
+    if r:
+        seq1 =  parse_string ("\"")
+        
+    r = r and seq1
+    r =   strchar ()+
+    seq2 = True
+    if r:
+        seq2 =  parse_string ("\"")
+        
+    r = r and seq2
     if r:
         return accept ("string")
     else:
@@ -48,7 +142,16 @@ def string ():
 def strchar ():
     begin ("strchar")
     r = True
-    not parse_string ("\"")  any ()
+    seq1 = True
+    if r:
+        seq1 =  not parse_string ("\"")
+        
+    r = r and seq1
+    seq2 = True
+    if r:
+        seq2 =   any ()
+        
+    r = r and seq2
     if r:
         return accept ("strchar")
     else:
@@ -57,7 +160,11 @@ def strchar ():
 def keystring ():
     begin ("keystring")
     r = True
-    string ()
+    seq1 = True
+    if r:
+        seq1 =   string ()
+        
+    r = r and seq1
     if r:
         return accept ("keystring")
     else:
@@ -66,7 +173,16 @@ def keystring ():
 def emptyString ():
     begin ("emptyString")
     r = True
-    parse_string ("\"") parse_string ("\"")
+    seq1 = True
+    if r:
+        seq1 =  parse_string ("\"")
+        
+    r = r and seq1
+    seq2 = True
+    if r:
+        seq2 =  parse_string ("\"")
+        
+    r = r and seq2
     if r:
         return accept ("emptyString")
     else:
@@ -75,7 +191,71 @@ def emptyString ():
 def number ():
     begin ("number")
     r = True
-    (| parse_string ("0")| parse_string ("1")| parse_string ("2")| parse_string ("3")| parse_string ("4")| parse_string ("5")| parse_string ("6")| parse_string ("7")| parse_string ("8")| parse_string ("9"))+
+    seq1 = True
+    if r:
+        (|
+        seq2 = True
+        if seq1:
+            seq2 =  parse_string ("0")
+            
+        seq1 = seq1 and seq2
+        |
+        seq3 = True
+        if seq1:
+            seq3 =  parse_string ("1")
+            
+        seq1 = seq1 and seq3
+        |
+        seq4 = True
+        if seq1:
+            seq4 =  parse_string ("2")
+            
+        seq1 = seq1 and seq4
+        |
+        seq5 = True
+        if seq1:
+            seq5 =  parse_string ("3")
+            
+        seq1 = seq1 and seq5
+        |
+        seq6 = True
+        if seq1:
+            seq6 =  parse_string ("4")
+            
+        seq1 = seq1 and seq6
+        |
+        seq7 = True
+        if seq1:
+            seq7 =  parse_string ("5")
+            
+        seq1 = seq1 and seq7
+        |
+        seq8 = True
+        if seq1:
+            seq8 =  parse_string ("6")
+            
+        seq1 = seq1 and seq8
+        |
+        seq9 = True
+        if seq1:
+            seq9 =  parse_string ("7")
+            
+        seq1 = seq1 and seq9
+        |
+        seq10 = True
+        if seq1:
+            seq10 =  parse_string ("8")
+            
+        seq1 = seq1 and seq10
+        |
+        seq11 = True
+        if seq1:
+            seq11 =  parse_string ("9")
+            
+        seq1 = seq1 and seq11
+        )+
+        
+    r = r and seq1
     if r:
         return accept ("number")
     else:
