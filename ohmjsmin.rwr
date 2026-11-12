@@ -11,15 +11,34 @@ Main [id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 
 Rules [x+] = ‛«x»’
 
-SyntacticRule [id _eq RuleBody] = ‛\n«id» «_eq» «RuleBody»’
+SyntacticRule [ id _eq RuleBody] =
+⎡ skip=‛true’
+  ⎡ rulename=‛«id»’
+    ⎡ retvar=‛⎨resetgenvar⎬r’
+       ‛«RuleBody»’
+    ⎦
+  ⎦
+⎦
 
-LexicalRule [id _eq RuleBody] = ‛\n«id» «_eq» «RuleBody»’
+LexicalRule [ id _eq RuleBody] =
+⎡ skip=‛false’
+  ⎡ rulename=‛«id»’
+    ⎡ retvar=‛⎨resetgenvar⎬r’
+       ‛«RuleBody»’
+    ⎦
+  ⎦
+⎦
 
-
-
-
-
-RuleBody [x] = ‛«x»’
+RuleBody [x] = ‛
+def ⦑rulename⦒ ():⤷
+  begin ("⦑rulename⦒")
+  ⦑retvar⦒ = True
+  «x»
+  if ⦑retvar⦒:⤷
+    return accept ("⦑rulename⦒")⤶
+  else:⤷
+    return fail ("⦑rulename⦒")⤶
+ ⤶’
 
 BranchedSequence [item+] = ‛«item»’
 BranchedItem [item] = ‛«item»’
