@@ -5,23 +5,29 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
-  RuleBody = BranchedItem
+  RuleBody = BranchedSequence
+  BranchedSequence = SingleSeqBranchedItem+
+  BranchedItem = (SingleSeqBranchedItem | BranchedAlternation | SingleBranchedPredItem)
 
-  BranchedItem = (BranchedAlternation | BranchedSequence | BranchedPred)
-  BranchedSequence = 
-    | "(" BranchedItem ")" "+" -- parenplus
-    | "(" BranchedItem ")" "*" -- parenstar
-    | "(" BranchedItem ")" "?" -- parenopt
-    | "(" BranchedItem ")"     -- parenplain
-    | BranchedItem              -- plain
+  SingleSeqBranchedItem =
+    | "(" NoBarBranchedSequence ")" "+"  -- parenplus
+    | "(" NoBarBranchedSequence ")" "*"  -- parenstar
+    | "(" NoBarBranchedSequence ")" "?"  -- parenopt
+    | "(" NoBarBranchedSequence ")"      -- paren
+    | BranchedItem "+"                   -- plainplus
+    | BranchedItem "*"                   -- plainstar
+    | BranchedItem "?"                   -- plainop
+    | BranchedItem                       -- plain
+  NoBarBranchedSequence = NoBarSingleSeqBranchedItem+
+  NoBarSingleSeqBranchedItem = ~"|" SingleSeqBranchedItem
   BranchedAlternation =
-    | "(" AltBranchedItem ")" "+" -- parenplus
-    | "(" AltBranchedItem ")" "*" -- parenstar
-    | "(" AltBranchedItem ")" "?" -- parenopt
-    | "(" AltBranchedItem ")"     -- parenplain
-  BranchedPred = Pred
-
-  AltBranchedItem = "|" BranchedItem
+    | "(" SingleAltBranchedItem+ ")" "+" -- altplus
+    | "(" SingleAltBranchedItem+ ")" "*" -- altstar
+    | "(" SingleAltBranchedItem+ ")" "?" -- altopt
+    | "(" SingleAltBranchedItem+ ")"     -- altplain
+  SingleAltBranchedItem =
+    | "|" BranchedSequence
+  SingleBranchedPredItem = Pred
 
   //////////////////////////////////////////////////////////////////////////////
   // Pred returns a function call not wrapped in branching code

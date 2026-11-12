@@ -46,30 +46,33 @@ def ⦑rulename⦒ ():⤷
 
 BranchedItem [x] = ‛«x»’
 
-BranchedSequence_parenplus [lp britem rp _plus] = ‛NIY’
-BranchedSequence_parenstar [lp britem rp _star] = ‛NIY’
-BranchedSequence_parenopt [lp britem rp _opt]   = ‛NIY’
-BranchedSequence_parenplain [lp britem rp]      = ‛NIY’
+BranchedSequence_parenplus [lp britem+ rp _plus] = ‛NIY’
+BranchedSequence_parenstar [lp britem+ rp _star] = ‛NIY’
+BranchedSequence_parenopt [lp britem+ rp _opt]   = ‛NIY’
+BranchedSequence_parenplain [lp britem+ rp]      = ‛NIY’
 BranchedSequence_plain [britem]                  =
 ⎡ previousretvar = ‛⦑retvar⦒’
   ⎡ retvar = ‛⎨genvar ‛seq’⎬’
     ‛
+      # BEGINBranched Sequence Plain
       ⦑retvar⦒ = None
       if ⦑previousretvar⦒:⤷
         «britem»
       ⤶
       ⦑previousretvar⦒ = ⦑previousretvar⦒ or ⦑retvar⦒
+      # END Branched Sequence Plain
     ’
   ⎦
 ⎦
 
-BranchedAlternation_parenplus [lp altitem rp _plus] = ‛NIY’
-BranchedAlternation_parenstar [lp altitem rp _star] = ‛NIY’
-BranchedAlternation_parenopt [lp altitem rp _opt]   = ‛NIY’
-BranchedAlternation_parenplain [lp altitem rp]      =
+BranchedAlternation_parenplus [lp altitem+ rp _plus] = ‛NIY’
+BranchedAlternation_parenstar [lp altitem+ rp _star] = ‛NIY’
+BranchedAlternation_parenopt [lp altitem+ rp _opt]   = ‛NIY’
+BranchedAlternation_parenplain [lp altitem+ rp]      =
 ⎡ previousretvar = ‛⦑retvar⦒’
   ⎡ retvar = ‛⎨genvar ‛alt’⎬’
     ‛
+      # Branched Alteration Paren Plain
       ⦑retvar⦒ = None
       if not ⦑previousretvar⦒:⤷
         «altitem»
@@ -82,7 +85,9 @@ BranchedAlternation_parenplain [lp altitem rp]      =
 BranchedPred [p] =
 ⎡ previousretvar = ‛⦑retvar⦒’
   ‛
+    # BEGIN Branched Pred
     ⦑previousretvar⦒ = «p»
+    # END Branched Pred
   ’
 ⎦
 
