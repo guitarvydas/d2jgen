@@ -1,3 +1,7 @@
+# v3
+flesh out Pred rewrites
+
+
 # Parser-building SCN
 WIP
 ## Goal

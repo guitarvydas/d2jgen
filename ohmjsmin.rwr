@@ -62,20 +62,18 @@ SingleAltBranchedItem [_bar i] = ‛«_bar»«i»’
 SingleBranchedPredItem [p] = ‛«p»’
 
 
-Pred_neg [_not matchAtom] = ‛«_not»«matchAtom»’
-Pred_plain [matchAtom] = ‛«matchAtom»’
+Pred_neg [_not matchAtom] = ‛ not «matchAtom»’
+Pred_plain [matchAtom] = ‛ «matchAtom»’
 
-matchAtom_string [dqstring] =‛«dqstring»’
-matchAtom_single [id] =‛«id»’
+matchAtom_string [dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
+matchAtom_single [id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
 
 dqstring [dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
 
 sqchar_escdq [_bslash dq] = ‛«_bslash»«dq»’
 sqchar_any [any] = ‛«any»’
 
-id [id] = ‛«id»’
-
+id [id] = ‛ «id»’
 uppercaseid [upper alnum*] = ‛«upper»«alnum»’
-
 lowercaseid [lower alnum*] = ‛«lower»«alnum»’
 }

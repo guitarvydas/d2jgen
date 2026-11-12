@@ -3,7 +3,7 @@ from plib2 import *
 def Main ():
     begin ("Main")
     r = True
-    Array
+    parse_ignoring (lambda :  Array ())
     if r:
         return accept ("Main")
     else:
@@ -12,7 +12,7 @@ def Main ():
 def Array ():
     begin ("Array")
     r = True
-    "["(|KV|Object)+"]"
+    parse_ignoring (lambda : parse_string ("["))(| parse_ignoring (lambda :  KV ())| parse_ignoring (lambda :  Object ()))+ parse_ignoring (lambda : parse_string ("]"))
     if r:
         return accept ("Array")
     else:
@@ -21,7 +21,7 @@ def Array ():
 def Object ():
     begin ("Object")
     r = True
-    "{"KV+"}"
+    parse_ignoring (lambda : parse_string ("{")) parse_ignoring (lambda :  KV ())+ parse_ignoring (lambda : parse_string ("}"))
     if r:
         return accept ("Object")
     else:
@@ -30,7 +30,7 @@ def Object ():
 def KV ():
     begin ("KV")
     r = True
-    keystring":"(|Array|Object|string|emptyString|number)
+    parse_ignoring (lambda :  keystring ()) parse_ignoring (lambda : parse_string (":"))(| parse_ignoring (lambda :  Array ())| parse_ignoring (lambda :  Object ())| parse_ignoring (lambda :  string ())| parse_ignoring (lambda :  emptyString ())| parse_ignoring (lambda :  number ()))
     if r:
         return accept ("KV")
     else:
@@ -39,7 +39,7 @@ def KV ():
 def string ():
     begin ("string")
     r = True
-    "\""strchar+"\""
+    parse_string ("\"")  strchar ()+ parse_string ("\"")
     if r:
         return accept ("string")
     else:
@@ -48,7 +48,7 @@ def string ():
 def strchar ():
     begin ("strchar")
     r = True
-    ~"\""any
+    not parse_string ("\"")  any ()
     if r:
         return accept ("strchar")
     else:
@@ -57,7 +57,7 @@ def strchar ():
 def keystring ():
     begin ("keystring")
     r = True
-    string
+    string ()
     if r:
         return accept ("keystring")
     else:
@@ -66,7 +66,7 @@ def keystring ():
 def emptyString ():
     begin ("emptyString")
     r = True
-    "\"""\""
+    parse_string ("\"") parse_string ("\"")
     if r:
         return accept ("emptyString")
     else:
@@ -75,7 +75,7 @@ def emptyString ():
 def number ():
     begin ("number")
     r = True
-    (|"0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9")+
+    (| parse_string ("0")| parse_string ("1")| parse_string ("2")| parse_string ("3")| parse_string ("4")| parse_string ("5")| parse_string ("6")| parse_string ("7")| parse_string ("8")| parse_string ("9"))+
     if r:
         return accept ("number")
     else:
