@@ -30,8 +30,9 @@ sed -E 's/,//g' <"kernel.drawio.json.txt" >"test.kernel.drawio.json.txt"
 rm -f d2jgen.py
 # export T2TVERBOSE=1
 ./pbp/t2t "${TARGET}" <"d2jtest.ohm" |\
+    ./pbp/indent |\
     python nonblank.py |\
-    ./pbp/indent | tee d2jgen.py >$output
+   tee d2jgen.py >$output
 
 
 ############################

@@ -44,12 +44,23 @@ BranchedSequence [item+] = ‛«item»’
 BranchedItem [item] = ‛«item»’
 
 SingleSeqBranchedItem_parenplus [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
-SingleSeqBranchedItem_parenstar [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
-SingleSeqBranchedItem_parenopt [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
 SingleSeqBranchedItem_parenplain [_lp nbbseq _rp] = ‛«_lp»«nbbseq»«_rp»’
-SingleSeqBranchedItem_plainplus [bi op] = ‛«bi»«op»’
-SingleSeqBranchedItem_plainstar [bi op] = ‛«bi»«op»’
-SingleSeqBranchedItem_plainopt [bi op] = ‛«bi»«op»’
+
+SingleSeqBranchedItem_plainplus [bi op] =
+⎡ prevretvar = ‛⦑retvar⦒’
+  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
+    ‛
+      ⦑retvar⦒ = True
+      if ⦑prevretvar⦒:⤷
+        «bi»
+        ⦑prevretvar⦒ = ⦑prevretvar⦒ and ⦑retvar⦒ 
+        while ⦑retvar⦒:⤷
+          «bi»
+        ⤶
+      ⤶
+    ’
+  ⎦
+⎦
 
 SingleSeqBranchedItem_plain [bi] =
 ⎡ prevretvar = ‛⦑retvar⦒’
@@ -57,7 +68,7 @@ SingleSeqBranchedItem_plain [bi] =
     ‛
       ⦑retvar⦒ = True
       if ⦑prevretvar⦒:⤷
-      «bi»
+        «bi»
       ⤶
       ⦑prevretvar⦒ = ⦑prevretvar⦒ and ⦑retvar⦒ 
     ’
@@ -68,11 +79,9 @@ NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
 NoBarSingleSeqBranchedItem [i] = ‛«i»’
 
 BranchedAlternation_altplus [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
-BranchedAlternation_altstar [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
-BranchedAlternation_altopt [_lp i+ _rp op] = ‛«_lp»«i»«_rp»«op»’
 BranchedAlternation_altplain [_lp i+ _rp] = ‛«_lp»«i»«_rp»’
 
-SingleAltBranchedItem [_bar i] = ‛«_bar»«i»’
+SingleAltBranchedItem [_bar i] = ‛«i»’
 SingleBranchedPredItem [p] = ‛⦑retvar⦒ = «p»’
 
 

@@ -1,4 +1,12 @@
+# v5
+- remove * and ? (YAGNI)
+- flesh out SingleSeqBranchedItem_plainplus
+- rm _bar
+- look at Object
+- indent before nonblank
+
 # v4
+- SingleSeqBranchedItem_plain
 
 # v3
 flesh out Pred rewrites

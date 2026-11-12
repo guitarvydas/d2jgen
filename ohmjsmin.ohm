@@ -11,19 +11,13 @@ ohmjsmin {
 
   SingleSeqBranchedItem =
     | "(" NoBarBranchedSequence ")" "+"  -- parenplus
-    | "(" NoBarBranchedSequence ")" "*"  -- parenstar
-    | "(" NoBarBranchedSequence ")" "?"  -- parenopt
     | "(" NoBarBranchedSequence ")"      -- parenplain
     | BranchedItem "+"                   -- plainplus
-    | BranchedItem "*"                   -- plainstar
-    | BranchedItem "?"                   -- plainopt
     | BranchedItem                       -- plain
   NoBarBranchedSequence = NoBarSingleSeqBranchedItem+
   NoBarSingleSeqBranchedItem = ~"|" SingleSeqBranchedItem
   BranchedAlternation =
     | "(" SingleAltBranchedItem+ ")" "+" -- altplus
-    | "(" SingleAltBranchedItem+ ")" "*" -- altstar
-    | "(" SingleAltBranchedItem+ ")" "?" -- altopt
     | "(" SingleAltBranchedItem+ ")"     -- altplain
   SingleAltBranchedItem =
     | "|" BranchedSequence
