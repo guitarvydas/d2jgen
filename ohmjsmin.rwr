@@ -7,7 +7,7 @@
 
 %rewrite ohmjsmin {
 
-Main [id _lb Rules _rb] = ‛«id»«_lb»«Rules»«_rb»’
+Main [id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 
 Rules [x+] = ‛«x»’
 
