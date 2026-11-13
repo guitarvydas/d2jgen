@@ -56,7 +56,7 @@ Sequence [item+] =
 
 PredItem [p] = 
 ‛
-# begin end PredItem
+# begin PredItem
 ⦑target⦒ = «p»
 # end PredItem
 ’
@@ -68,19 +68,35 @@ Alternation_plus [alt _plus] =
 # end Alternation_plus
 ’
 
-Alternation_parenthesized [_lp item+ _rp] = 
-‛
-# begin Alternation_parenthesized
-«item»
-# end Alternation_parenthesized
-’
+Alternation_parenthesized [_lp item+ _rp] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      # begin AltItem_parenthesized
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = False
+        «item»
+      ⤶
+      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
+      # end AltItem_parenthesized
+    ’
+  ⎦
+⎦
 
 AltItem [_bar bitem] =
-‛
-# begin AltItem
-«_bar»«bitem»
-# end AltItem
-’
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      # begin AltItem
+      if not ⦑mytarget⦒:⤷
+        ⦑target⦒ = False
+        «bitem»
+      ⤶
+      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
+      # end AltItem
+    ’
+  ⎦
+⎦
 
 BranchingItem [x] = 
 ‛
@@ -130,17 +146,17 @@ SeqItem_sequence [s] =
 ’
 
 SeqItem_alternation [a] =
-‛
-# begin SeqItem_alternation
-«a»
-# end SeqItem_alternation
-’
+    ‛
+    # begin SeqItem_alternation
+    «a»
+    # end SeqItem_alternation
+    ’
 
 SeqItem_preditem [p] = 
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # end SeqItem_preditem
+      # begin SeqItem_preditem
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «p»

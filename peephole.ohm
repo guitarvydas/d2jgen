@@ -5,7 +5,13 @@ peephole {
     | applySyntactic<RandSeqFN> -- randseqfn
     | any                       -- char
   SeqNNTrue = "seq" NN "=" "True" "seq" NN "="
-  RandSeqFN = id "=" id "(" ")" id "=" id "and" "seq" NN
+  RandSeqFN = id "=" id "(" Actuals? ")" id "=" id "and" "seq" NN
+  Actuals =
+    | "(" Actuals ")" -- rec
+    | ~"(" ~")" any   -- plain
   NN = digit+
   id = letter alnum*
+  comment = "#" (~nl any)* nl
+  nl = "\n"
+  space += comment
 }

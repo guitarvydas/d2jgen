@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="8">
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="10">
   <diagram name="d2jgen" id="h6xlj_zDoH3NoklH6s_h">
     <mxGraphModel dx="977" dy="642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -1323,7 +1323,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="layered" id="_FIrwFJs9YnwSpLsWeDv">
-    <mxGraphModel dx="2212" dy="2294" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="3128" dy="2362" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="KdArVdHzkO85lGktfiTv-0" />
         <mxCell id="KdArVdHzkO85lGktfiTv-1" parent="KdArVdHzkO85lGktfiTv-0" />
@@ -2348,6 +2348,118 @@
         </mxCell>
         <mxCell id="Q3kJU7k_5ibJkZ7CZ8bI-168" parent="Q3kJU7k_5ibJkZ7CZ8bI-164" style="rounded=1;whiteSpace=wrap;html=1;sketch=0;points=[[0,0.5,0,0,0],[1,0.5,0,0,0]];fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;arcSize=50;fontFamily=Helvetica;fontSize=11;labelBackgroundColor=none;" value="target" vertex="1">
           <mxGeometry height="25" width="36" x="83" y="27.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="SbGSF3x8FUqOLp7b6S8b" name="nesting">
+    <mxGraphModel dx="1106" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qBaM4E3B_21yf9RuepHi-11" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        # begin SeqItem_alternation&#xa;        # begin AltItem_parenthesized&#xa;        if seq1:&#xa;            seq2 = False&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq3 = False&#xa;                # begin BranchingItem&#xa;                if seq3:&#xa;                    seq4 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq4:&#xa;                        seq4 = a ()&#xa;                    # end SeqItem_preditem&#xa;                    seq3 = seq3 and seq4&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq3&#xa;            # end AltItem&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq6 = False&#xa;                # begin BranchingItem&#xa;                if seq6:&#xa;                    seq7 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq7:&#xa;                        seq7 = b ()&#xa;                    # end SeqItem_preditem&#xa;                    seq6 = seq6 and seq7&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq6&#xa;            # end AltItem&#xa;        seq1 = seq1 or seq2&#xa;        # end AltItem_parenthesized&#xa;        # end SeqItem_alternation&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)" vertex="1">
+          <mxGeometry height="620" width="220" x="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-12" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="40" width="30" x="160" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-13" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="110" width="30" x="150" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-14" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="170" width="30" x="140" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-15" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="50" width="30" x="160" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-16" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="120" width="30" x="150" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-17" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="180" width="30" x="140" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-18" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="430" width="30" x="130" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-19" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="460" width="30" x="120" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-20" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="500" width="30" x="110" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="qBaM4E3B_21yf9RuepHi-21" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="main = (|a |b)" vertex="1">
+          <mxGeometry height="40" width="100" x="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Copy of nesting" id="d2ZEnC3TtfsCDiepU_Km">
+    <mxGraphModel dx="1106" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-0" />
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-1" parent="qDIte3Vp1yg8a7FzSjSn-0" />
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-2" parent="qDIte3Vp1yg8a7FzSjSn-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        # begin SeqItem_alternation&#xa;        # begin AltItem_parenthesized&#xa;        if seq1:&#xa;            seq2 = False&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq3 = False&#xa;                # begin BranchingItem&#xa;                if seq3:&#xa;                    seq4 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq4:&#xa;                        seq4 = a ()&#xa;                    # end SeqItem_preditem&#xa;                    seq3 = seq3 and seq4&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq3&#xa;            # end AltItem&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq6 = False&#xa;                # begin BranchingItem&#xa;                if seq6:&#xa;                    seq7 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq7:&#xa;                        seq7 = b ()&#xa;                    # end SeqItem_preditem&#xa;                    seq6 = seq6 and seq7&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq6&#xa;            # end AltItem&#xa;        seq1 = seq1 or seq2&#xa;        # end AltItem_parenthesized&#xa;        # end SeqItem_alternation&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)" vertex="1">
+          <mxGeometry height="620" width="220" x="640" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-3" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="510" width="250" x="630" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-4" parent="qDIte3Vp1yg8a7FzSjSn-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        # begin SeqItem_alternation&#xa;        # begin AltItem_parenthesized&#xa;        if seq1:&#xa;            seq2 = False&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq3 = False&#xa;                # begin BranchingItem&#xa;                if seq3:&#xa;                    seq4 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq4:&#xa;                        seq4 = a ()&#xa;                    # end SeqItem_preditem&#xa;                    seq3 = seq3 and seq4&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq3&#xa;            # end AltItem&#xa;            # begin AltItem&#xa;            if not seq2:&#xa;                seq6 = False&#xa;                # begin BranchingItem&#xa;                if seq6:&#xa;                    seq7 = True&#xa;                    # begin SeqItem_preditem&#xa;                    if seq7:&#xa;                        seq7 = b ()&#xa;                    # end SeqItem_preditem&#xa;                    seq6 = seq6 and seq7&#xa;                # end BranchingItem&#xa;            seq2 = seq2 or seq6&#xa;            # end AltItem&#xa;        seq1 = seq1 or seq2&#xa;        # end AltItem_parenthesized&#xa;        # end SeqItem_alternation&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)" vertex="1">
+          <mxGeometry height="620" width="220" x="280" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-5" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="40" width="30" x="320" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-6" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="110" width="30" x="310" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-7" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="170" width="30" x="300" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-8" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="50" width="30" x="320" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-9" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="120" width="30" x="310" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-10" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="180" width="30" x="300" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-11" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="430" width="30" x="290" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-12" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="460" width="30" x="280" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-13" parent="qDIte3Vp1yg8a7FzSjSn-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="500" width="30" x="270" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-14" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="60" width="130" x="700" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-15" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="40" width="130" x="770" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-16" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="180" width="175" x="675" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-17" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="430" width="210" x="650" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-18" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="120" width="150" x="690" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-19" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="50" width="130" x="700" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-20" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="460" width="230" x="640" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-21" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="180" width="175" x="675" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="qDIte3Vp1yg8a7FzSjSn-22" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="120" width="150" x="690" y="780" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
