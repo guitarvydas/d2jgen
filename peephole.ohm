@@ -1,0 +1,11 @@
+peephole {
+  main = match+
+  match=
+    | applySyntactic<SeqNNTrue> -- seqnntrue
+    | applySyntactic<RandSeqFN> -- randseqfn
+    | any                       -- char
+  SeqNNTrue = "seq" NN "=" "True" "seq" NN "="
+  RandSeqFN = id "=" id "(" ")" id "=" id "and" "seq" NN
+  NN = digit+
+  id = letter alnum*
+}

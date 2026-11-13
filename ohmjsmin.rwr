@@ -43,11 +43,23 @@ def ⦑rulename⦒ ():⤷
 Sequence [item+] = ‛«item»’
 PredItem [p] = ‛⦑target⦒ = «p»’
 Alternation_plus [alt _plus] =‛«alt»«_plus»’
-Alternation_parenthesized [_lp item+ _rp] =‛«_lp»«item»«_rp»’
+Alternation_parenthesized [_lp item+ _rp] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
+        «item»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+      ⤶
+    ’
+  ⎦
+⎦
+
 AltItem [_bar bitem] = ‛«_bar»«bitem»’
 BranchingItem [x] = ‛«x»’
 SeqItem_plus [item _plus] = ‛«item»«_plus»’
-SeqItem_parenthesized [_lp nbitem+ _rp] = ‛«_lp»«nbitem»«_rp»’
+SeqItem_parenthesized [_lp nbitem+ _rp] = ‛«nbitem»’
 SeqItem_sequence [s] = ‛«s»’
 SeqItem_alternation [a] = ‛«a»’
 
@@ -56,6 +68,7 @@ SeqItem_preditem [p] =
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
       if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
         «p»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
