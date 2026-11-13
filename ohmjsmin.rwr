@@ -58,8 +58,36 @@ Alternation_parenthesized [_lp item+ _rp] =
 
 AltItem [_bar bitem] = ‛«_bar»«bitem»’
 BranchingItem [x] = ‛«x»’
-SeqItem_plus [item _plus] = ‛«item»A«_plus»’
-SeqItem_parenthesized [_lp nbitem+ _rp] = ‛«nbitem»’
+
+SeqItem_plus [item _plus] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
+        «item»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+	while ⦑target⦒:⤷
+          «item»
+	⤶
+      ⤶
+    ’
+  ⎦
+⎦
+
+SeqItem_parenthesized [_lp nbitem+ _rp] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
+        «nbitem»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+      ⤶
+    ’
+  ⎦
+⎦
+
 SeqItem_sequence [s] = ‛«s»’
 SeqItem_alternation [a] = ‛«a»’
 
