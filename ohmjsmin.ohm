@@ -25,6 +25,7 @@ ohmjsmin {
     | "(" NoBarSeqItem+ ")" -- parenthesized
     | Sequence              -- sequence
     | Alternation           -- alternation
+    | PredItem "+"          -- preditemplus
     | PredItem              -- preditem
   NoBarSeqItem = ~"|" SeqItem
 

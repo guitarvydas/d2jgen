@@ -4,8 +4,8 @@ def main ():
     r = True
     if r:
         r = a ()
-    if r:
-        r = b ()
+        while seq1:
+            seq1 =  a ()
     if r:
         r = c ()
     if r:

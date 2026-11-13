@@ -3,7 +3,7 @@
   match [x] =‛«x»’
   SeqNNTrue [_seq nn _eq _true _seq2 nn2 _eq2] = ‛\n«_seq»«nn» «_eq» ⎨xcontinue⎬’
   RandSeqFN [id _eq id1 _lp _rp id2 _eq2 id3 _and _seq2 nn2] =
-    ‛\n«id2» «_eq2» «id1» ()’
+    ‛\n«id2» «_eq2» «id1» ()\n’
   NN [d+] = ‛«d»’
   id [c rest*] = ‛«c»«rest»’
 }
