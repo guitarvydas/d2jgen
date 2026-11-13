@@ -56,29 +56,40 @@ Sequence [item+] =
 
 PredItem [p] = 
 ‛
-# begin PredItem
+#B PredItem ⦑target⦒
 ⦑target⦒ = «p»
-# end PredItem
+#E PredItem ⦑target⦒
 ’
 
-Alternation_plus [alt _plus] =
-‛
-# begin Alternation_plus
-«alt»«_plus»
-# end Alternation_plus
-’
-
-Alternation_parenthesized [_lp item+ _rp] =
+Alternation_plus [_lp item+ _rp _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin AltItem_parenthesized
+      #B Alternation_plus <- ⦑target⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = False
         «item»
       ⤶
       ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
-      # end AltItem_parenthesized
+      while ⦑target⦒:⤷
+        «item»
+      ⤶
+      #E AltItem_pplus -> ⦑mytarget⦒
+    ’
+  ⎦
+⎦
+
+Alternation_parenthesized [_lp item+ _rp] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B AltItem_parenthesized <- ⦑mytarget⦒
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = False
+        «item»
+      ⤶
+      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
+      #E AltItem_parenthesized -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
@@ -87,29 +98,29 @@ AltItem [_bar bitem] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin AltItem
+      #B AltItem <- ⦑mytarget⦒
       if not ⦑mytarget⦒:⤷
         ⦑target⦒ = False
         «bitem»
       ⤶
       ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
-      # end AltItem
+      #E AltItem -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
 
 BranchingItem [x] = 
 ‛
-# begin BranchingItem
+#B BranchingItem <- ⦑target⦒
 «x»
-# end BranchingItem
+#E BranchingItem -> ⦑target⦒
 ’
 
 SeqItem_plus [item _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin SeqItem_plus
+      #B SeqItem_plus <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «item»
@@ -118,7 +129,7 @@ SeqItem_plus [item _plus] =
           «item»
 	⤶
       ⤶
-      # end SeqItem_plus
+      #E SeqItem_plus -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
@@ -127,42 +138,58 @@ SeqItem_parenthesized [_lp nbitem+ _rp] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin SeqItem_parenthesized
+      #B SeqItem_parenthesized <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «nbitem»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
-      # end SeqItem_parenthesized
+      #E -> SeqItem_parenthesized ⦑mytarget⦒
     ’
   ⎦
 ⎦
 
 SeqItem_sequence [s] =
-‛
-# end SeqItem_sequence
-«s»
-# end SeqItem_sequence
-’
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B SeqItem_sequenc <- ⦑target⦒
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
+        «s»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+      ⤶
+      #E SeqItem_sequence -> ⦑target⦒
+    ’
+  ⎦
+⎦
 
 SeqItem_alternation [a] =
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-    # begin SeqItem_alternation
-    «a»
-    # end SeqItem_alternation
+      #B SeqItem_alternation <- ⦑target⦒
+      if ⦑mytarget⦒:⤷
+        ⦑target⦒ = True
+        «a»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+      ⤶
+      #E SeqItem_alternation -> ⦑target⦒
     ’
+  ⎦
+⎦
 
 SeqItem_preditem [p] = 
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin SeqItem_preditem
+      #B SeqItem_preditem <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «p»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
-      # end SeqItem_preditem
+      #E SeqItem_preditem -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
@@ -170,7 +197,7 @@ SeqItem_preditemplus [p _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # begin SeqItem_preditemplus
+      #B SeqItem_preditemplus <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «p»
@@ -179,7 +206,7 @@ SeqItem_preditemplus [p _plus] =
 	  «p»
 	⤶
       ⤶
-      # end SeqItem_preditemplus
+      #E SeqItem_preditemplus -> ⦑mytarget⦒
     ’
   ⎦
 ⎦

@@ -1,8 +1,8 @@
 #!/bin/bash
-sed -E '/# begin Seq/d' |\
-    sed -E  '/# end Seq/d' |\
-    sed -E  '/# begin Pred/d' |\
-    sed -E  '/# end Pred/d' |\
-    sed -E  '/# begin Br/d' |\
-    sed -E  '/# end Br/d'
+sed -E '/#B Seq/d' |\
+    sed -E  '/#E Seq/d' |\
+    sed -E  '/#B Pred/d' |\
+    sed -E  '/#E Pred/d' |\
+    sed -E  '/#B Br/d' |\
+    sed -E  '/#E Br/d'
     

@@ -4,41 +4,55 @@ def main ():
     r = True
     if r:
         seq1 = True
-        # begin SeqItem_alternation
-        # begin AltItem_parenthesized
         if seq1:
-            seq2 = False
-            # begin AltItem
-            if not seq2:
+            seq2 = True
+            #B Alternation_plus <- seq3
+            if seq2:
                 seq3 = False
-                # begin BranchingItem
-                if seq3:
-                    seq4 = True
-                    # begin SeqItem_preditem
+                #B AltItem <- seq3
+                if not seq3:
+                    seq4 = False
                     if seq4:
-                        seq4 = a ()
-                    # end SeqItem_preditem
-                    seq3 = seq3 and seq4
-                # end BranchingItem
-            seq2 = seq2 or seq3
-            # end AltItem
-            # begin AltItem
-            if not seq2:
-                seq6 = False
-                # begin BranchingItem
-                if seq6:
-                    seq7 = True
-                    # begin SeqItem_preditem
+                        seq5 = True
+                        if seq5:
+                            seq5 = a ()
+                        seq4 = seq4 and seq5
+                seq3 = seq3 or seq4
+                #E AltItem -> seq3
+                #B AltItem <- seq3
+                if not seq3:
+                    seq7 = False
                     if seq7:
-                        seq7 = b ()
-                    # end SeqItem_preditem
-                    seq6 = seq6 and seq7
-                # end BranchingItem
-            seq2 = seq2 or seq6
-            # end AltItem
-        seq1 = seq1 or seq2
-        # end AltItem_parenthesized
-        # end SeqItem_alternation
+                        seq8 = True
+                        if seq8:
+                            seq8 = b ()
+                        seq7 = seq7 and seq8
+                seq3 = seq3 or seq7
+                #E AltItem -> seq3
+            seq2 = seq2 or seq3
+            while seq3:
+                #B AltItem <- seq3
+                if not seq3:
+                    seq10 = False
+                    if seq10:
+                        seq11 = True
+                        if seq11:
+                            seq11 = a ()
+                        seq10 = seq10 and seq11
+                seq3 = seq3 or seq10
+                #E AltItem -> seq3
+                #B AltItem <- seq3
+                if not seq3:
+                    seq13 = False
+                    if seq13:
+                        seq14 = True
+                        if seq14:
+                            seq14 = b ()
+                        seq13 = seq13 and seq14
+                seq3 = seq3 or seq13
+                #E AltItem -> seq3
+            #E AltItem_pplus -> seq2
+            seq1 = seq1 and seq2
         r = r and seq1
     if r:
         return accept ("main")
@@ -49,12 +63,9 @@ def a ():
     r = True
     if r:
         seq1 = True
-        # begin SeqItem_preditem
         if seq1:
             seq2 = parse_string ("a")
-            # end PredItem
             seq1 = seq1 and seq2
-        # end SeqItem_preditem
         r = r and seq1
     if r:
         return accept ("a")
@@ -65,12 +76,9 @@ def b ():
     r = True
     if r:
         seq1 = True
-        # begin SeqItem_preditem
         if seq1:
             seq2 = parse_string ("b")
-            # end PredItem
             seq1 = seq1 and seq2
-        # end SeqItem_preditem
         r = r and seq1
     if r:
         return accept ("b")
@@ -81,12 +89,9 @@ def c ():
     r = True
     if r:
         seq1 = True
-        # begin SeqItem_preditem
         if seq1:
             seq2 = parse_string ("c")
-            # end PredItem
             seq1 = seq1 and seq2
-        # end SeqItem_preditem
         r = r and seq1
     if r:
         return accept ("c")
