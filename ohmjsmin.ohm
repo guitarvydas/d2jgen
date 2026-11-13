@@ -5,23 +5,28 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
-  RuleBody = BranchedSequence
-  BranchedSequence = SingleSeqBranchedItem+
-  BranchedItem = (SingleSeqBranchedItem | BranchedAlternation | SingleBranchedPredItem)
 
-  SingleSeqBranchedItem =
-    | "(" NoBarBranchedSequence ")" "+"  -- parenplus
-    | "(" NoBarBranchedSequence ")"      -- parenplain
-    | BranchedItem "+"                   -- plainplus
-    | BranchedItem                       -- plain
-  NoBarBranchedSequence = NoBarSingleSeqBranchedItem+
-  NoBarSingleSeqBranchedItem = ~"|" SingleSeqBranchedItem
-  BranchedAlternation =
-    | "(" SingleAltBranchedItem+ ")" "+" -- altplus
-    | "(" SingleAltBranchedItem+ ")"     -- altplain
-  SingleAltBranchedItem =
-    | "|" BranchedSequence
-  SingleBranchedPredItem = Pred
+  //////////////////////////////////////////////////////////////////////////////
+  // There are 3 main branching control flow blocks: SeqItem, AltItem, PredItem
+  // each receives a target variable and leaves a true/false result in that variable
+  //////////////////////////////////////////////////////////////////////////////
+
+  RuleBody = Sequence
+
+  Sequence = SeqItem+
+  PredItem = Pred
+  Alternation =
+    | Alternation "+"  -- plus
+    | "(" AltItem+ ")" -- parenthesized
+  AltItem = "|" BranchingItem
+  BranchingItem = (Sequence | Alternation | PredItem)
+  SeqItem =
+    | SeqItem "+"           -- plus
+    | "(" NoBarSeqItem+ ")" -- parenthesized
+    | Sequence              -- sequence
+    | Alternation           -- alternation
+    | PredItem              -- preditem
+  NoBarSeqItem = ~"|" SeqItem
 
   //////////////////////////////////////////////////////////////////////////////
   // Pred returns a function call not wrapped in branching code

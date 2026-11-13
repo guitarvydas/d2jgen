@@ -1,5 +1,5 @@
-%parameter retvar
-%parameter previousretvar
+%parameter target
+%parameter mytarget
 %parameter skip
 %parameter rulename
 %parameter logicalop
@@ -14,7 +14,7 @@ Rules [x+] = ‛«x»’
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
+    ⎡ target=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
@@ -23,7 +23,7 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
+    ⎡ target=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
@@ -32,109 +32,42 @@ LexicalRule [ id _eq RuleBody] =
 RuleBody [x] = ‛
 def ⦑rulename⦒ ():⤷
   begin ("⦑rulename⦒")
-  ⦑retvar⦒ = True
+  ⦑target⦒ = True
   «x»
-  if ⦑retvar⦒:⤷
+  if ⦑target⦒:⤷
     return accept ("⦑rulename⦒")⤶
   else:⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-BranchedSequence [item+] =
-⎡ logicalop = ‛and’
-  ⎡ more = ‛’
-    ‛«item»’
-  ⎦
-⎦
+Sequence [item+] = ‛«item»’
+PredItem [p] = ‛⦑target⦒ = «p»’
+Alternation_plus [alt _plus] =‛«alt»«_plus»’
+Alternation_parenthesized [_lp item+ _rp] =‛«_lp»«item»«_rp»’
+AltItem [_bar bitem] = ‛«_bar»«bitem»’
+BranchingItem [x] = ‛«x»’
+SeqItem_plus [item _plus] = ‛«item»«_plus»’
+SeqItem_parenthesized [_lp nbitem+ _rp] = ‛«_lp»«nbitem»«_rp»’
+SeqItem_sequence [s] = ‛«s»’
+SeqItem_alternation [a] = ‛«a»’
 
-BranchedItem [item] = ‛«item»’
-
-SingleSeqBranchedItem_parenplus [_lp nbbseq _rp op] = ‛«_lp»«nbbseq»«_rp»«op»’
-SingleSeqBranchedItem_parenplain [_lp nbbseq _rp] = ‛«_lp»«nbbseq»«_rp»’
-
-SingleSeqBranchedItem_plainplus [bi op] =
-⎡ prevretvar = ‛⦑retvar⦒’
-  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
+SeqItem_preditem [p] = 
+⎡ mytarget = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      ⦑retvar⦒ = True
-      if ⦑more⦒ ⦑prevretvar⦒:⤷
-        «bi»
-        ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒ ⦑retvar⦒ 
-        while ⦑retvar⦒:⤷
-          «bi»
-        ⤶
+      if ⦑mytarget⦒:⤷
+        «p»
+        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
     ’
   ⎦
 ⎦
 
-SingleSeqBranchedItem_plain [bi] =
-⎡ prevretvar = ‛⦑retvar⦒’
-  ⎡ retvar = ‛⎨genvar ‛seq’⎬’
-    ‛
-      ⦑retvar⦒ = True
-      if ⦑more⦒ ⦑prevretvar⦒:⤷
-        «bi»
-      ⤶
-      ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒ ⦑retvar⦒ 
-    ’
-  ⎦
-⎦
-
-NoBarBranchedSequence [nbssbi+] = ‛«nbssbi»’
-NoBarSingleSeqBranchedItem [i] = ‛«i»’
-
-BranchedAlternation_altplus [_lp i+ _rp op] =
-⎡ logicalop = ‛and’
-  ⎡ more = ‛’
-    ⎡ prevretvar = ‛⦑retvar⦒’
-      ⎡ retvar = ‛⎨genvar ‛seq’⎬’
-	‛
-	  # BA_altplus
-	  ⦑retvar⦒ = False
-	  «i»
-	  while ⦑retvar⦒:⤷
-	    «i»
-	  ⤶
-	’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-BranchedAlternation_altplain [_lp i+ _rp] =
-⎡ logicalop = ‛and’
-  ⎡ more = ‛not’
-    ⎡ prevretvar = ‛⦑retvar⦒’
-      ⎡ retvar = ‛⎨genvar ‛seq’⎬’
-	‛
-	  # BA_altplain
-	  ⦑retvar⦒ = False
-	  «i»
-	’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-SingleAltBranchedItem [_bar i] =
-⎡ logicalop = ‛or’
-  ‛
-    if ⦑more⦒ ⦑prevretvar⦒:⤷
-      «i»
-      ⦑prevretvar⦒ = ⦑prevretvar⦒ ⦑logicalop⦒  ⦑retvar⦒ 
-    ⤶
-  ’
-⎦
-
-SingleBranchedPredItem [p] = ‛⦑retvar⦒ = «p»’
+NoBarSeqItem [item] = ‛«item»’
 
 
-
-
-
-Pred_neg [_not matchAtom] = ‛ not «matchAtom»’
-Pred_plain [matchAtom] = ‛ «matchAtom»’
+Pred_neg [_not matchAtom] = ‛not «matchAtom»’
+Pred_plain [matchAtom] = ‛«matchAtom»’
 
 matchAtom_string [dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
 matchAtom_single [id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
