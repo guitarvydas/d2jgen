@@ -40,10 +40,7 @@ def ⦑rulename⦒ ():⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-Sequence [item+] = ‛«item»’
-PredItem [p] = ‛⦑target⦒ = «p»’
-Alternation_plus [alt _plus] =‛«alt»«_plus»’
-Alternation_parenthesized [_lp item+ _rp] =
+Sequence [item+] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
@@ -55,6 +52,11 @@ Alternation_parenthesized [_lp item+ _rp] =
     ’
   ⎦
 ⎦
+
+
+PredItem [p] = ‛⦑target⦒ = «p»’
+Alternation_plus [alt _plus] =‛«alt»«_plus»’
+Alternation_parenthesized [_lp item+ _rp] = ‛«item»’
 
 AltItem [_bar bitem] = ‛«_bar»«bitem»’
 BranchingItem [x] = ‛«x»’
