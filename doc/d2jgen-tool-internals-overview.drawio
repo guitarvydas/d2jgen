@@ -1323,11 +1323,11 @@
     </mxGraphModel>
   </diagram>
   <diagram name="layered" id="_FIrwFJs9YnwSpLsWeDv">
-    <mxGraphModel dx="3128" dy="2362" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1106" dy="1597" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="KdArVdHzkO85lGktfiTv-0" />
         <mxCell id="KdArVdHzkO85lGktfiTv-1" parent="KdArVdHzkO85lGktfiTv-0" />
-        <mxCell id="KdArVdHzkO85lGktfiTv-6" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;sketch=1;curveFitting=1;jiggle=2;" value="( | x | y ) z" vertex="1">
+        <mxCell id="KdArVdHzkO85lGktfiTv-6" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;sketch=1;curveFitting=1;jiggle=2;" value="( | a | b ) c" vertex="1">
           <mxGeometry height="60" width="120" x="1120" y="-820" as="geometry" />
         </mxCell>
         <mxCell id="KdArVdHzkO85lGktfiTv-49" parent="KdArVdHzkO85lGktfiTv-1" style="rhombus;whiteSpace=wrap;html=1;rounded=1;fontStyle=1;glass=0;sketch=0;fontSize=12;points=[[0,0.5,0,0,0],[0.5,0,0,0,0],[0.5,1,0,0,0],[1,0.5,0,0,0]];shadow=1;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=none;" value="" vertex="1">
@@ -1336,7 +1336,7 @@
         <mxCell id="KdArVdHzkO85lGktfiTv-61" parent="KdArVdHzkO85lGktfiTv-1" style="rhombus;whiteSpace=wrap;html=1;rounded=1;fontStyle=1;glass=0;sketch=0;fontSize=12;points=[[0,0.5,0,0,0],[0.5,0,0,0,0],[0.5,1,0,0,0],[1,0.5,0,0,0]];shadow=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;fontFamily=Helvetica;labelBackgroundColor=none;" value="" vertex="1">
           <mxGeometry height="40" width="40" x="1880" y="-640" as="geometry" />
         </mxCell>
-        <mxCell id="hR4IEMPoc45NooSh8Znl-8" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#6c8ebf;fillColor=#CCFFFF;fontFamily=Helvetica;fontSize=11;gradientColor=#E6E6E6;fontColor=default;labelBackgroundColor=none;" value="x" vertex="1">
+        <mxCell id="hR4IEMPoc45NooSh8Znl-8" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#6c8ebf;fillColor=#CCFFFF;fontFamily=Helvetica;fontSize=11;gradientColor=#E6E6E6;fontColor=default;labelBackgroundColor=none;" value="a" vertex="1">
           <mxGeometry height="100" width="104" x="630" y="150" as="geometry">
             <mxRectangle height="26" width="99" x="-98" y="-1230" as="alternateBounds" />
           </mxGeometry>
@@ -1473,7 +1473,7 @@
         <mxCell id="hR4IEMPoc45NooSh8Znl-54" edge="1" parent="KdArVdHzkO85lGktfiTv-1" source="hR4IEMPoc45NooSh8Znl-90" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=0;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.453;exitY=0.96;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="hR4IEMPoc45NooSh8Znl-47">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="hR4IEMPoc45NooSh8Znl-55" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#6c8ebf;fillColor=#CCFFFF;fontFamily=Helvetica;fontSize=11;gradientColor=#E6E6E6;fontColor=default;labelBackgroundColor=none;" value="x" vertex="1">
+        <mxCell id="hR4IEMPoc45NooSh8Znl-55" parent="KdArVdHzkO85lGktfiTv-1" style="rounded=1;whiteSpace=wrap;html=1;container=1;recursiveResize=0;verticalAlign=top;arcSize=6;fontStyle=1;autosize=0;points=[];absoluteArcSize=1;shadow=1;strokeColor=#6c8ebf;fillColor=#CCFFFF;fontFamily=Helvetica;fontSize=11;gradientColor=#E6E6E6;fontColor=default;labelBackgroundColor=none;" value="b" vertex="1">
           <mxGeometry height="100" width="104" x="1167" y="150" as="geometry">
             <mxRectangle height="26" width="99" x="-98" y="-1230" as="alternateBounds" />
           </mxGeometry>
@@ -2358,54 +2358,57 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="qBaM4E3B_21yf9RuepHi-21" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="main = (|a |b)" vertex="1">
-          <mxGeometry height="40" width="100" x="35" y="10" as="geometry" />
+          <mxGeometry height="40" width="100" x="75" y="10" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-22" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        # { SeqItem_alternation &lt;- seq1&#xa;        # { AltItem_parenthesized &lt;- seq1&#xa;        if seq1:&#xa;            seq2 = False&#xa;            # { AltItem &lt;- seq2&#xa;            if not seq2:&#xa;                seq3 = False&#xa;                # { BranchingItem &lt;- seq3&#xa;                if seq3:&#xa;                    seq4 = True&#xa;                    # { SeqItem_preditem &lt;- seq4&#xa;                    if seq4:&#xa;                        seq4 = a ()&#xa;                    # } SeqItem_preditem -&gt; seq4&#xa;                    seq3 = seq3 and seq4&#xa;                # } BranchingItem -&gt; seq3&#xa;            seq2 = seq2 or seq3&#xa;            # } AltItem -&gt; seq2&#xa;            # { AltItem &lt;- seq2&#xa;            if not seq2:&#xa;                seq6 = False&#xa;                # { BranchingItem &lt;- seq6&#xa;                if seq6:&#xa;                    seq7 = True&#xa;                    # { SeqItem_preditem &lt;- seq7&#xa;                    if seq7:&#xa;                        seq7 = b ()&#xa;                    # } SeqItem_preditem -&gt; seq7&#xa;                    seq6 = seq6 and seq7&#xa;                # } BranchingItem -&gt; seq6&#xa;            seq2 = seq2 or seq6&#xa;            # } AltItem -&gt; seq2&#xa;        seq1 = seq1 or seq2&#xa;        # } AltItem_parenthesized -&gt; seq1&#xa;        # } SeqItem_alternation -&gt; seq1&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)&#xa;" vertex="1">
-          <mxGeometry height="620" width="220" x="40" y="60" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-1" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        #B SeqItem_alternation &lt;- seq2&#xa;        if seq1:&#xa;            seq2 = True&#xa;            #B AltItem_parenthesized &lt;- seq2&#xa;            if seq2:&#xa;                seq3 = False&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq4 = False&#xa;                    #B BranchingItem &lt;- seq4&#xa;                    if seq4:&#xa;                        seq5 = True&#xa;                        #B SeqItem_preditem &lt;- seq5&#xa;                        if seq5:&#xa;                            seq5 = a ()&#xa;                        #E SeqItem_preditem -&gt; seq5&#xa;                        seq4 = seq4 and seq5&#xa;                    #E BranchingItem -&gt; seq4&#xa;                seq3 = seq3 or seq4&#xa;                #E AltItem -&gt; seq3&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq7 = False&#xa;                    #B BranchingItem &lt;- seq7&#xa;                    if seq7:&#xa;                        seq8 = True&#xa;                        #B SeqItem_preditem &lt;- seq8&#xa;                        if seq8:&#xa;                            seq8 = b ()&#xa;                        #E SeqItem_preditem -&gt; seq8&#xa;                        seq7 = seq7 and seq8&#xa;                    #E BranchingItem -&gt; seq7&#xa;                seq3 = seq3 or seq7&#xa;                #E AltItem -&gt; seq3&#xa;            seq2 = seq2 or seq3&#xa;            #E AltItem_parenthesized -&gt; seq2&#xa;            seq1 = seq1 and seq2&#xa;        #E SeqItem_alternation -&gt; seq2&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)&#xa;" vertex="1">
+          <mxGeometry height="620" width="240" x="80" y="70" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-32" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
-          <mxGeometry height="40" width="30" x="80" y="270" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-2" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="50" width="30" x="130" y="300" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-33" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
-          <mxGeometry height="110" width="30" x="70" y="230" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-3" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="120" width="30" x="110" y="260" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-34" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
-          <mxGeometry height="170" width="30" x="60" y="190" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-4" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="180" width="40" x="90" y="220" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-35" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
-          <mxGeometry height="50" width="30" x="80" y="450" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-5" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="50" width="30" x="130" y="490" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-36" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
-          <mxGeometry height="120" width="30" x="70" y="410" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-6" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="120" width="30" x="110" y="445" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-37" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
-          <mxGeometry height="180" width="30" x="60" y="370" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-7" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="180" width="40" x="90" y="410" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-38" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
-          <mxGeometry height="430" width="30" x="50" y="150" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-8" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="420" width="50" x="70" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-39" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
-          <mxGeometry height="460" width="30" x="40" y="130" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-9" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="495" width="50" x="50" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="qBaM4E3B_21yf9RuepHi-40" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
-          <mxGeometry height="500" width="30" x="30" y="110" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-10" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="540" width="60" x="20" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="rx4tpcYV5lKL7aA1nOc1-1" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
-          <mxGeometry height="50" width="20" x="260" y="270" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-15" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="500" width="20" x="360" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="rx4tpcYV5lKL7aA1nOc1-2" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
-          <mxGeometry height="110" width="20" x="280" y="230" as="geometry" />
+        <mxCell id="_ta9aWOcFxMKFJKNHP-k-16" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="seq2 = (| a | b)" vertex="1">
+          <mxGeometry height="40" width="100" x="390" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="odNzGR5odVWdbVAKqbw6-1" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        #B SeqItem_alternation &lt;- seq2&#xa;        if seq1:&#xa;            seq2 = True&#xa;            #B AltItem_parenthesized &lt;- seq2&#xa;            if seq2:&#xa;                seq3 = False&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq4 = False&#xa;                    #B BranchingItem &lt;- seq4&#xa;                    if seq4:&#xa;                        seq5 = True&#xa;                        #B SeqItem_preditem &lt;- seq5&#xa;                        if seq5:&#xa;                            seq5 = a ()&#xa;                        #E SeqItem_preditem -&gt; seq5&#xa;                        seq4 = seq4 and seq5&#xa;                    #E BranchingItem -&gt; seq4&#xa;                seq3 = seq3 or seq4&#xa;                #E AltItem -&gt; seq3&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq7 = False&#xa;                    #B BranchingItem &lt;- seq7&#xa;                    if seq7:&#xa;                        seq8 = True&#xa;                        #B SeqItem_preditem &lt;- seq8&#xa;                        if seq8:&#xa;                            seq8 = b ()&#xa;                        #E SeqItem_preditem -&gt; seq8&#xa;                        seq7 = seq7 and seq8&#xa;                    #E BranchingItem -&gt; seq7&#xa;                seq3 = seq3 or seq7&#xa;                #E AltItem -&gt; seq3&#xa;            seq2 = seq2 or seq3&#xa;            #E AltItem_parenthesized -&gt; seq2&#xa;            seq1 = seq1 and seq2&#xa;        #E SeqItem_alternation -&gt; seq2&#xa;        #B SeqItem_preditem &lt;- seq1&#xa;        if seq1:&#xa;            seq1 = c ()&#xa;        #E SeqItem_preditem -&gt; seq1&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)" vertex="1">
+          <mxGeometry height="710" width="250" x="600" y="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram name="Copy of nesting" id="ZN-7LENsGZNuRsY4Uuvq">
-    <mxGraphModel dx="763" dy="515" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1106" dy="747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="QpZMHGBivG6auMU_wqZH-0" />
         <mxCell id="QpZMHGBivG6auMU_wqZH-1" parent="QpZMHGBivG6auMU_wqZH-0" />
         <mxCell id="QpZMHGBivG6auMU_wqZH-2" parent="QpZMHGBivG6auMU_wqZH-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="main = (|a |b)" vertex="1">
-          <mxGeometry height="40" width="100" x="400" y="160" as="geometry" />
+          <mxGeometry height="40" width="100" x="470" as="geometry" />
         </mxCell>
         <mxCell id="QpZMHGBivG6auMU_wqZH-3" parent="QpZMHGBivG6auMU_wqZH-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        # { SeqItem_alternation &lt;- seq1&#xa;        # { AltItem_parenthesized &lt;- seq1&#xa;        if seq1:&#xa;            seq2 = False&#xa;            # { AltItem &lt;- seq2&#xa;            if not seq2:&#xa;                seq3 = False&#xa;                # { BranchingItem &lt;- seq3&#xa;                if seq3:&#xa;                    seq4 = True&#xa;                    # { SeqItem_preditem &lt;- seq4&#xa;                    if seq4:&#xa;                        seq4 = a ()&#xa;                    # } SeqItem_preditem -&gt; seq4&#xa;                    seq3 = seq3 and seq4&#xa;                # } BranchingItem -&gt; seq3&#xa;            seq2 = seq2 or seq3&#xa;            # } AltItem -&gt; seq2&#xa;            # { AltItem &lt;- seq2&#xa;            if not seq2:&#xa;                seq6 = False&#xa;                # { BranchingItem &lt;- seq6&#xa;                if seq6:&#xa;                    seq7 = True&#xa;                    # { SeqItem_preditem &lt;- seq7&#xa;                    if seq7:&#xa;                        seq7 = b ()&#xa;                    # } SeqItem_preditem -&gt; seq7&#xa;                    seq6 = seq6 and seq7&#xa;                # } BranchingItem -&gt; seq6&#xa;            seq2 = seq2 or seq6&#xa;            # } AltItem -&gt; seq2&#xa;        seq1 = seq1 or seq2&#xa;        # } AltItem_parenthesized -&gt; seq1&#xa;        # } SeqItem_alternation -&gt; seq1&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)&#xa;" vertex="1">
           <mxGeometry height="620" width="220" x="40" y="60" as="geometry" />
@@ -2454,6 +2457,54 @@
         </mxCell>
         <mxCell id="MnNBoIjS5_o3hyO8G-J5-3" parent="QpZMHGBivG6auMU_wqZH-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="seq2 = (| a | b)" vertex="1">
           <mxGeometry height="40" width="100" x="340" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-4" parent="QpZMHGBivG6auMU_wqZH-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def main ():&#xa;    begin (&quot;main&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        #B SeqItem_alternation &lt;- seq2&#xa;        if seq1:&#xa;            seq2 = True&#xa;            #B AltItem_parenthesized &lt;- seq2&#xa;            if seq2:&#xa;                seq3 = False&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq4 = False&#xa;                    #B BranchingItem &lt;- seq4&#xa;                    if seq4:&#xa;                        seq5 = True&#xa;                        #B SeqItem_preditem &lt;- seq5&#xa;                        if seq5:&#xa;                            seq5 = a ()&#xa;                        #E SeqItem_preditem -&gt; seq5&#xa;                        seq4 = seq4 and seq5&#xa;                    #E BranchingItem -&gt; seq4&#xa;                seq3 = seq3 or seq4&#xa;                #E AltItem -&gt; seq3&#xa;                #B AltItem &lt;- seq3&#xa;                if not seq3:&#xa;                    seq7 = False&#xa;                    #B BranchingItem &lt;- seq7&#xa;                    if seq7:&#xa;                        seq8 = True&#xa;                        #B SeqItem_preditem &lt;- seq8&#xa;                        if seq8:&#xa;                            seq8 = b ()&#xa;                        #E SeqItem_preditem -&gt; seq8&#xa;                        seq7 = seq7 and seq8&#xa;                    #E BranchingItem -&gt; seq7&#xa;                seq3 = seq3 or seq7&#xa;                #E AltItem -&gt; seq3&#xa;            seq2 = seq2 or seq3&#xa;            #E AltItem_parenthesized -&gt; seq2&#xa;            seq1 = seq1 and seq2&#xa;        #E SeqItem_alternation -&gt; seq2&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;main&quot;)&#xa;    else:&#xa;        return fail (&quot;main&quot;)&#xa;" vertex="1">
+          <mxGeometry height="620" width="240" x="520" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-5" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="40" width="30" x="560" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-6" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="110" width="30" x="550" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-7" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="170" width="30" x="540" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-8" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="50" width="30" x="560" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-9" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="120" width="30" x="550" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-10" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="180" width="30" x="540" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-11" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="430" width="30" x="530" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-12" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="460" width="30" x="520" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-13" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="500" width="30" x="510" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-14" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="50" width="20" x="740" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-15" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="110" width="20" x="760" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-16" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="180" width="20" x="780" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-17" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="180" width="20" x="780" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-18" parent="QpZMHGBivG6auMU_wqZH-1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;legacyAnchorPoints=0;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;dashed=1;dashPattern=1 1;" value="" vertex="1">
+          <mxGeometry height="380" width="20" x="800" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="MnNBoIjS5_o3hyO8G-J5-19" parent="QpZMHGBivG6auMU_wqZH-1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="seq2 = (| a | b)" vertex="1">
+          <mxGeometry height="40" width="100" x="820" y="350" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

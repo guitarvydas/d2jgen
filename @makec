@@ -32,7 +32,7 @@ rm -f d2jgen.py
 tempfile=temp.${RANDOM}.txt
 ./pbp/t2t "${TARGET}" <"d2jtest.ohm" >${tempfile}
 ./pbp/t2t peephole <${tempfile} |\
-    ./cull.sh |\
+#    ./cull.sh |\
     ./pbp/indent |\
     python nonblank.py |\
     tee d2jgen.py >$output
