@@ -1,1 +1,1 @@
-abababcdef
+bcdef

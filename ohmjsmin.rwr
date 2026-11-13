@@ -54,17 +54,46 @@ Sequence [item+] =
 ⎦
 
 
-PredItem [p] = ‛⦑target⦒ = «p»’
-Alternation_plus [alt _plus] =‛«alt»«_plus»’
-Alternation_parenthesized [_lp item+ _rp] = ‛«item»’
+PredItem [p] = 
+‛
+# begin end PredItem
+⦑target⦒ = «p»
+# end PredItem
+’
 
-AltItem [_bar bitem] = ‛«_bar»«bitem»’
-BranchingItem [x] = ‛«x»’
+Alternation_plus [alt _plus] =
+‛
+# begin Alternation_plus
+«alt»«_plus»
+# end Alternation_plus
+’
+
+Alternation_parenthesized [_lp item+ _rp] = 
+‛
+# begin Alternation_parenthesized
+«item»
+# end Alternation_parenthesized
+’
+
+AltItem [_bar bitem] =
+‛
+# begin AltItem
+«_bar»«bitem»
+# end AltItem
+’
+
+BranchingItem [x] = 
+‛
+# begin BranchingItem
+«x»
+# end BranchingItem
+’
 
 SeqItem_plus [item _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
+      # begin SeqItem_plus
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «item»
@@ -73,6 +102,7 @@ SeqItem_plus [item _plus] =
           «item»
 	⤶
       ⤶
+      # end SeqItem_plus
     ’
   ⎦
 ⎦
@@ -81,27 +111,42 @@ SeqItem_parenthesized [_lp nbitem+ _rp] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
+      # begin SeqItem_parenthesized
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «nbitem»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
+      # end SeqItem_parenthesized
     ’
   ⎦
 ⎦
 
-SeqItem_sequence [s] = ‛«s»’
-SeqItem_alternation [a] = ‛«a»’
+SeqItem_sequence [s] =
+‛
+# end SeqItem_sequence
+«s»
+# end SeqItem_sequence
+’
+
+SeqItem_alternation [a] =
+‛
+# begin SeqItem_alternation
+«a»
+# end SeqItem_alternation
+’
 
 SeqItem_preditem [p] = 
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
+      # end SeqItem_preditem
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «p»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
+      # end SeqItem_preditem
     ’
   ⎦
 ⎦
@@ -109,6 +154,7 @@ SeqItem_preditemplus [p _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
+      # begin SeqItem_preditemplus
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «p»
@@ -117,6 +163,7 @@ SeqItem_preditemplus [p _plus] =
 	  «p»
 	⤶
       ⤶
+      # end SeqItem_preditemplus
     ’
   ⎦
 ⎦
