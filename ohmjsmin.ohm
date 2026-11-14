@@ -15,16 +15,16 @@ ohmjsmin {
 
   Sequence = SeqItem+
   PredItem = Pred
-  Alternation =
+  AlternationGroup =
     | "(" AltItem+ ")" "+"  -- plus
     | "(" AltItem+ ")" -- parenthesized
   AltItem = "|" BranchingItem
-  BranchingItem = ( PredItem | Sequence | Alternation )
+  BranchingItem = ( PredItem | Sequence | AlternationGroup )
   SeqItem =
     | SeqItem "+"           -- plus
     | "(" NoBarSeqItem+ ")" -- parenthesized
     | Sequence              -- sequence
-    | Alternation           -- alternation
+    | AlternationGroup      -- alternationgroup
     | PredItem "+"          -- preditemplus
     | PredItem              -- preditem
   NoBarSeqItem = ~"|" SeqItem

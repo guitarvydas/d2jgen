@@ -61,11 +61,11 @@ PredItem [p] =
 #E PredItem ⦑target⦒
 ’
 
-Alternation_plus [_lp item+ _rp _plus] =
+AlternationGroup_plus [_lp item+ _rp _plus] =
 ⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B Alternation_plus <- ⦑inout⦒
+      #B AlternationGroup_plus <- ⦑inout⦒
       if ⦑inout⦒:⤷
         ⦑target⦒ = False
         «item»
@@ -79,7 +79,7 @@ Alternation_plus [_lp item+ _rp _plus] =
   ⎦
 ⎦
 
-Alternation_parenthesized [_lp item+ _rp] =
+AlternationGroup_parenthesized [_lp item+ _rp] =
 ⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
@@ -164,17 +164,17 @@ SeqItem_sequence [s] =
   ⎦
 ⎦
 
-SeqItem_alternation [a] =
+SeqItem_alternationgroup [a] =
 ⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛salt’⎬’
     ‛
-      #B SeqItem_alternation <- ⦑inout⦒
+      #B SeqItem_AlternationGroup <- ⦑inout⦒
       if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «a»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_alternation -> ⦑inout⦒
+      #E SeqItem_AlternationGroup -> ⦑inout⦒
     ’
   ⎦
 ⎦

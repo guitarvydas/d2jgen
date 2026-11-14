@@ -22,7 +22,7 @@ def number ():
     r = True
     if r:
         seq1 = True
-        #B SeqItem_alternation <- seq1
+        #B SeqItem_AlternationGroup <- seq1
         if seq1:
             salt2 = True
             #B AltItem_parenthesized <- salt2
@@ -51,7 +51,7 @@ def number ():
             salt2 = salt2 or alt3
             #E AltItem_parenthesized -> salt2
             seq1 = seq1 and salt2
-        #E SeqItem_alternation -> seq1
+        #E SeqItem_AlternationGroup -> seq1
         r = r and seq1
     if r:
         return accept ("number")
