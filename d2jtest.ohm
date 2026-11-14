@@ -1,6 +1,4 @@
 d2j {
-  main = (| a | b) c
-  a = "a"
-  b = "b"
-  c = "c"
+  Main = number
+  number = (| "0" | "1" )
 }

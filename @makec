@@ -29,13 +29,15 @@ output=/dev/stdout
 sed -E 's/,//g' <"kernel.drawio.json.txt" >"test.kernel.drawio.json.txt"
 rm -f d2jgen.py
 # export T2TVERBOSE=1
+# tempfile=temp.${RANDOM}.txt
+# ./pbp/t2t "${TARGET}" <"d2jtest.ohm" >${tempfile}
+# ./pbp/t2t peephole <${tempfile} |\
+#     ./cull.sh |\
+#     ./pbp/indent |\
+#     python nonblank.py |\
+#     tee d2jgen.py >$output
 tempfile=temp.${RANDOM}.txt
-./pbp/t2t "${TARGET}" <"d2jtest.ohm" >${tempfile}
-./pbp/t2t peephole <${tempfile} |\
-#    ./cull.sh |\
-    ./pbp/indent |\
-    python nonblank.py |\
-    tee d2jgen.py >$output
+./pbp/t2t "${TARGET}" <"d2jtest.ohm" | ./pbp/indent | python nonblank.py | tee d2jgen.py >$output
 
 
 ############################

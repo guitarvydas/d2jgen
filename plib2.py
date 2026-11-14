@@ -1,6 +1,6 @@
 ## builtins
-debugprogress = False
-debugtrace = False
+debugprogress = True
+debugtrace = True
 
 class StringBuffer ():
     def __init__ (self):

@@ -4,7 +4,7 @@ peephole {
     | applySyntactic<SeqNNTrue> -- seqnntrue
     | applySyntactic<RandSeqFN> -- randseqfn
     | any                       -- char
-  SeqNNTrue = "seq" NN "=" "True" "seq" NN "="
+  SeqNNTrue = "seq" NN "=" ("True" | "False") "seq" NN "="
   RandSeqFN = id "=" id "(" Actuals? ")" id "=" id "and" "seq" NN
   Actuals =
     | "(" Actuals ")" -- rec

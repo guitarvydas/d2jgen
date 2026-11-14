@@ -1,5 +1,5 @@
 %parameter target
-%parameter mytarget
+%parameter inout
 %parameter skip
 %parameter rulename
 %parameter logicalop
@@ -41,13 +41,13 @@ def ⦑rulename⦒ ():⤷
  ⤶’
 
 Sequence [item+] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      if ⦑mytarget⦒:⤷
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «item»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
     ’
   ⎦
@@ -62,49 +62,49 @@ PredItem [p] =
 ’
 
 Alternation_plus [_lp item+ _rp _plus] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B Alternation_plus <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B Alternation_plus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = False
         «item»
       ⤶
-      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
+      ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       while ⦑target⦒:⤷
         «item»
       ⤶
-      #E AltItem_pplus -> ⦑mytarget⦒
+      #E AltItem_pplus -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
 Alternation_parenthesized [_lp item+ _rp] =
-⎡ mytarget = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
-      #B AltItem_parenthesized <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B AltItem_parenthesized <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = False
         «item»
       ⤶
-      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
-      #E AltItem_parenthesized -> ⦑mytarget⦒
+      ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
+      #E AltItem_parenthesized -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
 AltItem [_bar bitem] =
-⎡ mytarget = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
-      #B AltItem <- ⦑mytarget⦒
-      if not ⦑mytarget⦒:⤷
+      #B AltItem <- ⦑inout⦒
+      if not ⦑inout⦒:⤷
         ⦑target⦒ = False
         «bitem»
+        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       ⤶
-      ⦑mytarget⦒ = ⦑mytarget⦒ or ⦑target⦒
-      #E AltItem -> ⦑mytarget⦒
+      #E AltItem -> ⦑inout⦒
     ’
   ⎦
 ⎦
@@ -117,96 +117,96 @@ BranchingItem [x] =
 ’
 
 SeqItem_plus [item _plus] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_plus <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B SeqItem_plus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «item»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
 	while ⦑target⦒:⤷
           «item»
 	⤶
       ⤶
-      #E SeqItem_plus -> ⦑mytarget⦒
+      #E SeqItem_plus -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
 SeqItem_parenthesized [_lp nbitem+ _rp] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_parenthesized <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B SeqItem_parenthesized <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «nbitem»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      #E -> SeqItem_parenthesized ⦑mytarget⦒
+      #E -> SeqItem_parenthesized ⦑inout⦒
     ’
   ⎦
 ⎦
 
 SeqItem_sequence [s] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_sequence <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B SeqItem_sequence <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «s»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_sequence -> ⦑mytarget⦒
+      #E SeqItem_sequence -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
 SeqItem_alternation [a] =
-⎡ mytarget = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛salt’⎬’
     ‛
-      #B SeqItem_alternation <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
-        ⦑target⦒ = True
+      #B SeqItem_alternation <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = False
         «a»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_alternation -> ⦑mytarget⦒
+      #E SeqItem_alternation -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
 SeqItem_preditem [p] = 
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_preditem <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B SeqItem_preditem <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «p»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_preditem -> ⦑mytarget⦒
+      #E SeqItem_preditem -> ⦑inout⦒
     ’
   ⎦
 ⎦
 SeqItem_preditemplus [p _plus] =
-⎡ mytarget = ‛⦑target⦒’
+⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_preditemplus <- ⦑mytarget⦒
-      if ⦑mytarget⦒:⤷
+      #B SeqItem_preditemplus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
         ⦑target⦒ = True
         «p»
-        ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
         while ⦑target⦒:⤷
 	  «p»
 	⤶
       ⤶
-      #E SeqItem_preditemplus -> ⦑mytarget⦒
+      #E SeqItem_preditemplus -> ⦑inout⦒
     ’
   ⎦
 ⎦
