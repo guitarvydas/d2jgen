@@ -14,29 +14,21 @@ def main ():
                 if not seq3:
                     seq4 = False
                     #B BranchingItem <- seq4
-                    if seq4:
-                        seq5 = True
-                        #B SeqItem_preditem <- seq5
-                        if seq5:
-                            seq5 = a ()
-                        #E SeqItem_preditem -> seq5
-                        seq4 = seq4 and seq5
+                    #B PredItem seq4
+                    seq4 =  a ()
+                    #E PredItem seq4
                     #E BranchingItem -> seq4
                 seq3 = seq3 or seq4
                 #E AltItem -> seq3
                 #B AltItem <- seq3
                 if not seq3:
-                    seq7 = False
-                    #B BranchingItem <- seq7
-                    if seq7:
-                        seq8 = True
-                        #B SeqItem_preditem <- seq8
-                        if seq8:
-                            seq8 = b ()
-                        #E SeqItem_preditem -> seq8
-                        seq7 = seq7 and seq8
-                    #E BranchingItem -> seq7
-                seq3 = seq3 or seq7
+                    seq5 = False
+                    #B BranchingItem <- seq5
+                    #B PredItem seq5
+                    seq5 =  b ()
+                    #E PredItem seq5
+                    #E BranchingItem -> seq5
+                seq3 = seq3 or seq5
                 #E AltItem -> seq3
             seq2 = seq2 or seq3
             #E AltItem_parenthesized -> seq2

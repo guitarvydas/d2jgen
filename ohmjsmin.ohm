@@ -19,7 +19,7 @@ ohmjsmin {
     | "(" AltItem+ ")" "+"  -- plus
     | "(" AltItem+ ")" -- parenthesized
   AltItem = "|" BranchingItem
-  BranchingItem = (Sequence | Alternation | PredItem)
+  BranchingItem = ( PredItem | Sequence | Alternation )
   SeqItem =
     | SeqItem "+"           -- plus
     | "(" NoBarSeqItem+ ")" -- parenthesized

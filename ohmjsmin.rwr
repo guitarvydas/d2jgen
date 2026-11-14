@@ -65,7 +65,7 @@ Alternation_plus [_lp item+ _rp _plus] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B Alternation_plus <- ⦑target⦒
+      #B Alternation_plus <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = False
         «item»
@@ -153,13 +153,13 @@ SeqItem_sequence [s] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_sequenc <- ⦑target⦒
+      #B SeqItem_sequence <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «s»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_sequence -> ⦑target⦒
+      #E SeqItem_sequence -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
@@ -168,13 +168,13 @@ SeqItem_alternation [a] =
 ⎡ mytarget = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      #B SeqItem_alternation <- ⦑target⦒
+      #B SeqItem_alternation <- ⦑mytarget⦒
       if ⦑mytarget⦒:⤷
         ⦑target⦒ = True
         «a»
         ⦑mytarget⦒ = ⦑mytarget⦒ and ⦑target⦒
       ⤶
-      #E SeqItem_alternation -> ⦑target⦒
+      #E SeqItem_alternation -> ⦑mytarget⦒
     ’
   ⎦
 ⎦
