@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="13">
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1" pages="14">
   <diagram name="d2jgen" id="h6xlj_zDoH3NoklH6s_h">
     <mxGraphModel dx="977" dy="642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -2353,7 +2353,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="SbGSF3x8FUqOLp7b6S8b" name="nesting commented">
-    <mxGraphModel dx="1193" dy="747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1404" dy="879" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2655,6 +2655,44 @@
         </mxCell>
         <mxCell id="qDIte3Vp1yg8a7FzSjSn-22" parent="qDIte3Vp1yg8a7FzSjSn-1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;fillColor=none;" value="" vertex="1">
           <mxGeometry height="120" width="150" x="690" y="780" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="EYzAWp33qNDgIuiPPrNw" name="number temp">
+    <mxGraphModel dx="1193" dy="747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-1" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=none;" value="def number ():&#xa;    begin (&quot;number&quot;)&#xa;    r = True&#xa;    if r:&#xa;        seq1 = True&#xa;        #B SeqItem_alternation &lt;- seq1&#xa;        if seq1:&#xa;            salt2 = True&#xa;            #B AltItem_parenthesized &lt;- salt2&#xa;            if salt2:&#xa;                alt3 = False&#xa;                #B AltItem &lt;- alt3&#xa;                if not alt3:&#xa;                    alt4 = False&#xa;                    #B BranchingItem &lt;- alt4&#xa;                    #B PredItem alt4&#xa;                    alt4 = parse_string (&quot;0&quot;)&#xa;                    #E PredItem alt4&#xa;                    #E BranchingItem -&gt; alt4&#xa;                    alt3 = alt3 or alt4&#xa;                #E AltItem -&gt; alt3&#xa;                #B AltItem &lt;- alt3&#xa;                if not alt3:&#xa;                    alt5 = False&#xa;                    #B BranchingItem &lt;- alt5&#xa;                    #B PredItem alt5&#xa;                    alt5 = parse_string (&quot;1&quot;)&#xa;                    #E PredItem alt5&#xa;                    #E BranchingItem -&gt; alt5&#xa;                    alt3 = alt3 or alt5&#xa;                #E AltItem -&gt; alt3&#xa;            salt2 = salt2 or alt3&#xa;            #E AltItem_parenthesized -&gt; salt2&#xa;            seq1 = seq1 and salt2&#xa;        #E SeqItem_alternation -&gt; seq1&#xa;        r = r and seq1&#xa;    if r:&#xa;        return accept (&quot;number&quot;)&#xa;    else:&#xa;        return fail (&quot;number&quot;)" vertex="1">
+          <mxGeometry height="710" width="250" x="200" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-2" parent="1" style="text;whiteSpace=wrap;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=default;sketch=1;curveFitting=1;jiggle=2;dashed=1;align=center;verticalAlign=middle;" value="number = (| &quot;0&quot; | &quot;1&quot; )" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-3" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="30" width="40" x="230" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-4" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="55" width="30" x="220" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-5" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="130" width="40" x="200" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-6" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="320" width="50" x="160" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-7" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="380" width="50" x="120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-8" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="240" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-9" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;dashed=1;" value="" vertex="1">
+          <mxGeometry height="55" width="30" x="220" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="JToSjX1hZGHA7fBjtEfb-10" parent="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;strokeColor=#FF0000;" value="" vertex="1">
+          <mxGeometry height="130" width="40" x="200" y="407.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

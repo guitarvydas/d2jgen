@@ -24,7 +24,7 @@ def number ():
         seq1 = True
         #B SeqItem_alternation <- seq1
         if seq1:
-            salt2 = False
+            salt2 = True
             #B AltItem_parenthesized <- salt2
             if salt2:
                 alt3 = False

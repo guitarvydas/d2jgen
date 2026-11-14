@@ -170,7 +170,7 @@ SeqItem_alternation [a] =
     ‛
       #B SeqItem_alternation <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = False
+        ⦑target⦒ = True
         «a»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
