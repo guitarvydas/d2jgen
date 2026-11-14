@@ -2,6 +2,9 @@
 debugprogress = True
 debugtrace = True
 
+def declare (bool):
+    return bool
+
 class StringBuffer ():
     def __init__ (self):
         self.buff = ""

@@ -16,8 +16,8 @@ ohmjsmin {
   Sequence = SeqItem+
   PredItem = Pred
   AlternationGroup =
-    | "(" AltItem+ ")" "+"  -- plus
-    | "(" AltItem+ ")" -- parenthesized
+    | "(" AltItem+ ")" "+" -- plus
+    | "(" AltItem+ ")"     -- plain
   AltItem = "|" BranchingItem
   BranchingItem = ( PredItem | Sequence | AlternationGroup )
   SeqItem =

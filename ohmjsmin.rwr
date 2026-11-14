@@ -32,7 +32,7 @@ LexicalRule [ id _eq RuleBody] =
 RuleBody [x] = ‛
 def ⦑rulename⦒ ():⤷
   begin ("⦑rulename⦒")
-  ⦑target⦒ = True
+  ⦑target⦒ = declare (True)
   «x»
   if ⦑target⦒:⤷
     return accept ("⦑rulename⦒")⤶
@@ -45,7 +45,7 @@ Sequence [item+] =
   ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «item»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
@@ -67,7 +67,7 @@ AlternationGroup_plus [_lp item+ _rp _plus] =
     ‛
       #B AlternationGroup_plus <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = False
+        ⦑target⦒ = declare (False)
         «item»
       ⤶
       ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
@@ -79,17 +79,17 @@ AlternationGroup_plus [_lp item+ _rp _plus] =
   ⎦
 ⎦
 
-AlternationGroup_parenthesized [_lp item+ _rp] =
+AlternationGroup_plain [_lp item+ _rp] =
 ⎡ inout = ‛⦑target⦒’
   ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
-      #B AltItem_parenthesized <- ⦑inout⦒
+      #B AlternationGroup <- ⦑inout⦒
+      ⦑target⦒ = declare (False)
       if ⦑inout⦒:⤷
-        ⦑target⦒ = False
         «item»
       ⤶
       ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
-      #E AltItem_parenthesized -> ⦑inout⦒
+      #E AlternationGroup -> ⦑inout⦒
     ’
   ⎦
 ⎦
@@ -100,7 +100,7 @@ AltItem [_bar bitem] =
     ‛
       #B AltItem <- ⦑inout⦒
       if not ⦑inout⦒:⤷
-        ⦑target⦒ = False
+        ⦑target⦒ = declare (False)
         «bitem»
         ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       ⤶
@@ -122,7 +122,7 @@ SeqItem_plus [item _plus] =
     ‛
       #B SeqItem_plus <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «item»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
 	while ⦑target⦒:⤷
@@ -140,7 +140,7 @@ SeqItem_parenthesized [_lp nbitem+ _rp] =
     ‛
       #B SeqItem_parenthesized <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «nbitem»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
@@ -155,7 +155,7 @@ SeqItem_sequence [s] =
     ‛
       #B SeqItem_sequence <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «s»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
@@ -170,7 +170,7 @@ SeqItem_alternationgroup [a] =
     ‛
       #B SeqItem_AlternationGroup <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (False)
         «a»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
@@ -185,7 +185,7 @@ SeqItem_preditem [p] =
     ‛
       #B SeqItem_preditem <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «p»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
@@ -199,7 +199,7 @@ SeqItem_preditemplus [p _plus] =
     ‛
       #B SeqItem_preditemplus <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = True
+        ⦑target⦒ = declare (True)
         «p»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
         while ⦑target⦒:⤷
