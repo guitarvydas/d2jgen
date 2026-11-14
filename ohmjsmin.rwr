@@ -69,8 +69,8 @@ AlternationGroup_plus [_lp item+ _rp _plus] =
       if ⦑inout⦒:⤷
         ⦑target⦒ = declare (False)
         «item»
+        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       ⤶
-      ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       while ⦑target⦒:⤷
         «item»
       ⤶
@@ -166,13 +166,13 @@ SeqItem_sequence [s] =
 
 SeqItem_alternationgroup [a] =
 ⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛salt’⎬’
+  ⎡ target=‛⎨genvar ‛seqalt’⎬’
     ‛
       #B SeqItem_AlternationGroup <- ⦑inout⦒
       if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (False)
         «a»
         ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+        ⦑target⦒ = declare (False)
       ⤶
       #E SeqItem_AlternationGroup -> ⦑inout⦒
     ’
