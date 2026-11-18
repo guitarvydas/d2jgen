@@ -1,5 +1,5 @@
-%parameter retvar
-%parameter previousretvar
+%parameter target
+%parameter inout
 %parameter skip
 %parameter rulename
 %parameter logicalop
@@ -7,14 +7,14 @@
 
 %rewrite ohmjsmin {
 
-Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
+Main [id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 
-Rules [ _1+] = ‛«_1»’
+Rules [x+] = ‛«x»’
 
 SyntacticRule [ id _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
+    ⎡ target=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
@@ -23,242 +23,209 @@ SyntacticRule [ id _eq RuleBody] =
 LexicalRule [ id _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«id»’
-    ⎡ retvar=‛⎨resetgenvar⎬r’
+    ⎡ target=‛⎨resetgenvar⎬r’
        ‛«RuleBody»’
     ⎦
   ⎦
 ⎦
 
-
-
-
-
-RuleBody [x+] = ‛
+RuleBody [x] = ‛
 def ⦑rulename⦒ ():⤷
   begin ("⦑rulename⦒")
-  ⦑retvar⦒ = True
+  ⦑target⦒ = declare (True)
   «x»
-  if ⦑retvar⦒:⤷
+  if ⦑target⦒:⤷
     return accept ("⦑rulename⦒")⤶
   else:⤷
     return fail ("⦑rulename⦒")⤶
  ⤶’
 
-Sequence [i+] =
-⎡previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛seq’⎬’
-    ⎡more=‛’
-      ⎡logicalop=‛and’
-        ‛
-	  # Sequence
-          ⦑retvar⦒=True
-          «i»
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_plus [lp clauses+ rp _plus] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin +
-          ⦑retvar⦒=False
-          «clauses»
-	  ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-          while ⦑retvar⦒:⤷
-            «alts»
-	  ⤶
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_star [lp clauses+ rp _star] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin *
-          ⦑retvar⦒=False
-          while ⦑retvar⦒:⤷
-            «clauses»
-	  ⤶
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_opt [lp clauses+ rp _opt] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin ?
-          ⦑retvar⦒=True
-          «clauses»
-        ’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-Alternation_plain [lp clauses+ rp] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
-    ⎡ more=‛not’
-      ⎡ logicalop=‛or’
-        ‛
-	  # Alt Begin
-	  ⦑retvar⦒ = False
-          «clauses»
-	’
-      ⎦
-    ⎦
-  ⎦
-⎦
-
-AltClause [_bar seq] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛alt’⎬’
+Sequence [item+] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      # Alt Clause
-       ⦑retvar⦒ = False
-      if not ⦑previousretvar⦒:⤷
-	«seq»
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «item»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
       ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
     ’
   ⎦
 ⎦
-SeqItem [m] =
+
+
+PredItem [p] = 
 ‛
-    # SeqItem
-    if ⦑retvar⦒:⤷
-      «m»
-    ⤶
-    ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+#B PredItem ⦑target⦒
+⦑target⦒ = «p»
+#E PredItem ⦑target⦒
 ’
 
-MatchItem_alt [a] = ‛«a»’
-
-MatchItem_parenplus [lp i rp _op] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛parenp’⎬’
+AlternationGroup_plus [_lp item+ _rp _plus] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-      if ⦑retvar⦒:⤷
-        while ⦑retvar⦒:⤷
-          «i»
-        ⤶
+      #B AlternationGroup_plus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (False)
+        «item»
+        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
       ⤶
+      while ⦑target⦒:⤷
+        «item»
+      ⤶
+      #E AltItem_pplus -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
-MatchItem_parenstar [lp i rp _op] =
-  ⎡ retvar=‛ignore’
+AlternationGroup_plain [_lp item+ _rp] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
-      while ⦑retvar⦒:⤷
-        «i»⤶    
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-  ⎦
-
-MatchItem_parenopt [lp i rp _op] =
-    ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-
-MatchItem_paren [lp i rp] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      «i»
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+      #B AlternationGroup <- ⦑inout⦒
+      ⦑target⦒ = declare (False)
+      if ⦑inout⦒:⤷
+        «item»
+      ⤶
+      ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
+      #E AlternationGroup -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
-MatchItem_plus [ Pred _plus] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
+AltItem [_bar bitem] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛alt’⎬’
     ‛
-      ⦑retvar⦒ = «Pred»
-      if ⦑retvar⦒:⤷
-	while «Pred»:⤷
-	  pass
+      #B AltItem <- ⦑inout⦒
+      if not ⦑inout⦒:⤷
+        ⦑target⦒ = declare (False)
+        «bitem»
+        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
+      ⤶
+      #E AltItem -> ⦑inout⦒
+    ’
+  ⎦
+⎦
+
+BranchingItem [x] = 
+‛
+#B BranchingItem <- ⦑target⦒
+«x»
+#E BranchingItem -> ⦑target⦒
+’
+
+SeqItem_plus [item _plus] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B SeqItem_plus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «item»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+	while ⦑target⦒:⤷
+          «item»
 	⤶
       ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
+      #E SeqItem_plus -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
-MatchItem_star [ Pred _star] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
+SeqItem_parenthesized [_lp nbitem+ _rp] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
     ‛
-      if ⦑retvar⦒:⤷
-	while «Pred»:⤷
-	  pass
+      #B SeqItem_parenthesized <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «nbitem»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+      ⤶
+      #E -> SeqItem_parenthesized ⦑inout⦒
+    ’
+  ⎦
+⎦
+
+SeqItem_sequence [s] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B SeqItem_sequence <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «s»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+      ⤶
+      #E SeqItem_sequence -> ⦑inout⦒
+    ’
+  ⎦
+⎦
+
+SeqItem_alternationgroup [a] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seqalt’⎬’
+    ‛
+      #B SeqItem_AlternationGroup <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        «a»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+        ⦑target⦒ = declare (False)
+      ⤶
+      #E SeqItem_AlternationGroup -> ⦑inout⦒
+    ’
+  ⎦
+⎦
+
+SeqItem_preditem [p] = 
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B SeqItem_preditem <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «p»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+      ⤶
+      #E SeqItem_preditem -> ⦑inout⦒
+    ’
+  ⎦
+⎦
+SeqItem_preditemplus [p _plus] =
+⎡ inout = ‛⦑target⦒’
+  ⎡ target=‛⎨genvar ‛seq’⎬’
+    ‛
+      #B SeqItem_preditemplus <- ⦑inout⦒
+      if ⦑inout⦒:⤷
+        ⦑target⦒ = declare (True)
+        «p»
+        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
+        while ⦑target⦒:⤷
+	  «p»
 	⤶
       ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
+      #E SeqItem_preditemplus -> ⦑inout⦒
     ’
   ⎦
 ⎦
 
-MatchItem_optional [ Pred _opt] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛paren’⎬’
-    ‛
-      if ⦑retvar⦒:⤷
-	«Pred»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ True
-    ’
-  ⎦
-⎦
-
-MatchItem_plain [ Pred] =
-⎡ previousretvar=‛⦑retvar⦒’
-  ⎡ retvar=‛⎨genvar ‛iplain’⎬’
-    ‛
-      ⦑retvar⦒ = True
-      if  ⦑retvar⦒:⤷
-        ⦑retvar⦒ = «Pred»
-      ⤶
-      ⦑previousretvar⦒ = ⦑previousretvar⦒ ⦑logicalop⦒ ⦑retvar⦒
-    ’
-  ⎦
-⎦
+NoBarSeqItem [item] = ‛«item»’
 
 
+Pred_neg [_not matchAtom] = ‛not «matchAtom»’
+Pred_plain [matchAtom] = ‛«matchAtom»’
 
-Pred_neg [ _not matchAtom] = ‛ not «matchAtom»’
-Pred_plain [ matchAtom] = ‛ «matchAtom»’
+matchAtom_string [dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
+matchAtom_single [id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
 
-matchAtom_string [ dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
-matchAtom_single [ id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
+dqstring [dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
 
-dqstring [ dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
-
-sqchar_escdq [ _bslash dq] = ‛«_bslash»«dq»’
+sqchar_escdq [_bslash dq] = ‛«_bslash»«dq»’
 sqchar_any [any] = ‛«any»’
 
-id [ _3] = ‛ «_3»’
-
-uppercaseid [ upper alnum*] = ‛«upper»«alnum»’
-
-lowercaseid [ lower alnum*] = ‛«lower»«alnum»’
+id [id] = ‛ «id»’
+uppercaseid [upper alnum*] = ‛«upper»«alnum»’
+lowercaseid [lower alnum*] = ‛«lower»«alnum»’
 }

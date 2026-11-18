@@ -1,3 +1,23 @@
+# v9
+- after drawing control flow diagram in ../d2jpbp
+![ohm-editor screenshot](doc/screenshot-rwr9.png)
+
+- parser functions return true or false. If they need to provide more detail, they use `stkpush (..., ...)`
+- add `from plib2 import *\n` to Main
+- remove `stkpush` from pred - parsing control flow only works with booleans, other values must be pushed onto the value stack as necessary (none needed at this moment)
+- add `    begin ("⦑rulename⦒")` to RuleBody
+- return accept or fail
+- introduce cntinue and mycntinue - a new one at each level for future compositions
+- use skip to track if ohm space-skipping is needed
+- use lambda when space-skipping, tested with genskipmaybe
+- Stepper `‛⦑cntinue⦒ = ⦑cond⦒ «ParsingCall»’`
+- AltGroup flows cntinue from above into AltItem, then flows the result back in mycntinue. Similarly in SeqGroup. Might be wasteful, but keeping a stack of bools is safer than optimizing. We might be able to apply peephole optimizations for common optimizable patterns.
+
+```
+           ⦑cntinue⦒ = ⦑mycntinue⦒
+           «AltItem»
+           ⦑mycntinue⦒ = ⦑cntinue⦒
+```
 # v6
 
 # v5

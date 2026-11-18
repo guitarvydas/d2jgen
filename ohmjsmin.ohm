@@ -5,32 +5,23 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
+  RuleBody = SeqGroup
 
-  //////////////////////////////////////////////////////////////////////////////
-  // There are 3 main branching control flow blocks: SeqItem, AltItem, PredItem
-  // each receives a target variable and leaves a true/false result in that variable
-  //////////////////////////////////////////////////////////////////////////////
-
-  RuleBody = Sequence
-
-  Sequence = SeqItem+
-  PredItem = Pred
-  AlternationGroup =
+  SeqGroup = Stepper+
+  AltGroup =
     | "(" AltItem+ ")" "+" -- plus
     | "(" AltItem+ ")"     -- plain
-  AltItem = "|" BranchingItem
-  BranchingItem = ( PredItem | Sequence | AlternationGroup )
-  SeqItem =
-    | SeqItem "+"           -- plus
-    | "(" NoBarSeqItem+ ")" -- parenthesized
-    | Sequence              -- sequence
-    | AlternationGroup      -- alternationgroup
-    | PredItem "+"          -- preditemplus
-    | PredItem              -- preditem
-  NoBarSeqItem = ~"|" SeqItem
+  AltItem = "|" Stepper
+
+  Stepper = ParsingCall
+
+  ParsingCall = Pred
 
   //////////////////////////////////////////////////////////////////////////////
-  // Pred returns a function call not wrapped in branching code
+  // Pred is a parsing function call not wrapped in branching code
+  // the call returns
+  // - a True/False on the value stack (a global variable called "value" in the RWR code)
+  // - a "done" control flow blip on its output port ""
   //////////////////////////////////////////////////////////////////////////////
   Pred =
     | "~" matchAtom -- neg

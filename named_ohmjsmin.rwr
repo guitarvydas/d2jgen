@@ -1,61 +1,41 @@
 ohmjsmin {
 
 
-Main [ id _lb Rules _rb] = ‛ «id» «_lb» «Rules» «_rb»’
+Main [ id _lb Rules _rb] = ‛«id» «_lb» «Rules» «_rb»’
 
-Rules [ _1+] = ‛ «_1»’
+Rules [ _1+] = ‛«_1»’
 
-SyntacticRule [ uppercaseid _eq Rulohmjsmin {
+SyntacticRule [ uppercaseid _eq RuleBody] = ‛«uppercaseid» «_eq» «RuleBody»’
 
+LexicalRule [ lowercaseid _eq RuleBody] = ‛«lowercaseid» «_eq» «RuleBody»’
 
-Main [ id _lb Rules _rb] = ‛ «id» «_lb» «Rules» «_rb»’
+RuleBody [ SeqGroup] = ‛«SeqGroup»’
 
-Rules [ _1+] = ‛ «_1»’
+SeqGroup [ Stepper+] = ‛«Stepper»’
 
-SyntacticRule [ uppercaseid _eq RuleBody] = ‛ «uppercaseid» «_eq» «RuleBody»’
+AltGroup_plus [ _lp AltItem+ _rp _plus] = ‛«_lp» «AltItem» «_rp» «_plus»’
+AltGroup_plain [ _lp AltItem+ _rp] = ‛«_lp» «AltItem» «_rp»’
 
-LexicalRule [ lowercaseid _eq RuleBody] = ‛ «lowercaseid» «_eq» «RuleBody»’
+AltItem [ _orbar Stepper] = ‛«_orbar» «Stepper»’
 
-LexicalExtension [ lowercaseid _peq RuleBody] = ‛ «lowercaseid» «_peq» «RuleBody»’
-|
-«RuleBody»_«alternates» [ Alternation] = ‛ «Alternation»’|
-«RuleBody»_«sequence» [ Sequence] = ‛ «Sequence»’
+Stepper [ ParsingCall] = ‛«ParsingCall»’
 
-Alternation [ _bar? Sequence OrBranch+] = ‛ «_bar» «Sequence» «OrBranch»’
+ParsingCall [ Pred] = ‛«Pred»’
 
-OrBranch [ _bar Sequence] = ‛ «_bar» «Sequence»’
+«Pred»_«neg» [ _not matchAtom] = ‛«_not» «matchAtom»’
+«Pred»_«plain» [ matchAtom] = ‛«matchAtom»’
 
-Sequence [ MatchItem+] = ‛ «MatchItem»’
-|
-«MatchItem»_«paren» [ ParenthesizedMatchItem] = ‛ «ParenthesizedMatchItem»’|
-«MatchItem»_«plus» [ Pred _plus] = ‛ «Pred» «_plus»’|
-«MatchItem»_«star» [ Pred _star] = ‛ «Pred» «_star»’|
-«MatchItem»_«optional» [ Pred _opt] = ‛ «Pred» «_opt»’|
-«MatchItem»_«plain» [ Pred] = ‛ «Pred»’
-|
-«ParenthesizedMatchItem»_«orplus» [ lp Alternation rp _plus] = ‛ «lp» «Alternation» «rp» «_plus»’|
-«ParenthesizedMatchItem»_«orstar» [ lp Alternation rp _star] = ‛ «lp» «Alternation» «rp» «_star»’|
-«ParenthesizedMatchItem»_«oropt» [ lp Alternation rp _opt] = ‛ «lp» «Alternation» «rp» «_opt»’|
-«ParenthesizedMatchItem»_«or» [ lp Alternation rp] = ‛ «lp» «Alternation» «rp»’|
-«ParenthesizedMatchItem»_«andplus» [ lp Sequence rp _plus] = ‛ «lp» «Sequence» «rp» «_plus»’|
-«ParenthesizedMatchItem»_«andstar» [ lp Sequence rp _star] = ‛ «lp» «Sequence» «rp» «_star»’|
-«ParenthesizedMatchItem»_«andopt» [ lp Sequence rp _opt] = ‛ «lp» «Sequence» «rp» «_opt»’|
-«ParenthesizedMatchItem»_«and» [ lp Sequence rp] = ‛ «lp» «Sequence» «rp»’
-|
-«Pred»_«neg» [ _not matchAtom] = ‛ «_not» «matchAtom»’|
-«Pred»_«plain» [ matchAtom] = ‛ «matchAtom»’
-|
-«matchAtom»_«string» [ dqstring] = ‛ «dqstring»’|
-«matchAtom»_«single» [ id~  spaces _2] = ‛ «id»~  «spaces» «_2»’
+«matchAtom»_«string» [ dqstring] = ‛«dqstring»’
+«matchAtom»_«single» [ id~  spaces _eq] = ‛«id»~  «spaces» «_eq»’
 
-dqstring [ dq sqchar+ dq] = ‛ «dq» «sqchar» «dq»’
-|
-«sqchar»_«escdq» [ _bslash dq] = ‛ «_bslash» «dq»’|
-«sqchar»_«any» [~ dq any] = ‛~ «dq» «any»’
+dqstring [ _dq sqchar+ _dq] = ‛«_dq» «sqchar» «_dq»’
 
-id [ _3] = ‛ «_3»’
+«sqchar»_«escdq» [ _bslash _dq] = ‛«_bslash» «_dq»’
+«sqchar»_«any» [~ _dq any] = ‛~ «_dq» «any»’
 
-uppercaseid [ upper alnum*] = ‛ «upper» «alnum»’
+id [ _2] = ‛«_2»’
 
-lowercaseid [ lower alnum*] = ‛ «lower» «alnum»’
+uppercaseid [ upper alnum*] = ‛«upper»«alnum»’
+
+lowercaseid [ lower alnum*] = ‛«lower»«alnum»’
 }

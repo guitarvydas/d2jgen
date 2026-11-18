@@ -1,218 +1,83 @@
-%parameter target
-%parameter inout
-%parameter skip
+%parameter cntinue
+%parameter mycntinue
 %parameter rulename
-%parameter logicalop
-%parameter more
+%parameter cond
+%parameter skip
 
 %rewrite ohmjsmin {
 
-Main [id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
+Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 
-Rules [x+] = ‛«x»’
+Rules [ _1+] = ‛«_1»’
 
-SyntacticRule [ id _eq RuleBody] =
-⎡ skip=‛true’
-  ⎡ rulename=‛«id»’
-    ⎡ target=‛⎨resetgenvar⎬r’
-       ‛«RuleBody»’
+SyntacticRule [ uppercaseid _eq RuleBody] =
+⎡ rulename=‛«uppercaseid»’
+  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛csyn’⎬’
+    ⎡skip=‛true’
+      ‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
     ⎦
   ⎦
 ⎦
 
-LexicalRule [ id _eq RuleBody] =
-⎡ skip=‛false’
-  ⎡ rulename=‛«id»’
-    ⎡ target=‛⎨resetgenvar⎬r’
-       ‛«RuleBody»’
+LexicalRule [ lowercaseid _eq RuleBody] =
+⎡ rulename=‛«lowercaseid»’
+  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛clex’⎬’
+    ⎡skip=‛false’
+      ‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
     ⎦
   ⎦
 ⎦
 
-RuleBody [x] = ‛
-def ⦑rulename⦒ ():⤷
-  begin ("⦑rulename⦒")
-  ⦑target⦒ = declare (True)
-  «x»
-  if ⦑target⦒:⤷
-    return accept ("⦑rulename⦒")⤶
-  else:⤷
-    return fail ("⦑rulename⦒")⤶
- ⤶’
+RuleBody [ SeqGroup] =
+  ‛
+    begin ("⦑rulename⦒")
+    ⦑cntinue⦒=declare(True)
+    «SeqGroup»
+    if ⦑cntinue⦒:⤷
+      return accept ("⦑rulename⦒")
+    ⤶
+    else:⤷
+      return fail ("⦑rulename⦒")
+    ⤶
+  ’
 
-Sequence [item+] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «item»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-      ⤶
-    ’
+SeqGroup [ Stepper+] = 
+⎡ cond=‛’
+  ⎡ mycntinue=‛⦑cntinue⦒’
+    ⎡cntinue=‛⎨genvar ‛cseq’⎬’
+	 ‛
+           ⦑cntinue⦒ = ⦑mycntinue⦒
+           «Stepper»
+           ⦑mycntinue⦒ = ⦑cntinue⦒
+	 ’
+     ⎦
   ⎦
 ⎦
 
-
-PredItem [p] = 
-‛
-#B PredItem ⦑target⦒
-⦑target⦒ = «p»
-#E PredItem ⦑target⦒
-’
-
-AlternationGroup_plus [_lp item+ _rp _plus] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B AlternationGroup_plus <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (False)
-        «item»
-        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
-      ⤶
-      while ⦑target⦒:⤷
-        «item»
-      ⤶
-      #E AltItem_pplus -> ⦑inout⦒
-    ’
+AltGroup_plus [ _lp AltItem+ _rp _plus] = ‛«_lp» «AltItem» «_rp» «_plus»’
+AltGroup_plain [ _lp AltItem+ _rp] =
+⎡ cond=‛not’
+  ⎡ mycntinue=‛⦑cntinue⦒’
+    ⎡cntinue=‛⎨genvar ‛calt’⎬’
+	 ‛
+           ⦑cntinue⦒ = ⦑mycntinue⦒
+           «AltItem»
+           ⦑mycntinue⦒ = ⦑cntinue⦒
+	 ’
+    ⎦
   ⎦
 ⎦
 
-AlternationGroup_plain [_lp item+ _rp] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛alt’⎬’
+AltItem [ _orbar Stepper] = ‛«Stepper»’
+
+Stepper [ ParsingCall] = 
     ‛
-      #B AlternationGroup <- ⦑inout⦒
-      ⦑target⦒ = declare (False)
-      if ⦑inout⦒:⤷
-        «item»
+      if ⦑cntinue⦒:⤷
+        ⦑cntinue⦒ = ⦑cond⦒ «ParsingCall»
       ⤶
-      ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
-      #E AlternationGroup -> ⦑inout⦒
     ’
-  ⎦
-⎦
 
-AltItem [_bar bitem] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛alt’⎬’
-    ‛
-      #B AltItem <- ⦑inout⦒
-      if not ⦑inout⦒:⤷
-        ⦑target⦒ = declare (False)
-        «bitem»
-        ⦑inout⦒ = ⦑inout⦒ or ⦑target⦒
-      ⤶
-      #E AltItem -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-BranchingItem [x] = 
-‛
-#B BranchingItem <- ⦑target⦒
-«x»
-#E BranchingItem -> ⦑target⦒
-’
-
-SeqItem_plus [item _plus] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B SeqItem_plus <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «item»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-	while ⦑target⦒:⤷
-          «item»
-	⤶
-      ⤶
-      #E SeqItem_plus -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-SeqItem_parenthesized [_lp nbitem+ _rp] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B SeqItem_parenthesized <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «nbitem»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-      ⤶
-      #E -> SeqItem_parenthesized ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-SeqItem_sequence [s] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B SeqItem_sequence <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «s»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-      ⤶
-      #E SeqItem_sequence -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-SeqItem_alternationgroup [a] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seqalt’⎬’
-    ‛
-      #B SeqItem_AlternationGroup <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        «a»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-        ⦑target⦒ = declare (False)
-      ⤶
-      #E SeqItem_AlternationGroup -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-SeqItem_preditem [p] = 
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B SeqItem_preditem <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «p»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-      ⤶
-      #E SeqItem_preditem -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-SeqItem_preditemplus [p _plus] =
-⎡ inout = ‛⦑target⦒’
-  ⎡ target=‛⎨genvar ‛seq’⎬’
-    ‛
-      #B SeqItem_preditemplus <- ⦑inout⦒
-      if ⦑inout⦒:⤷
-        ⦑target⦒ = declare (True)
-        «p»
-        ⦑inout⦒ = ⦑inout⦒ and ⦑target⦒
-        while ⦑target⦒:⤷
-	  «p»
-	⤶
-      ⤶
-      #E SeqItem_preditemplus -> ⦑inout⦒
-    ’
-  ⎦
-⎦
-
-NoBarSeqItem [item] = ‛«item»’
-
+ParsingCall [ Pred] = ‛«Pred»’
 
 Pred_neg [_not matchAtom] = ‛not «matchAtom»’
 Pred_plain [matchAtom] = ‛«matchAtom»’

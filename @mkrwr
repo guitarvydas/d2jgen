@@ -2,3 +2,4 @@
 here=$(realpath .)
 there=$(realpath ~/projects/mkrwr)
 ${there}/@make ${there} ${here} named_ohmjsmin >named_ohmjsmin.rwr
+echo Now you have to hand edit named_ohmjsmin.rwr to remove glitches

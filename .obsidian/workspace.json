@@ -11,10 +11,14 @@
             "id": "c769a219810c4f52",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "README"
             }
           },
           {
@@ -90,8 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 218.4609375
   },
   "right": {
     "id": "f5c1ed2dde6a7022",
@@ -169,6 +172,7 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -182,7 +186,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 212.21484375
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,17 +201,17 @@
   },
   "active": "c769a219810c4f52",
   "lastOpenFiles": [
-    "kernel/ohmjs.rwr~",
-    "kernel/ohmjs.rwr",
-    "kernel/#ohmjs.rwr#",
-    "kernel/ohm2py.rwr",
-    "kernel/#ohm2py.rwr#",
-    "kernel/#ohmjs.ohm#",
-    "kernel/ohmjs.ohm~",
-    "kernel/ohmjs.ohm",
-    "kernel/#d2j.mockup.py#",
-    "kernel/junk.md~",
-    "kernel/test.json~",
+    "temp.nanodsl.9628.mjs",
+    "#README.md#",
+    "temp.nanodsl.16200.mjs",
+    "temp.nanodsl.19428.mjs",
+    "temp.nanodsl.25168.mjs",
+    "temp.grammar",
+    "temp.nanodsl.14864.mjs",
+    "temp.nanodsl.11944.mjs",
+    "temp.nanodsl.28106.mjs",
+    "temp.nanodsl.8831.mjs",
+    "temp.nanodsl.2258.mjs",
     "kernel/temp/script.md",
     "kernel/dlisp.md",
     "kernel/dict.md",
