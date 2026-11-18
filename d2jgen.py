@@ -3,10 +3,12 @@ def Main ():
     begin ("Main")
     csyn1=declare(True)
     cseq2 = csyn1
-    if cseq2:
-        cseq2 =  parse_ignoring (lambda :  a ())
-    if cseq2:
-        cseq2 =  parse_ignoring (lambda :  b ())
+    calt3 = cseq2
+    if calt3:
+        calt3 = not parse_ignoring (lambda :  a ())
+    if calt3:
+        calt3 = not parse_ignoring (lambda :  b ())
+    cseq2 = not calt3
     csyn1 = cseq2
     if csyn1:
         return accept ("Main")

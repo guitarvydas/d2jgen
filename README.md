@@ -12,6 +12,7 @@
 - use lambda when space-skipping, tested with genskipmaybe
 - Stepper `‛⦑cntinue⦒ = ⦑cond⦒ «ParsingCall»’`
 - AltGroup flows cntinue from above into AltItem, then flows the result back in mycntinue. Similarly in SeqGroup. Might be wasteful, but keeping a stack of bools is safer than optimizing. We might be able to apply peephole optimizations for common optimizable patterns.
+- match instead of cntinue
 
 ```
            ⦑cntinue⦒ = ⦑mycntinue⦒

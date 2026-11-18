@@ -62,7 +62,7 @@ AltGroup_plain [ _lp AltItem+ _rp] =
 	 ‛
            ⦑cntinue⦒ = ⦑mycntinue⦒
            «AltItem»
-           ⦑mycntinue⦒ = ⦑cntinue⦒
+           ⦑mycntinue⦒ = not ⦑cntinue⦒
 	 ’
     ⎦
   ⎦

@@ -7,7 +7,7 @@ ohmjsmin {
 
   RuleBody = SeqGroup
 
-  SeqGroup = Stepper+
+  SeqGroup = (Stepper | AltGroup)+
   AltGroup =
     | "(" AltItem+ ")" "+" -- plus
     | "(" AltItem+ ")"     -- plain

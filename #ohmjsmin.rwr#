@@ -1,0 +1,103 @@
+%parameter cntinue
+%parameter mycntinue
+%parameter match
+%parameter savedmatch
+%parameter rulename
+%parameter cond
+%parameter skip
+
+%rewrite ohmjsmin {
+
+Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
+
+Rules [ _1+] = ‛«_1»’
+
+SyntacticRule [ uppercaseid _eq RuleBody] =
+⎡ rulename=‛«uppercaseid»’
+  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛csyn’⎬’
+    ⎡skip=‛true’
+      ‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
+    ⎦
+  ⎦
+⎦
+
+LexicalRule [ lowercaseid _eq RuleBody] =
+⎡ rulename=‛«lowercaseid»’
+  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛clex’⎬’
+    ⎡skip=‛false’
+      ‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
+    ⎦
+  ⎦
+⎦
+
+RuleBody [ SeqGroup] =
+  ‛
+    begin ("⦑rulename⦒")
+    ⦑cntinue⦒=declare(True)
+    «SeqGroup»
+    if ⦑cntinue⦒:⤷
+      return accept ("⦑rulename⦒")
+    ⤶
+    else:⤷
+      return fail ("⦑rulename⦒")
+    ⤶
+  ’
+
+SeqGroup [ Stepper+] = 
+⎡ cond=‛’
+  ⎡ mycntinue=‛⦑cntinue⦒’
+    ⎡cntinue=‛⎨genvar ‛cseq’⎬’
+      ⎡ savedmatch=‛⦑match⦒’
+        ⎡match=‛⎨genvar ‛cseq’⎬’
+	   ‛
+	     ⦑cntinue⦒ = ⦑mycntinue⦒
+	     ⦑match⦒ = False
+	     «Stepper»
+	     ⦑mycntinue⦒ = ⦑match⦒
+	   ’
+        ⎦
+      ⎦
+    ⎦
+  ⎦
+⎦
+
+AltGroup_plus [ _lp AltItem+ _rp _plus] = ‛«_lp» «AltItem» «_rp» «_plus»’
+AltGroup_plain [ _lp AltItem+ _rp] =
+⎡ cond=‛not’
+  ⎡ mycntinue=‛⦑cntinue⦒’
+    ⎡cntinue=‛⎨genvar ‛calt’⎬’
+	 ‛
+           ⦑cntinue⦒ = ⦑mycntinue⦒
+           «AltItem»
+           ⦑mycntinue⦒ = not ⦑cntinue⦒
+	 ’
+    ⎦
+  ⎦
+⎦
+
+AltItem [ _orbar Stepper] = ‛«Stepper»’
+
+Stepper [ ParsingCall] = 
+    ‛
+      if ⦑cntinue⦒:⤷
+        ⦑cntinue⦒ = ⦑cond⦒ «ParsingCall»
+      ⤶
+    ’
+
+ParsingCall [ Pred] = ‛«Pred»’
+
+Pred_neg [_not matchAtom] = ‛not «matchAtom»’
+Pred_plain [matchAtom] = ‛«matchAtom»’
+
+matchAtom_string [dqstring] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛parse_string («dqstring»)’⎬’
+matchAtom_single [id] =‛⎨genskipmaybe ‛⦑skip⦒’ ‛«id» ()’⎬’
+
+dqstring [dq sqchar+ dq2] = ‛«dq»«sqchar»«dq2»’
+
+sqchar_escdq [_bslash dq] = ‛«_bslash»«dq»’
+sqchar_any [any] = ‛«any»’
+
+id [id] = ‛ «id»’
+uppercaseid [upper alnum*] = ‛«upper»«alnum»’
+lowercaseid [lower alnum*] = ‛«lower»«alnum»’
+}
