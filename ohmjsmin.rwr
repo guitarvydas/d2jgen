@@ -1,7 +1,7 @@
-%parameter cntinue
-%parameter mycntinue
+%parameter targetid
+%parameter savedtargetid
 %parameter rulename
-%parameter cond
+%parameter proceed
 %parameter skip
 
 %rewrite ohmjsmin {
@@ -11,73 +11,102 @@ Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
 Rules [ _1+] = ‛«_1»’
 
 SyntacticRule [ uppercaseid _eq RuleBody] =
-⎡ rulename=‛«uppercaseid»’
-  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛csyn’⎬’
-    ⎡skip=‛true’
-      ‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
+⎡ skip=‛true’
+  ⎡ rulename=‛«uppercaseid»’
+    ⎡proceed=‛⎨resetgenvar⎬⎨genvar ‛psyn’⎬’
+      ⎡targetid=‛⎨genvar ‛v’⎬’
+	‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
+      ⎦
     ⎦
   ⎦
 ⎦
 
 LexicalRule [ lowercaseid _eq RuleBody] =
-⎡ rulename=‛«lowercaseid»’
-  ⎡cntinue=‛⎨resetgenvar⎬⎨genvar ‛clex’⎬’
-    ⎡skip=‛false’
-      ‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
+⎡ skip=‛false’
+  ⎡ rulename=‛«lowercaseid»’
+    ⎡proceed=‛⎨resetgenvar⎬⎨genvar ‛plex’⎬’
+      ⎡targetid=‛⎨genvar ‛v’⎬’
+	‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
+      ⎦
     ⎦
   ⎦
 ⎦
 
-RuleBody [ SeqGroup] =
+RuleBody [Group] =
   ‛
+    ###in RuleBody
     begin ("⦑rulename⦒")
-    ⦑cntinue⦒=declare(True)
-    «SeqGroup»
-    if ⦑cntinue⦒:⤷
+    ⦑proceed⦒=declare(True)
+    ⦑targetid⦒=declare(False)
+    «Group»
+    if ⦑targetid⦒:⤷
       return accept ("⦑rulename⦒")
     ⤶
     else:⤷
       return fail ("⦑rulename⦒")
     ⤶
+    ###in RuleBody
   ’
 
-SeqGroup [ Stepper+] = 
-⎡ cond=‛’
-  ⎡ mycntinue=‛⦑cntinue⦒’
-    ⎡cntinue=‛⎨genvar ‛cseq’⎬’
-	 ‛
-           ⦑cntinue⦒ = ⦑mycntinue⦒
-           «Stepper»
-           ⦑mycntinue⦒ = ⦑cntinue⦒
-	 ’
-     ⎦
-  ⎦
-⎦
-
-AltGroup_plus [ _lp AltItem+ _rp _plus] = ‛«_lp» «AltItem» «_rp» «_plus»’
-AltGroup_plain [ _lp AltItem+ _rp] =
-⎡ cond=‛not’
-  ⎡ mycntinue=‛⦑cntinue⦒’
-    ⎡cntinue=‛⎨genvar ‛calt’⎬’
-	 ‛
-           ⦑cntinue⦒ = ⦑mycntinue⦒
-           «AltItem»
-           ⦑mycntinue⦒ = not ⦑cntinue⦒
-	 ’
+Group [x+] =
+⎡ savedtargetid = ‛⦑targetid⦒’
+  ⎡ targetid = ‛⎨genvar ‛v’⎬’
+    ⎡ savedproceed = ‛⦑proceed⦒’
+      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+	‛
+	  ⦑targetid⦒ = declare (None)
+	  «x»
+	  ⦑savedtargetid⦒ = ⦑targetid⦒ 
+	’
+      ⎦
     ⎦
   ⎦
 ⎦
 
-AltItem [ _orbar Stepper] = ‛«Stepper»’
+AltGroup_plus [_lp x+ _rp _plus] =
+⎡ savedtargetid = ‛⦑targetid⦒’
+  ⎡ targetid = ‛⎨genvar ‛v’⎬’
+    ⎡ savedproceed = ‛⦑proceed⦒’
+      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+      ‛
+	⦑proceed⦒ = declare (True)
+	⦑targetid⦒ = declare (None)
+	«x»
+	⦑savedtargetid⦒ = ⦑targetid⦒ 
+	⦑proceed⦒ = ⦑targetid⦒ 
+      ’
+      ⎦
+    ⎦
+  ⎦
+⎦
 
-Stepper [ ParsingCall] = 
-    ‛
-      if ⦑cntinue⦒:⤷
-        ⦑cntinue⦒ = ⦑cond⦒ «ParsingCall»
-      ⤶
-    ’
+AltGroup_plain [_lp x+ _rp] =
+⎡ savedtargetid = ‛⦑targetid⦒’
+  ⎡ targetid = ‛⎨genvar ‛v’⎬’	
+    ⎡ savedproceed = ‛⦑proceed⦒’
+      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+      ‛
+	⦑proceed⦒ = declare (True)
+	⦑targetid⦒ = declare (None)
+	«x»
+	⦑savedtargetid⦒ = ⦑targetid⦒ 
+	⦑proceed⦒ = not ⦑targetid⦒ 
+      ’
+      ⎦
+    ⎦
+  ⎦
+⎦
 
-ParsingCall [ Pred] = ‛«Pred»’
+AltItem [_orbar group] =
+‛
+  if ⦑proceed⦒:⤷
+    «group»⤶
+’
+
+ParsingCall [ Pred] = ‛⦑targetid⦒ = «Pred»’
+
+
+
 
 Pred_neg [_not matchAtom] = ‛not «matchAtom»’
 Pred_plain [matchAtom] = ‛«matchAtom»’

@@ -5,17 +5,16 @@ ohmjsmin {
   LexicalRule = lowercaseid "=" RuleBody
 
 
-  RuleBody = SeqGroup
+  RuleBody = Group
 
-  SeqGroup = (Stepper | AltGroup)+
+  Group = (ParsingCall | AltGroup)+
   AltGroup =
     | "(" AltItem+ ")" "+" -- plus
     | "(" AltItem+ ")"     -- plain
-  AltItem = "|" Stepper
-
-  Stepper = ParsingCall
-
+  AltItem = "|" Group
   ParsingCall = Pred
+
+
 
   //////////////////////////////////////////////////////////////////////////////
   // Pred is a parsing function call not wrapped in branching code
