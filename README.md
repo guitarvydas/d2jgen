@@ -1,3 +1,10 @@
+# v10
+- savedtargetid instead of myid
+- proceed instead of cntinue
+- p and v prefixes
+- skip
+- use value based triggering
+
 # v9
 - after drawing control flow diagram in ../d2jpbp
 ![ohm-editor screenshot](doc/screenshot-rwr9.png)

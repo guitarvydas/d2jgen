@@ -1,5 +1,5 @@
 d2j {
-  Main = ( | a | b )
+  Main = ( | a | b)
   a = "a"
   b = "b"
 }

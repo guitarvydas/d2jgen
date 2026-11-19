@@ -108,18 +108,33 @@ let _rewrite = {
         enter_rule ("main");
         set_return (`let parameters = {};
 function pushParameter (name, v) {
-    if (!parameters [name]) {
-        parameters [name] = [];
+    try {
+	if (!parameters [name]) {
+	    parameters [name] = [];
+	}
+	parameters [name].push (v);
+    } catch (e) {
+        console.error (\`failure in pushParameter (\${name}, \${v})\`);
+        process.exit (1);
     }
-    parameters [name].push (v);
 }
 function popParameter (name) {
-    parameters [name].pop ();
+    try {
+        parameters [name].pop ();
+    } catch (e) {
+        console.error (\`failure in popParameter (\${name})\`);
+        process.exit (1);
+    }
 }
 function getParameter (name) {
-    let top = parameters [name].pop ();
-    parameters [name].push (top);
-    return top;
+    try {
+        let top = parameters [name].pop ();
+        parameters [name].push (top);
+        return top;
+    } catch (e) {
+        console.error (\`failure in getParameter (\${name})\`);
+        process.exit (1);
+    }
 }
 ${parameterDef_i.rwr ().join ('')}
 
