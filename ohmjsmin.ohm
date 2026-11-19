@@ -7,7 +7,8 @@ ohmjsmin {
 
   RuleBody = Group
 
-  Group = (ParsingCall | AltGroup)+
+  Group = SequentialItem+
+  SequentialItem = ParsingCall | AltGroup+
   AltGroup =
     | "(" AltItem+ ")" "+" -- plus
     | "(" AltItem+ ")"     -- plain

@@ -2,22 +2,18 @@ from plib2 import *
 def Main ():
     ###in RuleBody
     begin ("Main")
-    psyn1=declare(True)
+    bpsyn1=declare(False)
     v2=declare(False)
+    bp4 = declare (False)
     v3 = declare (None)
-    p6 = declare (True)
-    v5 = declare (None)
-    if p6:
-        v7 = declare (None)
-        v7 = parse_ignoring (lambda :  a ())
-        v5 = v7
-    if p6:
-        v9 = declare (None)
-        v9 = parse_ignoring (lambda :  b ())
-        v5 = v9
-    v3 = v5
-    p6 = not v5
+    if not bp4:
+        v3 = parse_ignoring (lambda :  a ())
+        bp4 = not v3
+    if not bp4:
+        v3 = parse_ignoring (lambda :  b ())
+        bp4 = not v3
     v2 = v3
+    bpsyn1 = v3
     if v2:
         return accept ("Main")
     else:
@@ -26,11 +22,15 @@ def Main ():
 def a ():
     ###in RuleBody
     begin ("a")
-    plex1=declare(True)
+    bplex1=declare(False)
     v2=declare(False)
+    bp4 = declare (False)
     v3 = declare (None)
-    v3 = parse_string ("a")
+    if not bp4:
+        v3 = parse_string ("a")
+        bp4 = not v3
     v2 = v3
+    bplex1 = v3
     if v2:
         return accept ("a")
     else:
@@ -39,11 +39,15 @@ def a ():
 def b ():
     ###in RuleBody
     begin ("b")
-    plex1=declare(True)
+    bplex1=declare(False)
     v2=declare(False)
+    bp4 = declare (False)
     v3 = declare (None)
-    v3 = parse_string ("b")
+    if not bp4:
+        v3 = parse_string ("b")
+        bp4 = not v3
     v2 = v3
+    bplex1 = v3
     if v2:
         return accept ("b")
     else:

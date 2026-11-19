@@ -1,7 +1,8 @@
 %parameter targetid
 %parameter savedtargetid
 %parameter rulename
-%parameter proceed
+%parameter savedbypass
+%parameter bypass
 %parameter skip
 
 %rewrite ohmjsmin {
@@ -13,7 +14,7 @@ Rules [ _1+] = ‛«_1»’
 SyntacticRule [ uppercaseid _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«uppercaseid»’
-    ⎡proceed=‛⎨resetgenvar⎬⎨genvar ‛psyn’⎬’
+    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bpsyn’⎬’
       ⎡targetid=‛⎨genvar ‛v’⎬’
 	‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
       ⎦
@@ -24,7 +25,7 @@ SyntacticRule [ uppercaseid _eq RuleBody] =
 LexicalRule [ lowercaseid _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«lowercaseid»’
-    ⎡proceed=‛⎨resetgenvar⎬⎨genvar ‛plex’⎬’
+    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bplex’⎬’
       ⎡targetid=‛⎨genvar ‛v’⎬’
 	‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
       ⎦
@@ -36,7 +37,7 @@ RuleBody [Group] =
   ‛
     ###in RuleBody
     begin ("⦑rulename⦒")
-    ⦑proceed⦒=declare(True)
+    ⦑bypass⦒=declare(False)
     ⦑targetid⦒=declare(False)
     «Group»
     if ⦑targetid⦒:⤷
@@ -51,29 +52,41 @@ RuleBody [Group] =
 Group [x+] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’
-    ⎡ savedproceed = ‛⦑proceed⦒’
-      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+    ⎡ savedbypass = ‛⦑bypass⦒’
+      ⎡ bypass = ‛⎨genvar ‛bp’⎬’	
 	‛
+	⦑bypass⦒ = declare (False)
 	  ⦑targetid⦒ = declare (None)
 	  «x»
 	  ⦑savedtargetid⦒ = ⦑targetid⦒ 
+          ⦑savedbypass⦒ = ⦑targetid⦒ 
 	’
       ⎦
     ⎦
   ⎦
 ⎦
 
+SequentialItem [group] =
+‛
+  if not ⦑bypass⦒:⤷
+    «group»
+    ⦑bypass⦒ = not ⦑targetid⦒⤶
+’
+
+
+
+
 AltGroup_plus [_lp x+ _rp _plus] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’
-    ⎡ savedproceed = ‛⦑proceed⦒’
-      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+    ⎡ savedbypass = ‛⦑bypass⦒’
+      ⎡ bypass = ‛⎨genvar ‛p’⎬’	
       ‛
-	⦑proceed⦒ = declare (True)
+	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
 	«x»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
-	⦑proceed⦒ = ⦑targetid⦒ 
+	⦑savedbypass⦒ = ⦑bypass⦒ 
       ’
       ⎦
     ⎦
@@ -83,14 +96,14 @@ AltGroup_plus [_lp x+ _rp _plus] =
 AltGroup_plain [_lp x+ _rp] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’	
-    ⎡ savedproceed = ‛⦑proceed⦒’
-      ⎡ proceed = ‛⎨genvar ‛p’⎬’	
+    ⎡ savedbypass = ‛⦑bypass⦒’
+      ⎡ bypass = ‛⎨genvar ‛p’⎬’	
       ‛
-	⦑proceed⦒ = declare (True)
+	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
 	«x»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
-	⦑proceed⦒ = not ⦑targetid⦒ 
+	⦑savedbypass⦒ = ⦑bypass⦒ 
       ’
       ⎦
     ⎦
@@ -99,8 +112,9 @@ AltGroup_plain [_lp x+ _rp] =
 
 AltItem [_orbar group] =
 ‛
-  if ⦑proceed⦒:⤷
-    «group»⤶
+  if not ⦑bypass⦒:⤷
+    «group»
+    ⦑bypass⦒ = ⦑targetid⦒⤶
 ’
 
 ParsingCall [ Pred] = ‛⦑targetid⦒ = «Pred»’
