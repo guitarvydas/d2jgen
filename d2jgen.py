@@ -7,10 +7,28 @@ def Main ():
     bp4 = declare (False)
     v3 = declare (None)
     if not bp4:
-        v3 = parse_ignoring (lambda :  a ())
-        bp4 = not v3
-    if not bp4:
-        v3 = parse_ignoring (lambda :  b ())
+        p6 = declare (False)
+        v5 = declare (None)
+        if not p6:
+            bp8 = declare (False)
+            v7 = declare (None)
+            if not bp8:
+                v7 = parse_ignoring (lambda :  a ())
+                bp8 = not v7
+            v5 = v7
+            p6 = v7
+            p6 = v5
+        if not p6:
+            bp10 = declare (False)
+            v9 = declare (None)
+            if not bp10:
+                v9 = parse_ignoring (lambda :  b ())
+                bp10 = not v9
+            v5 = v9
+            p6 = v9
+            p6 = v5
+        v3 = v5
+        bp4 = p6
         bp4 = not v3
     v2 = v3
     bpsyn1 = v3
