@@ -36,3 +36,6 @@ function pbplog (s) {
     console.error (s);
 }
 
+function debug_print (s) {
+    console.error (`debug: ${s}`);
+}

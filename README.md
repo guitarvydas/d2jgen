@@ -1,3 +1,19 @@
+# v11
+- begin thinking about AltGroup_plus
+```
+Main = ( | a | b)+
+```
+
+means
+- parse an "a" or a "b" (skipping spaces)
+- if successful
+  - set the return values for targetid and bypass
+  - then, in a sand-box not affecting the return values, repeat the alternation until it fails
+- if not successful
+  - set the return values for targetid and bypass
+  - don't try any more alternations
+  
+
 # v10
 - savedtargetid instead of myid
 - proceed instead of cntinue

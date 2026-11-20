@@ -11,7 +11,7 @@ ohmjsmin {
   SequentialItem = ParsingCall | AltGroup+
   AltGroup =
     | "(" AltItem+ ")" "+" -- plus
-    | "(" AltItem+ ")"     -- plain
+    | "(" AltItem+")"     -- plain
   AltItem = "|" Group
   ParsingCall = Pred
 

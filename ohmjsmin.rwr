@@ -7,14 +7,14 @@
 
 %rewrite ohmjsmin {
 
-Main [ id _lb Rules _rb] = ‛from plib2 import *\n«Rules»’
+Main [ id _lb Rules _rb] = ‛from plib2 import *\nimport sys\n«Rules»’
 
 Rules [ _1+] = ‛«_1»’
 
 SyntacticRule [ uppercaseid _eq RuleBody] =
 ⎡ skip=‛true’
   ⎡ rulename=‛«uppercaseid»’
-    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bpsyn’⎬’
+    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bp_syn’⎬’
       ⎡targetid=‛⎨genvar ‛v’⎬’
 	‛\ndef «uppercaseid» ():⤷«RuleBody»⤶’
       ⎦
@@ -25,7 +25,7 @@ SyntacticRule [ uppercaseid _eq RuleBody] =
 LexicalRule [ lowercaseid _eq RuleBody] =
 ⎡ skip=‛false’
   ⎡ rulename=‛«lowercaseid»’
-    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bplex’⎬’
+    ⎡bypass=‛⎨resetgenvar⎬⎨genvar ‛bp_lex’⎬’
       ⎡targetid=‛⎨genvar ‛v’⎬’
 	‛\ndef «lowercaseid» ():⤷«RuleBody»⤶’
       ⎦
@@ -35,7 +35,7 @@ LexicalRule [ lowercaseid _eq RuleBody] =
 
 RuleBody [Group] =
   ‛
-    ###in RuleBody
+    ###                                 >>in RuleBody
     begin ("⦑rulename⦒")
     ⦑bypass⦒=declare(False)
     ⦑targetid⦒=declare(False)
@@ -46,20 +46,22 @@ RuleBody [Group] =
     else:⤷
       return fail ("⦑rulename⦒")
     ⤶
-    ###in RuleBody
+    ###                                 <<out RuleBody
   ’
 
 Group [x+] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’
     ⎡ savedbypass = ‛⦑bypass⦒’
-      ⎡ bypass = ‛⎨genvar ‛bp’⎬’	
+      ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
 	‛
-	⦑bypass⦒ = declare (False)
+          ###                             >>in Group bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
+          ⦑bypass⦒ = declare (False)
 	  ⦑targetid⦒ = declare (None)
 	  «x»
 	  ⦑savedtargetid⦒ = ⦑targetid⦒ 
           ⦑savedbypass⦒ = ⦑targetid⦒ 
+          ###                            <<out Group bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	’
       ⎦
     ⎦
@@ -68,25 +70,34 @@ Group [x+] =
 
 SequentialItem [group] =
 ‛
+  ###                             >>in SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
     «group»
-    ⦑bypass⦒ = not ⦑targetid⦒⤶
+    ⦑bypass⦒ = not ⦑targetid⦒ ##anding⤶
+  ###                             <<out SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
 ’
 
 
 
 
-AltGroup_plus [_lp x+ _rp _plus] =
+AltGroup_plus [_lp alt+ _rp _plus] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’
     ⎡ savedbypass = ‛⦑bypass⦒’
-      ⎡ bypass = ‛⎨genvar ‛p’⎬’	
+      ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
       ‛
+        ###                             >>in altgroupPLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
-	«x»
+	«alt»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
-	⦑savedbypass⦒ = ⦑bypass⦒ 
+	⦑savedbypass⦒ = ⦑bypass⦒
+        ###                             >>in PLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
+	while ⦑targetid⦒:⤷
+          ⦑bypass⦒ = False
+	  «alt»⤶
+        ###                             <<out PLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
+        ###                             <<out altgroupPLUS savedbypass=⦑savedbypass⦒ savedtarget=⦑savedtargetid⦒
       ’
       ⎦
     ⎦
@@ -97,13 +108,15 @@ AltGroup_plain [_lp x+ _rp] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’	
     ⎡ savedbypass = ‛⦑bypass⦒’
-      ⎡ bypass = ‛⎨genvar ‛p’⎬’	
+      ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
       ‛
+        ###                             >>in altgroup bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
 	«x»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
 	⦑savedbypass⦒ = ⦑bypass⦒ 
+        ###                             <<out altgroup savedbypass=⦑savedbypass⦒ savedtarget=⦑savedtargetid⦒
       ’
       ⎦
     ⎦
@@ -112,12 +125,19 @@ AltGroup_plain [_lp x+ _rp] =
 
 AltItem [_orbar group] =
 ‛
+  ###                             >>in AltItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
     «group»
-    ⦑bypass⦒ = ⦑targetid⦒⤶
+    ⦑bypass⦒ = ⦑targetid⦒##oring⤶
+  ###                             <<out AltItem bypass=⦑bypass⦒ target=⦑targetid⦒
 ’
 
-ParsingCall [ Pred] = ‛⦑targetid⦒ = «Pred»’
+ParsingCall [ Pred] =
+‛
+###                             >>in Pred target=⦑targetid⦒
+⦑targetid⦒ = «Pred»
+###                             <<out Pred target=⦑targetid⦒
+’
 
 
 
