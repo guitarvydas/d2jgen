@@ -1,5 +1,6 @@
 # v12
 - work on Sequence with "+"
+- branch SequentialItem into --plus and --plain
 
 # v11
 - begin thinking about AltGroup_plus
