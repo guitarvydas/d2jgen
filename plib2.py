@@ -1,6 +1,6 @@
 ## builtins
-debugprogress = True
-debugtrace = True
+debugprogress = False
+debugtrace = False
 
 def declare (bool):
     return bool
