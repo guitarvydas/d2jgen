@@ -1,3 +1,6 @@
+# v12
+- work on Sequence with "+"
+
 # v11
 - begin thinking about AltGroup_plus
 ```
@@ -8,13 +11,14 @@ means
 - parse an "a" or a "b" (skipping spaces)
 - if successful
   - set the return values for targetid and bypass
-  - then, in a sand-box not affecting the return values, repeat the alternation until it fails
+  - then, in a sand-box not affecting the return values, repeat[*] the alternation until it fails
 - if not successful
   - set the return values for targetid and bypass
   - don't try any more alternations
-  
 
-# v10
+[*]reset bypass to False at top of while
+
+# v10 (vid 22?)
 - savedtargetid instead of myid
 - proceed instead of cntinue
 - p and v prefixes

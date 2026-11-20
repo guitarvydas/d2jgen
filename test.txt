@@ -1,1 +1,1 @@
-abcd
+{aa}bcd

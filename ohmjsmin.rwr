@@ -49,6 +49,7 @@ RuleBody [Group] =
     ###                                 <<out RuleBody
   ’
 
+
 Group [x+] =
 ⎡ savedtargetid = ‛⦑targetid⦒’
   ⎡ targetid = ‛⎨genvar ‛v’⎬’
@@ -68,11 +69,22 @@ Group [x+] =
   ⎦
 ⎦
 
-SequentialItem [group] =
+SequentialItem_plus [x _plus] =
 ‛
   ###                             >>in SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
-    «group»
+    «x»
+    ⦑bypass⦒ = not ⦑targetid⦒ ##anding⤶
+    while ⦑targetid⦒:⤷
+      ⦑bypass⦒ = False
+      «x»⤶
+  ###                             <<out SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
+’
+SequentialItem_plain [x] =
+‛
+  ###                             >>in SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
+  if not ⦑bypass⦒:⤷
+    «x»
     ⦑bypass⦒ = not ⦑targetid⦒ ##anding⤶
   ###                             <<out SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
 ’
