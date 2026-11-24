@@ -19,12 +19,28 @@ means
 
 [*]reset bypass to False at top of while
 
-# v10 (vid 22?)
+# video 23
+- use value based triggering
+- 
+- playlist https://www.youtube.com/playlist?list=PLLklGkLmCilw
+
+# video 22
+- heavier testing
+- 
+- playlist https://www.youtube.com/playlist?list=PLLklGkLmCilw
+
+# video 21
+- Stepper component
+- https://youtu.be/jOTAlr7lW70
+- playlist https://www.youtube.com/playlist?list=PLLklGkLmCilw
+
+# v10
 - savedtargetid instead of myid
 - proceed instead of cntinue
 - p and v prefixes
 - skip
-- use value based triggering
+
+- vid 21
 
 # v9
 - after drawing control flow diagram in ../d2jpbp
