@@ -35,7 +35,6 @@ LexicalRule [ lowercaseid _eq RuleBody] =
 
 RuleBody [Group] =
   ‛
-    ###                                 >>in RuleBody
     begin ("⦑rulename⦒")
     ⦑bypass⦒=declare(False)
     ⦑targetid⦒=declare(False)
@@ -46,7 +45,6 @@ RuleBody [Group] =
     else:⤷
       return fail ("⦑rulename⦒")
     ⤶
-    ###                                 <<out RuleBody
   ’
 
 
@@ -56,13 +54,11 @@ Group [x+] =
     ⎡ savedbypass = ‛⦑bypass⦒’
       ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
 	‛
-          ###                             >>in Group bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
           ⦑bypass⦒ = declare (False)
 	  ⦑targetid⦒ = declare (None)
 	  «x»
 	  ⦑savedtargetid⦒ = ⦑targetid⦒ 
           ⦑savedbypass⦒ = ⦑targetid⦒ 
-          ###                            <<out Group bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	’
       ⎦
     ⎦
@@ -71,22 +67,18 @@ Group [x+] =
 
 SequentialItem_plus [x _plus] =
 ‛
-  ###                             >>in SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
     «x»
-    ⦑bypass⦒ = not ⦑targetid⦒ ##anding⤶
+    ⦑bypass⦒ = not ⦑targetid⦒⤶
     while ⦑targetid⦒:⤷
       ⦑bypass⦒ = False
       «x»⤶
-  ###                             <<out SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
 ’
 SequentialItem_plain [x] =
 ‛
-  ###                             >>in SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
     «x»
-    ⦑bypass⦒ = not ⦑targetid⦒ ##anding⤶
-  ###                             <<out SequentialItem bypass=⦑bypass⦒ target=⦑targetid⦒
+    ⦑bypass⦒ = not ⦑targetid⦒⤶
 ’
 
 
@@ -98,18 +90,14 @@ AltGroup_plus [_lp alt+ _rp _plus] =
     ⎡ savedbypass = ‛⦑bypass⦒’
       ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
       ‛
-        ###                             >>in altgroupPLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
 	«alt»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
 	⦑savedbypass⦒ = ⦑bypass⦒
-        ###                             >>in PLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	while ⦑targetid⦒:⤷
           ⦑bypass⦒ = False
 	  «alt»⤶
-        ###                             <<out PLUS bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
-        ###                             <<out altgroupPLUS savedbypass=⦑savedbypass⦒ savedtarget=⦑savedtargetid⦒
       ’
       ⎦
     ⎦
@@ -122,13 +110,11 @@ AltGroup_plain [_lp x+ _rp] =
     ⎡ savedbypass = ‛⦑bypass⦒’
       ⎡ bypass = ‛⎨genvar ‛bp_’⎬’	
       ‛
-        ###                             >>in altgroup bypass=⦑savedbypass⦒ target=⦑savedtargetid⦒
 	⦑bypass⦒ = declare (False)
 	⦑targetid⦒ = declare (None)
 	«x»
 	⦑savedtargetid⦒ = ⦑targetid⦒ 
 	⦑savedbypass⦒ = ⦑bypass⦒ 
-        ###                             <<out altgroup savedbypass=⦑savedbypass⦒ savedtarget=⦑savedtargetid⦒
       ’
       ⎦
     ⎦
@@ -137,18 +123,14 @@ AltGroup_plain [_lp x+ _rp] =
 
 AltItem [_orbar group] =
 ‛
-  ###                             >>in AltItem bypass=⦑bypass⦒ target=⦑targetid⦒
   if not ⦑bypass⦒:⤷
     «group»
-    ⦑bypass⦒ = ⦑targetid⦒##oring⤶
-  ###                             <<out AltItem bypass=⦑bypass⦒ target=⦑targetid⦒
+    ⦑bypass⦒ = ⦑targetid⦒⤶
 ’
 
 ParsingCall [ Pred] =
 ‛
-###                             >>in Pred target=⦑targetid⦒
 ⦑targetid⦒ = «Pred»
-###                             <<out Pred target=⦑targetid⦒
 ’
 
 

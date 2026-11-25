@@ -73,7 +73,9 @@ def fail (s):
     global indent
     indent.out ()
     indent.pr ()
-    if debugtrace:
+    if debugprogress:
+        print (f'fail {s} {buffer.buffrepr()}')
+    elif debugtrace:
         print (f'fail {s}')
     buffer.rewind ()
     return False
@@ -111,7 +113,7 @@ def debug (name, s):
 def parse_string (s):
     global buffer
     i = 0
-    debug ("parse_string", s)
+    #debug ("parse_string", s)
     while i < len (s):
         if buffer.parse_char (s [i]):
             i += 1
@@ -122,7 +124,7 @@ def parse_string (s):
 
 def any ():
     global buffer
-    debug ("any", "_")
+    #debug ("any", "_")
     if buffer.empty ():
         return False
     else:
@@ -151,7 +153,7 @@ def parse_range (first, last):
 
 def parse_ignoring (f):
     global buffer
-    debug ("ignore", "")
+    #debug ("ignore", "")
     while (buffer.is_space ()):
         buffer.accept_char ()
     r = f ()
